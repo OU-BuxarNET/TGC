@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interaction_game : MonoBehaviour
+public class Interaction_game : MonoBehaviour //скрип взаиможействия с играми (пока ни к чему не подключен)
 {
     private List<GameCount> GameCount = new List<GameCount>();
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckingForInternetAccess : MonoBehaviour
+public class CheckingForInternetAccess : MonoBehaviour //скрипт на проверку интернета (пока ни к чему не подключен)
 {
     private bool Internet = false;
     public GameObject P_Warning;

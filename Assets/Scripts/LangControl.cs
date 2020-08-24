@@ -67,7 +67,7 @@ public class LangControl : MonoBehaviour
         TranslateWord();
     }
 
-    private void TranslateWord()
+    private void TranslateWord() //перевод текста в приложении
     {
         T_Namegame.text = lng.namegame;
         T_ChangeLng.text = lng.changelng;
