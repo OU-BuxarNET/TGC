@@ -1,0 +1,9 @@
+{
+	"namegame": "Table game club",
+	"questionlng": "change your language?",
+	"yesno": ["Yes","No"],
+	"changelng": "Change language",
+	"language": ["English","Russian"],
+	"choose": "Choose",
+	"accord": ["I agree","Disagree"]
+}
