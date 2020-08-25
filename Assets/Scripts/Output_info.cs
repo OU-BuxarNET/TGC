@@ -6,38 +6,15 @@ using UnityEngine.UI;
 public class Output_info : MonoBehaviour // вывод данных
 {
     public GameObject P_LoadApp;
-    public GameObject P_CameCount;
     public GameObject P_Welcome;
+    public GameObject P_Rool;
     //public GameObject [] DestrButtons;
     private void Start()
     {
-      PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         Camera.main.aspect = 480f / 800f;
         IsActive();
-       // DestrButtons = GameObject.FindGameObjectsWithTag("ShowButton");
     }
- /*  public void ShowButtons()
-    {
-        try
-        {
-            for (int i = 0; i < DestrButtons.Length; i++)
-                Destroy(DestrButtons[i]);
-            print("удалилось");
-        }
-        catch 
-        {
-            print("ошибка удаления");
-        }*/
-       
-        
-        /*if (P_Welcome.activeSelf == true)
-        {
-            for (int i = 0; i < DestrButtons.Length; i++)
-            {
-                DestrButtons[i].SetActive(false);
-            }
-        }
-    }*/
 
     public void QuitApp() // метод выхода из приложения
     {
@@ -51,6 +28,14 @@ public class Output_info : MonoBehaviour // вывод данных
             P_LoadApp.SetActive(true);
             PlayerPrefs.SetInt("Entering", 0);
         }
-        else P_CameCount.SetActive(true);
+        else P_Welcome.SetActive(true);
+    }
+    public void BackParam()
+    {
+        if (P_Welcome.activeSelf == true)
+        {
+            P_Welcome.SetActive(true);
+        }
+        else P_Rool.SetActive(true);
     }
 }
