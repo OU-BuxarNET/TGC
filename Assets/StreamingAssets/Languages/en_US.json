@@ -5,5 +5,22 @@
 	"changelng": "Change language",
 	"language": ["English","Russian"],
 	"choose": "Choose",
-	"accord": ["I agree","Disagree"]
+	"accord": ["I agree","Disagree"],
+	"back": "Back",
+	"parametrs": "Customization",
+	"rool": "Rules for using the app",
+	"lng": "Language",
+	"delete": "Deleting an account",
+	"warningsave": "Are you sure you want to delete all your history and saved data?",
+	"instal": "Install",
+	"installvar": "Select the installation method",
+	"welcome": "You entered as a guest",
+	"warninginstall": "You don't have any games. Want to install?",
+	"gamecount": "List of available games",
+	"nexist": "There are no new games available",
+	"varinst": "С телефона",
+	"checklvl": "Select a level",
+	"beginner": "Beginner",
+	"fan": "Amateur",
+	"pro": "Professional"
 }

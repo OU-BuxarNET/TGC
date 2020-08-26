@@ -8,7 +8,8 @@ public class Output_info : MonoBehaviour // вывод данных
     public GameObject P_LoadApp;
     public GameObject P_Welcome;
     public GameObject P_Rool;
-    //public GameObject [] DestrButtons;
+    public Animator T_Welcome;
+    public GameObject Prefab;
     private void Start()
     {
         PlayerPrefs.DeleteAll();
@@ -37,5 +38,9 @@ public class Output_info : MonoBehaviour // вывод данных
             P_Welcome.SetActive(true);
         }
         else P_Rool.SetActive(true);
+    }
+    public void StartAnim()
+    {
+        T_Welcome.Play("WelcomeTextAnim");
     }
 }
