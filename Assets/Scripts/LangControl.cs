@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 using UnityEngine.UI;
 
 public class LangControl : MonoBehaviour
@@ -68,22 +69,38 @@ public class LangControl : MonoBehaviour
             }
         }
     }
-
-    void LangLoad() // метод перевода
+    void LangLoad()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-        string path = Path.Combine(Application.streamingAssetsPath, "Languages" + PlayerPrefs.GetString("Language") + ".json");
+        string path = Path.Combine(Application.streamingAssetsPath, "Languages/" + PlayerPrefs.GetString("Language") + ".json");
         WWW reader = new WWW(path);
         while (!reader.isDone) { }
         json = reader.text;
 #else
         json = File.ReadAllText(Application.streamingAssetsPath + "/Languages/" + PlayerPrefs.GetString("Language") + ".json");
-#endif
+        
+#endif  
         lng = JsonUtility.FromJson<lang>(json);
         TranslateWord();
     }
+/*void LangLoad() // метод перевода
+{
+    if (Application.platform != RuntimePlatform.Android)
+    {
+        json = File.ReadAllText(Application.streamingAssetsPath + "/Languages/" + PlayerPrefs.GetString("Language") + ".json");
+    }
+    else
+    {
+        string path = Path.Combine(Application.streamingAssetsPath, "Languages" + PlayerPrefs.GetString("Language") + ".json");
+        WWW reader = new WWW(path);
+        while (!reader.isDone) { }
+        json = reader.text;
+    }
+    lng = JsonUtility.FromJson<lang>(json);
+  
+}*/
 
-    private void TranslateWord() //перевод текста в приложении
+private void TranslateWord() //перевод текста в приложении
     {
         for (int i = 0; i < T_Namegame.Length; i++)
               T_Namegame[i].text = lng.namegame;
@@ -141,6 +158,8 @@ public class LangControl : MonoBehaviour
         LangLoad();
     }
 }
+
+[Serializable]
 public class lang //класс для json
 {
     public string namegame;
