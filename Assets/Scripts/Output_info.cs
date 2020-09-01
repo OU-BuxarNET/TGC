@@ -12,7 +12,6 @@ public class Output_info : MonoBehaviour // вывод данных
     public GameObject Prefab;
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
         Camera.main.aspect = 480f / 800f;
         IsActive();
     }
@@ -33,11 +32,10 @@ public class Output_info : MonoBehaviour // вывод данных
     }
     public void BackParam()
     {
-        if (P_Welcome.activeSelf == true)
+        if (P_Welcome.activeSelf != true)
         {
-            P_Welcome.SetActive(true);
+            P_Rool.SetActive(true);
         }
-        else P_Rool.SetActive(true);
     }
     public void StartAnim()
     {
