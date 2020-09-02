@@ -7,12 +7,14 @@ public class Output_info : MonoBehaviour // вывод данных
 {
     public GameObject P_LoadApp;
     public GameObject P_Welcome;
+    public GameObject P_Param;
     public GameObject P_Rool;
     public Animator T_Welcome;
+    public GameObject T_Wel;
     public GameObject Prefab;
     private void Start()
     {
-        Camera.main.aspect = 480f / 800f;
+        PlayerPrefs.DeleteAll();
         IsActive();
     }
 
@@ -32,10 +34,12 @@ public class Output_info : MonoBehaviour // вывод данных
     }
     public void BackParam()
     {
-        if (P_Welcome.activeSelf != true)
+        if (P_Welcome.activeSelf == true)
         {
-            P_Rool.SetActive(true);
+            P_Welcome.SetActive(true);
+            P_Param.SetActive(true);
         }
+        else P_Rool.SetActive(true);
     }
     public void StartAnim()
     {

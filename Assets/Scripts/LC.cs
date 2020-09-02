@@ -53,6 +53,14 @@ public class LC : MonoBehaviour
         lnggg.switchBttn();
         TranslateWord();
     }
+    public void Index1()
+    {
+        lnggg.Index1();
+    }
+    public void Index2()
+    {
+        lnggg.Index2();
+    }
     private void TranslateWord() //перевод текста в приложении
     {
 
