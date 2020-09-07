@@ -8,11 +8,11 @@
 {"picture": " " , "value": "0.5"},
 {"picture": " " , "value": "0.6"},
 {"picture": " " , "value": "1.1"},
-{"picture": " " , "value": "0.2"},
-{"picture": " " , "value": "0.3"},
-{"picture": " " , "value": "0.4"},
-{"picture": " " , "value": "0.5"},
-{"picture": " " , "value": "0.6"},
+{"picture": " " , "value": "1.2"},
+{"picture": " " , "value": "1.3"},
+{"picture": " " , "value": "1.4"},
+{"picture": " " , "value": "1.5"},
+{"picture": " " , "value": "1.6"},
 {"picture": " " , "value": "2.2"},
 {"picture": " " , "value": "2.3"},
 {"picture": " " , "value": "2.4"},
@@ -28,5 +28,9 @@
 {"picture": " " , "value": "5.5"},
 {"picture": " " , "value": "5.6"},
 {"picture": " " , "value": "6.6"},
-]
+],
+ "coordinates": {
+ "x":"0"},
+ {"y": "0"}
+ 
 }
