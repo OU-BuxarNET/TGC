@@ -7,5 +7,7 @@ public class Proverka : MonoBehaviour
 {
     void Start()
     {
+        Dominoshki dominoshki = new Dominoshki();
+        dominoshki.WriteJSON();
     }
 }

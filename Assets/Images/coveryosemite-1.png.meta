@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: 4435168801137335168
     second: coveryosemite-1_4
+  - first:
+      213: 5493690577222853459
+    second: coveryosemite-1_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -218,7 +221,7 @@ TextureImporter:
         width: 167
         height: 192
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -226,6 +229,27 @@ TextureImporter:
       bones: []
       spriteID: 08b9faea682ec8d30800000000000000
       internalID: 4435168801137335168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: coveryosemite-1_5
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 780
+        width: 224
+        height: 201
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 353674129728d3c40800000000000000
+      internalID: 5493690577222853459
       vertices: []
       indices: 
       edges: []
