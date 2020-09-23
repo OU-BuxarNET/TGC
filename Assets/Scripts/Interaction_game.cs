@@ -12,14 +12,18 @@ public class Interaction_game : MonoBehaviour //скрип взаиможейс�
     private int a;
     private string Button;
     public GameObject Parent;
+    
+    public void ChooseObj() //выбор предмета
+    {
+
+    }
     void Awake()
     {
-        a = UnityEngine.Random.Range(0, 100);
+        //a = UnityEngine.Random.Range(0, 100);
     }
-
     private void GameList()
     {
-
+        //список игр
     }
     public class GameCount
     {
