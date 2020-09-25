@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Dominos;
+using System;
 
 public class Helpp : MonoBehaviour
 {
     public Button[] ChooseDom;
-    Dominoshki d = new Dominoshki();
     private int b;
+    Player p = new Player();
     
 
     private void Start()
     {
-        Player p = new Player();
         p.ShowHand();
-
         for (int i = 0; i < p.Hand.Count; i++)
         {
             ChooseDom[i].image.sprite = Resources.Load<Sprite>("Textures/" + p.Hand[i]); //путь картинки
         }
-        Debug.Log(p.Hand.Count);
+    } 
+    void fd()
+    {
+        Board board = new Board();
+        board.Secundomer();
+    }
+    void Update()
+    {
+        fd();
     }
     public void B1()
     {
@@ -44,26 +51,24 @@ public class Helpp : MonoBehaviour
     }
     
     void Pr()
-    {  
+    {
         DominoshkiMoving moving = new DominoshkiMoving();
-        Player p = new Player();
         switch (b)
         {
             case 0:
-                moving.a = ChooseDom[0].image.sprite.name.ToString(); break;
+                moving.namespritebutt = ChooseDom[0].image.sprite.name.ToString(); break;
             case 1:
-                moving.a = ChooseDom[1].image.sprite.name.ToString(); break;
+                moving.namespritebutt = ChooseDom[1].image.sprite.name.ToString(); break;
             case 2:
-                moving.a = ChooseDom[2].image.sprite.name.ToString(); break;
+                moving.namespritebutt = ChooseDom[2].image.sprite.name.ToString(); break;
             case 3:
-                moving.a = ChooseDom[3].image.sprite.name.ToString(); break;
+                moving.namespritebutt = ChooseDom[3].image.sprite.name.ToString(); break;
             case 4:
-                moving.a = ChooseDom[4].image.sprite.name.ToString(); break;
+                moving.namespritebutt = ChooseDom[4].image.sprite.name.ToString(); break;
         }
         if (b >= 0)
         {
             moving.ChooseDomino();
-                Debug.Log(p.Hand.Count);
         }
         else Debug.Log("Ничего не выбрано");
     }
