@@ -7,10 +7,11 @@ using System;
 
 public class Helpp : MonoBehaviour
 {
+    
     public Button[] ChooseDom;
     private int b;
     Player p = new Player();
-    
+    DominoshkiMoving moving = new DominoshkiMoving();
 
     private void Start()
     {
@@ -19,15 +20,20 @@ public class Helpp : MonoBehaviour
         {
             ChooseDom[i].image.sprite = Resources.Load<Sprite>("Textures/" + p.Hand[i]); //путь картинки
         }
-    } 
-    void fd()
+    }
+    public void Pos() // сделать ход
+    {
+        moving.PosGoHand();
+        moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + moving.bak[0]);
+    }
+    void Secund()
     {
         Board board = new Board();
         board.Secundomer();
     }
     void Update()
     {
-        fd();
+        Secund();
     }
     public void B1()
     {
@@ -52,7 +58,7 @@ public class Helpp : MonoBehaviour
     
     void Pr()
     {
-        DominoshkiMoving moving = new DominoshkiMoving();
+        
         switch (b)
         {
             case 0:
