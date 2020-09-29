@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class Touch : MonoBehaviour
 {
-    #region ================================= PRIVATE FIELDS
-
-    private readonly float _speed = 0.1f;
-    private Vector2 _startPos;
-
-    #endregion
-
-    #region ============================== PRIVATE METHODS
+    private readonly float speed = 15.1f;
+    private bool move = false;
+    private Vector3 target;
+    private Vector2 startPos;
 
     private void Update()
     {
@@ -22,17 +18,16 @@ public class Touch : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    _startPos = touch.position;
+                    startPos = touch.position;
                     break;
 
                 case TouchPhase.Moved:
-                    var dir = touch.position - _startPos;
+                    var dir = touch.position - startPos;
                     var pos = transform.position + new Vector3(transform.position.x, transform.position.y, dir.y);
-                    transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * _speed);
+                    transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * speed);
                     break;
             }
         }
-    }
 
-    #endregion
+    }
 }

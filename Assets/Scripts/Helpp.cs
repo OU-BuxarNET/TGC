@@ -20,10 +20,10 @@ public class Helpp : MonoBehaviour
         {
             ChooseDom[i].image.sprite = Resources.Load<Sprite>("Textures/" + p.Hand[i]); //путь картинки
         }
+        moving.PosGoHand();
     }
     public void Pos() // сделать ход
     {
-        moving.PosGoHand();
         moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + moving.bak[0]);
     }
     void Secund()
@@ -34,6 +34,20 @@ public class Helpp : MonoBehaviour
     void Update()
     {
         Secund();
+        WayTrue();
+    }
+    public void WayTrue()// присваиваю картинки куда можно положить след. кость
+    { 
+      Color color = new Color(1f, 1f, 1f, 0.5f);
+        moving.WhenCube();
+        for(int i = 0; i < moving.goPos.Length; i++)
+        {
+            if (moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true)
+            {
+                moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
+                moving.goPos[i].GetComponent<Image>().color = color;
+            }
+        }
     }
     public void B1()
     {
@@ -55,10 +69,8 @@ public class Helpp : MonoBehaviour
     {
         b = 4; Pr();
     }
-    
     void Pr()
     {
-        
         switch (b)
         {
             case 0:
