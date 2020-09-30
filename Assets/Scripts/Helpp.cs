@@ -7,12 +7,11 @@ using System;
 
 public class Helpp : MonoBehaviour
 {
-    
     public Button[] ChooseDom;
     private int b;
     Player p = new Player();
     DominoshkiMoving moving = new DominoshkiMoving();
-
+    public Text t ;
     private void Start()
     {
         p.ShowHand();
@@ -24,7 +23,9 @@ public class Helpp : MonoBehaviour
     }
     public void Pos() // сделать ход
     {
-        moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + moving.bak[0]);
+        moving.PutDomino();
+        moving.goPos[moving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + moving.bak[0]);
+        
     }
     void Secund()
     {
@@ -34,13 +35,12 @@ public class Helpp : MonoBehaviour
     void Update()
     {
         Secund();
-        WayTrue();
+       // WayTrue();
     }
     public void WayTrue()// присваиваю картинки куда можно положить след. кость
-    { 
-      Color color = new Color(1f, 1f, 1f, 0.5f);
-        moving.WhenCube();
-        for(int i = 0; i < moving.goPos.Length; i++)
+    {
+        Color color = new Color(1f, 1f, 1f, 0.5f);
+        for (int i = 0; i < moving.goPos.Length; i++)
         {
             if (moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true)
             {
@@ -86,7 +86,7 @@ public class Helpp : MonoBehaviour
         }
         if (b >= 0)
         {
-            moving.ChooseDomino();
+            moving.ChooseBone();
         }
         else Debug.Log("Ничего не выбрано");
     }
