@@ -9,11 +9,12 @@ public class Helpp : MonoBehaviour
 {
     public Button[] ChooseDom;
     private int b;
-    Game game = new Game();
+    Game game;
     public Text t ;
     private void Start()
     {
-        game.StartGame();
+         game = new Game();
+         game.StartGame();
         for (int i = 0; i < game.board.Hand.Count; i++)
         {
             ChooseDom[i].image.sprite = Resources.Load<Sprite>("Textures/" + game.board.Hand[i]); //путь картинки
