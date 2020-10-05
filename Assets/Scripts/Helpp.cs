@@ -10,31 +10,36 @@ public class Helpp : MonoBehaviour
     public Button[] ChooseDom;
     private int b;
     Game game;
+    LogicComp logicComp;
     public Text t ;
     private void Start()
     {
          game = new Game();
-         game.StartGame();
+         logicComp = new LogicComp();
+        game.StartGame();
         for (int i = 0; i < game.board.Hand.Count; i++)
         {
             ChooseDom[i].image.sprite = Resources.Load<Sprite>("Textures/" + game.board.Hand[i]); //путь картинки
         }
+        game.next_move = true; 
     }
     public void Pos() // сделать ход
     {
-        Debug.Log(game.dominoshkiMoving.namespritebutt);
         game.MakeaMove();
         if (game.dominoshkiMoving.flag == true) // ставим
         {
-            game.dominoshkiMoving.goPos[game.dominoshkiMoving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + game.dominoshkiMoving.bak[0]);
-            WayTrue();
+            game.dominoshkiMoving.goPos[game.dominoshkiMoving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + game.dominoshkiMoving.namespritebutt);
         }
+    }
+    public void Comp()
+    {
+        game.dominoshkiMoving.goPos[game.dominoshkiMoving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + game.board.HandComp[0]);
     }
     void Update()
     {
-       // WayTrue();
+        WayTrue();
     }
-    public void WayTrue()// присваиваю картинки куда можно положить след. кость
+    public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
         for (int i = 0; i < game.dominoshkiMoving.goPos.Length; i++)
@@ -87,4 +92,5 @@ public class Helpp : MonoBehaviour
         }
         else Debug.Log("Ничего не выбрано");
     }
+    
 }
