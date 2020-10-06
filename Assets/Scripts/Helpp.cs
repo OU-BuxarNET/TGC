@@ -2,95 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Dominos;
+using Domino1;
 using System;
 
 public class Helpp : MonoBehaviour
 {
-    public Button[] ChooseDom;
-    private int b;
-    Game game;
-    LogicComp logicComp;
-    public Text t ;
-    private void Start()
+    private int a = 7; //количество элементов надо задать
+    public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
+    GameObject But;
+
+    public void Start() // сделать ход
     {
-         game = new Game();
-         logicComp = new LogicComp();
-        game.StartGame();
-        for (int i = 0; i < game.board.Hand.Count; i++)
+        for (int i = 0; i < a; i++)
         {
-            ChooseDom[i].image.sprite = Resources.Load<Sprite>("Textures/" + game.board.Hand[i]); //путь картинки
-        }
-        game.next_move = true; 
-    }
-    public void Pos() // сделать ход
-    {
-        game.MakeaMove();
-        if (game.dominoshkiMoving.flag == true) // ставим
-        {
-            game.dominoshkiMoving.goPos[game.dominoshkiMoving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + game.dominoshkiMoving.namespritebutt);
+            float PosX = -300 + i * 100f ; //тут сами подгоняйте это размер смещения
+            But = Instantiate(Resources.Load("Button", typeof(GameObject)), transform, false) as GameObject; //загружаем копию префаба из ресурсов.
+            But.transform.SetParent(Parent.transform); //Помещаем кнопку к родителю
+            But.transform.localPosition = new Vector3(PosX, -10f, 0f); //смещаем кнопки в моем случае по Х
+            int j = i + 1;
+            But.name = "B" + j.ToString(); //Дополняем кнопки нумерацией, чтобы потом можно скажем через EventSystem получать имя нажатой кнопки.
         }
     }
-    public void Comp()
+    void OnClick()
     {
-        game.dominoshkiMoving.goPos[game.dominoshkiMoving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + game.board.HandComp[0]);
+
     }
-    void Update()
-    {
-        WayTrue();
-    }
-    public void WayTrue() // присваиваю картинки куда можно положить след. кость
-    {
-        Color color = new Color(1f, 1f, 1f, 0.5f);
-        for (int i = 0; i < game.dominoshkiMoving.goPos.Length; i++)
-        {
-            if (game.dominoshkiMoving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true)
-            {
-                game.dominoshkiMoving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-                game.dominoshkiMoving.goPos[i].GetComponent<Image>().color = color;
-            }
-        }
-    }
-    public void B1()
-    {
-        b = 0; Pr();
-    }
-    public void B2()
-    {
-        b = 1; Pr();
-    }
-    public void B3()
-    {
-        b = 2; Pr();
-    }
-    public void B4()
-    {
-        b = 3; Pr();
-    }
-    public void B5()
-    {
-        b = 4; Pr();
-    }
-    void Pr()
-    {
-        switch (b)
-        {
-            case 0:
-                game.dominoshkiMoving.namespritebutt = ChooseDom[0].image.sprite.name.ToString(); break;
-            case 1:
-                game.dominoshkiMoving.namespritebutt = ChooseDom[1].image.sprite.name.ToString(); break;
-            case 2:
-                game.dominoshkiMoving.namespritebutt = ChooseDom[2].image.sprite.name.ToString(); break;
-            case 3:
-                game.dominoshkiMoving.namespritebutt = ChooseDom[3].image.sprite.name.ToString(); break;
-            case 4:
-                game.dominoshkiMoving.namespritebutt = ChooseDom[4].image.sprite.name.ToString(); break;
-        }
-        if (b >= 0)
-        {
-            game.dominoshkiMoving.ChooseBone();
-        }
-        else Debug.Log("Ничего не выбрано");
-    }
-    
 }
