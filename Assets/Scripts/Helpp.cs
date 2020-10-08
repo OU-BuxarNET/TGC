@@ -9,7 +9,7 @@ public class Helpp : MonoBehaviour
 {
     private int a = 7; //количество элементов надо задать
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
-    GameObject[] But;
+    static GameObject[] But;
     private int b;
     private int j;
 
@@ -22,7 +22,6 @@ public class Helpp : MonoBehaviour
         game = new Game();
         check = new Check();
        
-
         game.StartGame();
         But = new GameObject[a];
         for (int i = 0; i < a; i++)
@@ -59,20 +58,25 @@ public class Helpp : MonoBehaviour
         But[6].GetComponent<Button>().onClick.AddListener(() => Pr());
     }
     
-    public void Move()
+    public void Move1()
     {
         moving = new Moving();
         moving.PosGoHand();
-        game.MakeMove();
-        for (int i = 0; i < moving.goPos.Length; i++)
+        game.MakeMove(); 
+        if (Move.next_move == true)
         {
-            for (int j = 0; j < Board.Hand.Count; j++)
+            moving.goPos[Moving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.HandComp[Check.kolforCom]);
+            Board.HandComp.RemoveAt(Check.kolforCom);
+            Check.flag = false;
+        }
+        else
+        {
+            if (Check.flag == true)
             {
-                if (But[j].GetComponent<Image>().sprite.name == Moving.namespritebutt)
-                {
-                    moving.goPos[i].GetComponent<Image>().sprite = But[j].GetComponent<Image>().sprite;
-                    break;
-                }
+                moving.goPos[Moving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                Board.HandComp.RemoveAt(b);
+                Destroy(But[b]);
+                Check.flag = false; 
             }
         }
     }
@@ -80,7 +84,7 @@ public class Helpp : MonoBehaviour
     {  
         switch (b)
         {
-            case 0:
+            case 0: 
                 Moving.namespritebutt = But[0].GetComponent<Image>().sprite.name.ToString(); break;
             case 1:
                 Moving.namespritebutt = But[1].GetComponent<Image>().sprite.name.ToString(); break;
