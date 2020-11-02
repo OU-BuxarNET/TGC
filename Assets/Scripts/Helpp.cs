@@ -63,13 +63,28 @@ public class Helpp : MonoBehaviour
         {
             if (moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && moving.goPos[i].GetComponent<Image>().sprite.name != Moving.namespritebutt)
             {
+                Debug.Log("Дошло - триггеры активированы " + i);
                 moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-                moving.goPos[i].GetComponent<Image>().color = color;
+                moving.goPos[i].GetComponent<Image>().color = color; 
             }
         }
     }
+    float GameSeconds = 0;
+    float GameMinutes = 0;
     private void Update()
-    { 
+    {
+        GameObject timetext = GameObject.Find("T_Time");
+        GameSeconds += Time.deltaTime;
+        timetext.GetComponent<Text>().text = (Math.Round(GameMinutes, 0) + ":" + Math.Round(GameSeconds, 0)).ToString();
+        if (GameSeconds > 60.0f)
+        {
+            GameMinutes += 1.0f;
+            GameSeconds = 0.0f;
+            if (Moving.first == false)
+            {
+                moving.ChangePos();
+            }
+        }
     }
     public void Move1()
     {
@@ -88,9 +103,10 @@ public class Helpp : MonoBehaviour
         {
             moving.goPos[Moving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.HandComp[Check.kolforCom]);
             Board.HandComp.RemoveAt(Check.kolforCom);
-            Check.flag = false;
+            Check.flag = false; 
             WayTrue(); 
-        } 
+        }
+        Debug.Log(Moving.startpos.ToString());
     }
     void Pr()
     {  
