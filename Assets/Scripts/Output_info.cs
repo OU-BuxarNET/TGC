@@ -32,7 +32,7 @@ public class Output_info : MonoBehaviour // вывод данных
         }
         else P_Welcome.SetActive(true);
     }
-    public void BackParam()
+    public void BackParam() 
     {
         if (P_Welcome.activeSelf == true)
         {

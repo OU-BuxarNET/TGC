@@ -9,4 +9,19 @@ public class Touch : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    static int index = 0;
+    public void ShowIcons() // перенести в dll
+    { 
+        GameObject I_CopmPlayer = GameObject.Find("I_CopmPlayer");
+        if (index == 0)
+        {
+            I_CopmPlayer.SetActive(false);
+            index = 1;
+        }
+        else if (index == 1)
+        {
+            I_CopmPlayer.SetActive(true);
+            index = 0;
+        } 
+    }
 }

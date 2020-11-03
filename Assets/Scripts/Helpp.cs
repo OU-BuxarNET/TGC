@@ -71,6 +71,7 @@ public class Helpp : MonoBehaviour
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
+
     private void Update()
     {
         GameObject timetext = GameObject.Find("T_Time");
@@ -79,11 +80,11 @@ public class Helpp : MonoBehaviour
         if (GameSeconds > 60.0f)
         {
             GameMinutes += 1.0f;
-            GameSeconds = 0.0f;
-            if (Moving.first == false)
-            {
-                moving.ChangePos();
-            }
+            GameSeconds = 0.0f; 
+        }
+        if (Moving.first == false)
+        {
+            moving.ChangePos();
         }
     }
     public void Move1()
@@ -104,9 +105,9 @@ public class Helpp : MonoBehaviour
             moving.goPos[Moving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.HandComp[Check.kolforCom]);
             Board.HandComp.RemoveAt(Check.kolforCom);
             Check.flag = false; 
-            WayTrue(); 
-        }
-        Debug.Log(Moving.startpos.ToString());
+            WayTrue();
+            b = 0;
+        } 
     }
     void Pr()
     {  
