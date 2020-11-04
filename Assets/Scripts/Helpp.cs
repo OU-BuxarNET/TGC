@@ -10,7 +10,7 @@ public class Helpp : MonoBehaviour
     private int a = 7; //количество элементов надо задать
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
     static GameObject [] But;
-    private int b;
+    private int b = 0;
     private int j;
     bool per;
     Game game;
@@ -38,13 +38,13 @@ public class Helpp : MonoBehaviour
     }
     void ButD()
     {
-        But[0].GetComponent<Button>().onClick.AddListener(() => b = 0);
-        But[1].GetComponent<Button>().onClick.AddListener(() => b = 1);
-        But[2].GetComponent<Button>().onClick.AddListener(() => b = 2);
-        But[3].GetComponent<Button>().onClick.AddListener(() => b = 3);
-        But[4].GetComponent<Button>().onClick.AddListener(() => b = 4);
-        But[5].GetComponent<Button>().onClick.AddListener(() => b = 5);
-        But[6].GetComponent<Button>().onClick.AddListener(() => b = 6);
+        But[0].GetComponent<Button>().onClick.AddListener(() => b = 1);
+        But[1].GetComponent<Button>().onClick.AddListener(() => b = 2);
+        But[2].GetComponent<Button>().onClick.AddListener(() => b = 3);
+        But[3].GetComponent<Button>().onClick.AddListener(() => b = 4);
+        But[4].GetComponent<Button>().onClick.AddListener(() => b = 5);
+        But[5].GetComponent<Button>().onClick.AddListener(() => b = 6);
+        But[6].GetComponent<Button>().onClick.AddListener(() => b = 7);
     }
     void Butr()
     {
@@ -62,8 +62,7 @@ public class Helpp : MonoBehaviour
         for (int i = 0; i < moving.goPos.Length; i++)
         {
             if (moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && moving.goPos[i].GetComponent<Image>().sprite.name != Moving.namespritebutt)
-            {
-                Debug.Log("Дошло - триггеры активированы " + i);
+            { 
                 moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
                 moving.goPos[i].GetComponent<Image>().color = color; 
             }
@@ -89,49 +88,63 @@ public class Helpp : MonoBehaviour
     }
     public void Move1()
     {
-        moving = new Moving();
-        game.MakeMove();
-        moving.PosGoHand();
-        if (Move.next_move == false)
+        if (b > 0)
         {
-            moving.goPos[Moving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
-            Board.HandComp.RemoveAt(b);
-            Destroy(But[b]);
+            Debug.Log(b); 
+            Color color = new Color(255, 255, 255, 188);
+            moving = new Moving();
             game.MakeMove();
-        }
+            moving.PosGoHand();
+            if (Move.next_move == false)
+            {
+                if (Moving.LorR == false)
+                    moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                else
+                    moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                //moving.goPos[Moving.startpos].GetComponent<Image>().color = color;
+                Board.HandComp.RemoveAt(b);
+                Destroy(But[b]);
+                game.MakeMove();
+            }
 
-        if (Move.next_move == true)
-        {
-            moving.goPos[Moving.startpos].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.HandComp[Check.kolforCom]);
-            Board.HandComp.RemoveAt(Check.kolforCom);
-            Check.flag = false; 
-            WayTrue();
+            if (Move.next_move == true)
+            {
+                if (Moving.LorR == false)
+                    moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                else
+                    moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                //moving.goPos[Moving.startpos].GetComponent<Image>().color = color;
+                Board.HandComp.RemoveAt(Check.kolforCom);
+                Check.flag = false;
+                WayTrue();
+            }
             b = 0;
-        } 
+            Moving.namespritebutt = null;
+        }
+        else Debug.Log("Ничего не выбрано"); 
     }
     void Pr()
     {  
         switch (b)
         {
-            case 0: 
+            case 1: 
                 Moving.namespritebutt = But[0].GetComponent<Image>().sprite.name.ToString(); break;
-            case 1:
-                Moving.namespritebutt = But[1].GetComponent<Image>().sprite.name.ToString(); break;
             case 2:
-                Moving.namespritebutt = But[2].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.namespritebutt = But[1].GetComponent<Image>().sprite.name.ToString(); break;
             case 3:
-                Moving.namespritebutt = But[3].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.namespritebutt = But[2].GetComponent<Image>().sprite.name.ToString(); break;
             case 4:
-                Moving.namespritebutt = But[4].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.namespritebutt = But[3].GetComponent<Image>().sprite.name.ToString(); break;
             case 5:
-                Moving.namespritebutt = But[5].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.namespritebutt = But[4].GetComponent<Image>().sprite.name.ToString(); break;
             case 6:
+                Moving.namespritebutt = But[5].GetComponent<Image>().sprite.name.ToString(); break;
+            case 7:
                 Moving.namespritebutt = But[6].GetComponent<Image>().sprite.name.ToString(); break;
         }
-        if (b >= 0)
+        if (b > 0)
         {
             check.ChooseBone();
-        }
-        else Debug.Log("Ничего не выбрано");
+        } 
     } 
 }
