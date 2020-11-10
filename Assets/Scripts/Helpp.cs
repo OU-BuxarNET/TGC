@@ -55,9 +55,16 @@ public class Helpp : MonoBehaviour
     }
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
-        Color color = new Color(1f, 1f, 1f, 0.5f);
+        Color color = new Color(1f, 1f, 1f, 0.5f); 
+
+        if (Moving.first == true)
+        {
+            Game.moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
+            Game.moving.goPos[27].GetComponent<Image>().color = color;
+        }
         for (int i = 0; i < Game.moving.goPos.Length; i++)
         {
+           
             if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.namespritebutt)
             {
                 Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
@@ -80,14 +87,14 @@ public class Helpp : MonoBehaviour
         }
         if (Moving.first == false)
         {
-            Game.moving.ChangePos();
+            Game.moving.ChangePos(); 
         } 
     }
     public void Move1()
     {
-        if (b > 0 )
+        if (b > 0)
         {
-            Color color = new Color( 1f,1f,1f,0.7f );
+            Color color = new Color( 1f,1f,1f,0.7f);
             Game.moving = new Moving();
             game.MakeMove();
             Game.moving.PosGoHand();
@@ -99,10 +106,9 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
                 Board.HandComp.RemoveAt(b);
-                Destroy(But[b-1]);
+                Destroy(But[b-1]); 
                 game.MakeMove();
-            }
-
+            } 
             if (Move.next_move == true)
             {
                 if (Moving.LorR == false)
@@ -111,8 +117,8 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
                 Board.HandComp.RemoveAt(Check.kolforCom);
-                Check.flag = false;
-                WayTrue();
+                Check.flag = false; 
+                WayTrue(); 
             }
             b = 0;
             Moving.namespritebutt = null;
