@@ -105,7 +105,7 @@ public class Helpp : MonoBehaviour
                 else
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-                Board.HandComp.RemoveAt(b);
+                Board.HandComp.RemoveAt(b-1);
                 Destroy(But[b-1]); 
                 game.MakeMove();
             } 
@@ -116,8 +116,7 @@ public class Helpp : MonoBehaviour
                 else
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-                Board.HandComp.RemoveAt(Check.kolforCom);
-                Check.flag = false; 
+                Board.HandComp.RemoveAt(Check.kolforCom); 
                 WayTrue(); 
             }
             b = 0;
