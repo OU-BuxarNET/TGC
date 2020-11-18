@@ -30,8 +30,7 @@ public class Helpp : MonoBehaviour
             But[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.Hand[i]); // присваиваем спрайты кнопкам   
         }
         ButD();
-        Butr();
-        Game.check.WhoseMove(); 
+        Butr(); 
     }
     void ButD()
     {
@@ -104,9 +103,10 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                 else
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
+                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color; 
                 Board.HandComp.RemoveAt(b-1);
-                Destroy(But[b-1]); 
+                Destroy(But[b-1]);
+                WayTrue();
                 game.MakeMove();
             } 
             if (Move.next_move == true)
