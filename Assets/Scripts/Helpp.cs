@@ -62,8 +62,7 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[27].GetComponent<Image>().color = color;
         }
         for (int i = 0; i < Game.moving.goPos.Length; i++)
-        {
-           
+        { 
             if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.namespritebutt)
             {
                 Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
@@ -84,45 +83,65 @@ public class Helpp : MonoBehaviour
             GameMinutes += 1.0f;
             GameSeconds = 0.0f;
         }
-        if (Moving.first == false)
+        if (Moving.first == false && Move.next_move == "player")
         {
             Game.moving.ChangePos(); 
+        }
+        else
+        {
+            if (Move.next_move == "comp")
+                Move1();
         } 
     }
     public void Move1()
     {
+        Debug.Log(Moving.linkedList.Count);
+        Color color = new Color(1f, 1f, 1f, 0.7f);
+        Game.moving.PosGoHand(); 
         if (b > 0)
-        {
-            Color color = new Color( 1f,1f,1f,0.7f);
-            Game.moving = new Moving();
+        { 
             game.MakeMove();
-            Game.moving.PosGoHand();
-            if (Move.next_move == false)
-            {
+            if (Move.next_move == "player")
+            { 
                 if (Moving.LorR == false)
+                {
                     Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                    Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
+                } 
                 else
+                {
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color; 
+                    Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
+                } 
                 Board.HandComp.RemoveAt(b-1);
                 Destroy(But[b-1]);
                 WayTrue();
+                Move.next_move = "comp";
                 game.MakeMove();
-            } 
-            if (Move.next_move == true)
-            {
-                if (Moving.LorR == false)
-                    Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
-                else
-                    Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-                Board.HandComp.RemoveAt(Check.kolforCom); 
-                WayTrue(); 
-            }
-            b = 0;
-            Moving.namespritebutt = null;
+            }  
         }
-        else Debug.Log("Ничего не выбрано"); 
+        else Debug.Log("Ничего не выбрано");
+
+        if (Move.next_move == "comp")
+        {
+            game.MakeMove();
+            if (Moving.LorR == false)
+            {
+                Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
+            }
+            else
+            {
+                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
+            } 
+            Board.HandComp.RemoveAt(Check.kolforCom);
+            Game.moving.WhenCube();
+            WayTrue(); 
+            Move.next_move = "player";
+        }
+        b = 0; 
+        Moving.namespritebutt = null;
     }
     void Pr()
     {  
