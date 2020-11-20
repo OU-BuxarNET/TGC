@@ -95,7 +95,7 @@ public class Helpp : MonoBehaviour
     }
     public void Move1()
     {
-        Debug.Log(Moving.linkedList.Count);
+        Debug.Log(Moving.linkedList.head.Data + " " + Moving.linkedList.tail.Data);
         Color color = new Color(1f, 1f, 1f, 0.7f);
         Game.moving.PosGoHand(); 
         if (b > 0)
@@ -140,7 +140,12 @@ public class Helpp : MonoBehaviour
             WayTrue(); 
             Move.next_move = "player";
         }
-        b = 0; 
+        b = 0;
+        foreach (var a in Moving.linkedList)
+        {
+            Debug.Log(a + " linkedlist");
+        }
+        Debug.Log(Moving.linkedList.head.Data + " "+ Moving.linkedList.tail.Data);
         Moving.namespritebutt = null;
     }
     void Pr()
