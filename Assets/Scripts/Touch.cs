@@ -15,13 +15,13 @@ public class Touch : MonoBehaviour
         GameObject I_CopmPlayer = GameObject.Find("I_CopmPlayer");
         if (index == 0)
         {
-            I_CopmPlayer.SetActive(false);
+            I_CopmPlayer.transform.localPosition = new Vector2(0, 1000);
             index = 1;
         }
         else if (index == 1)
         {
-            I_CopmPlayer.SetActive(true);
+            I_CopmPlayer.transform.localPosition = new Vector2(0, 530);
             index = 0;
         } 
     }
-}
+} 

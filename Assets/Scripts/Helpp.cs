@@ -1,25 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Domino1;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Domino1;
-using System;
 
 public class Helpp : MonoBehaviour
 {
-    private int a = 7; //количество элементов надо задать
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
-    static GameObject [] But;
+    static GameObject[] But;
     private int b = 0;
-    private int j; 
+    private int j;
     Game game;
-    Animation RuttleBones = new Animation();  
+    float x = 120 , y = 120;
+    //Animation RuttleBones = new Animation();  
     public void Start() // сделать ход
     {
-        game = new Game(); 
+        game = new Game();
         game.StartGame();
-        But = new GameObject[a];
-        for (int i = 0; i < a; i++)
+        ButHandPlayer();
+    }
+    void ButHandPlayer()
+    {
+        But = new GameObject[Board.Hand.Count];
+        for (int i = 0; i < Board.Hand.Count; i++)
         {
             float PosX = -300 + i * 100f; // размер смещения
             But[i] = Instantiate(Resources.Load("Button", typeof(GameObject)), transform, false) as GameObject; //загружаем копию префаба из ресурсов
@@ -30,7 +32,7 @@ public class Helpp : MonoBehaviour
             But[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.Hand[i]); // присваиваем спрайты кнопкам   
         }
         ButD();
-        Butr(); 
+        Butr();
     }
     void ButD()
     {
@@ -44,7 +46,6 @@ public class Helpp : MonoBehaviour
     }
     void Butr()
     {
-        But[0].GetComponent<Button>().onClick.AddListener(() => Pr());
         But[1].GetComponent<Button>().onClick.AddListener(() => Pr());
         But[2].GetComponent<Button>().onClick.AddListener(() => Pr());
         But[3].GetComponent<Button>().onClick.AddListener(() => Pr());
@@ -54,7 +55,7 @@ public class Helpp : MonoBehaviour
     }
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
-        Color color = new Color(1f, 1f, 1f, 0.5f); 
+        Color color = new Color(1f, 1f, 1f, 0.5f);
 
         if (Moving.first == true)
         {
@@ -62,18 +63,18 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[27].GetComponent<Image>().color = color;
         }
         for (int i = 0; i < Game.moving.goPos.Length; i++)
-        { 
+        {
             if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.namespritebutt)
             {
                 Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-                Game.moving.goPos[i].GetComponent<Image>().color = color; 
+                Game.moving.goPos[i].GetComponent<Image>().color = color;
             }
         }
     }
     float GameSeconds = 0;
-    float GameMinutes = 0; 
+    float GameMinutes = 0;
     private void Update()
-    { 
+    {
         //RuttleBones.Play();
         GameObject timetext = GameObject.Find("T_Time");
         GameSeconds += Time.deltaTime;
@@ -85,39 +86,40 @@ public class Helpp : MonoBehaviour
         }
         if (Moving.first == false && Move.next_move == "player")
         {
-            Game.moving.ChangePos(); 
+            Game.moving.ChangePos();
         }
         else
         {
             if (Move.next_move == "comp")
                 Move1();
-        } 
+        }
+        game.Met();
     }
     public void Move1()
-    { 
+    {
         Color color = new Color(1f, 1f, 1f, 0.7f);
-        Game.moving.PosGoHand(); 
+        Game.moving.PosGoHand();
         if (b > 0)
-        { 
+        {
             game.MakeMove();
             if (Move.next_move == "player")
-            { 
+            {
                 if (Moving.LorR == false)
                 {
                     Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                     Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
-                } 
+                }
                 else
                 {
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-                } 
-                Board.HandComp.RemoveAt(b-1);
-                Destroy(But[b-1]);
+                }
+                Board.HandComp.RemoveAt(b - 1);
+                Destroy(But[b - 1]);
                 WayTrue();
                 Move.next_move = "comp";
                 game.MakeMove();
-            }  
+            }
         }
         else Debug.Log("Ничего не выбрано");
 
@@ -133,17 +135,17 @@ public class Helpp : MonoBehaviour
             {
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-            } 
+            }
             Board.HandComp.RemoveAt(Check.kolforCom);
             Game.moving.WhenCube();
-            WayTrue(); 
+            WayTrue();
             Move.next_move = "player";
         }
-        b = 0; 
+        b = 0;
         Moving.namespritebutt = null;
     }
     void Pr()
-    {  
+    {
         switch (b)
         {
             case 1:
@@ -164,6 +166,24 @@ public class Helpp : MonoBehaviour
         if (b > 0)
         {
             Game.check.ChooseBone();
-        } 
-    } 
+        }
+    }
+    public void TakeBar()
+    {
+        Game.board.TakeBar(true);
+        for (int i = 0; i < But.Length; i++)
+            Destroy(But[i]);
+        ButHandPlayer();
+        for (int i = 0; i < Board.Hand.Count; i++)
+        {
+            if (x <= 60)
+            {
+                Debug.Log(x);
+            }
+            else But[i].transform.localScale = new Vector2(x, y);
+           
+        }
+        x -= 20;
+        y -= 20;
+    }
 }
