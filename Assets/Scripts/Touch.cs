@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Touch : MonoBehaviour
 {
+   
+
     public void QuitOnscene()
     {
         SceneManager.LoadScene(0);
     }
     static int index = 0;
-    public void ShowIcons() // перенести в dll
+    public void ShowIcons() // перенести в dll комнаты
     { 
         GameObject I_CopmPlayer = GameObject.Find("I_CopmPlayer");
         if (index == 0)
@@ -20,8 +22,8 @@ public class Touch : MonoBehaviour
         }
         else if (index == 1)
         {
-            I_CopmPlayer.transform.localPosition = new Vector2(0, 530);
+            I_CopmPlayer.transform.localPosition = new Vector2(0, 490);
             index = 0;
-        } 
+        }
     }
-} 
+}

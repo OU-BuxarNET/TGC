@@ -12,8 +12,7 @@ public class LoadScene : MonoBehaviour
     void Start()
     {
         StartCoroutine(AsyncLoad()); //вызов корутины (загрузка следующей сцены)
-    }
-
+    } 
     IEnumerator AsyncLoad() //создание корутины - загрузка следующей сцены (анимация картинки + проценты загрузки)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneID);
