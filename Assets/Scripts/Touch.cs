@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; 
+using Domino1;
 
 public class Touch : MonoBehaviour
 {
-    static int a = 0;
-    static bool first = true;
-
+    static string lvl = "easy";
+    static string version = "classic"; 
+    static string point = "100";
+    static bool lvlfirst = true;
+    static bool versionfirst = true;
+    static bool pointfirst = true;
     public void ChooseLvlRight()
     {
         Vector2 vecxy = new Vector2(146, 405);
@@ -17,41 +21,35 @@ public class Touch : MonoBehaviour
         GameObject B_RightLvl = GameObject.Find("B_RightLvl");
         GameObject easy = GameObject.Find("T_Easy");
         GameObject medium = GameObject.Find("T_Medium");
-        GameObject hard = GameObject.Find("T_Hard");
-        if (first == true)
+        GameObject hard = GameObject.Find("T_Hard"); 
+
+        if (lvlfirst == true)
         {
-            a = -1;
-            first = false;
+            lvl = "medium";
+            lvlfirst = false;
         }
-        switch (a)
+        switch (lvl)
         {
-            case -1:
-                medium.transform.localPosition = vecxy;
-                easy.transform.localPosition = vecabroad;
-                hard.transform.localPosition = vecabroad;
-                B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
-                a = 1;
-                break;
-            case 0:
+            case "easy":
                 easy.transform.localPosition = vecxy;
                 medium.transform.localPosition = vecabroad;
                 hard.transform.localPosition = vecabroad;
                 B_LeftLvl.transform.localPosition = new Vector2(615, 405); 
-                B_RightLvl.transform.localPosition = new Vector2(200, 405);  
-                a = 1; break;
-            case 1:
+                B_RightLvl.transform.localPosition = new Vector2(325, 405);
+                lvl = "medium"; break;
+            case "medium":
                 medium.transform.localPosition = vecxy;
                 easy.transform.localPosition = vecabroad;
                 hard.transform.localPosition = vecabroad; 
                 B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
-                a = 2; break;
-            case 2:
+                lvl = "hard"; break;
+            case "hard":
                 hard.transform.localPosition = vecxy;
                 medium.transform.localPosition = vecabroad;
                 easy.transform.localPosition = vecabroad;
                 B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
                 B_RightLvl.transform.localPosition = new Vector2(610, 405);
-                a = 1;
+                lvl = "medium";
                 break;
         } 
     }
@@ -63,39 +61,113 @@ public class Touch : MonoBehaviour
         GameObject easy = GameObject.Find("T_Easy");
         GameObject medium = GameObject.Find("T_Medium");
         GameObject hard = GameObject.Find("T_Hard");
-
-        switch (a)
-        {
-            //case -2:
-            //    hard.transform.localPosition = new Vector2(146, 405);
-            //    easy.transform.localPosition = new Vector2(600, 300);
-            //    medium.transform.localPosition = new Vector2(600, 400);
-            //    B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
-            //    a = 2;
-            //    break;
-            case 0:
+       
+        switch (lvl)
+        { 
+            case "easy":
                 easy.transform.localPosition = new Vector2(146, 405);
                 medium.transform.localPosition = new Vector2(600, 300);
                 hard.transform.localPosition = new Vector2(600, 400);
                 B_LeftLvl.transform.localPosition = new Vector2(630, 405);
-                a = 1;
+                lvl = "medium";
                 break;
-            case 1:
+            case "medium":
                 medium.transform.localPosition = new Vector2(146, 405);
                 easy.transform.localPosition = new Vector2(600, 300);
                 hard.transform.localPosition = new Vector2(600, 400);
                 B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
-                B_RightLvl.transform.localPosition = new Vector2(160, 405); 
-                a = 0; break;
-            case 2:
-                hard.transform.localPosition = new Vector2(146, 405);
+                B_RightLvl.transform.localPosition = new Vector2(325, 405);
+                lvl = "easy"; break;
+            case "hard":
+                easy.transform.localPosition = new Vector2(146, 405);
                 medium.transform.localPosition = new Vector2(600, 300);
-                easy.transform.localPosition = new Vector2(600, 400);
-                B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
-                B_RightLvl.transform.localPosition = new Vector2(650, 405);
-                a = 1; break;
+                hard.transform.localPosition = new Vector2(600, 400);
+                B_LeftLvl.transform.localPosition = new Vector2(630, 405);
+                lvl = "medium";
+                break; 
         }
-    }  
+    }
+    public void ChooseVersionR()
+    {
+        GameObject B_LeftVersion = GameObject.Find("B_LeftVersion");
+        GameObject B_RightVersion = GameObject.Find("B_RightVersion");
+
+        GameObject classic = GameObject.Find("T_ClassicVersion");
+        GameObject goat = GameObject.Find("T_GoatVersion");
+        if (versionfirst == true)
+        {
+            lvl = "goat";
+            versionfirst = false;
+        }
+        switch (version)
+        {
+            case "classic":
+                B_LeftVersion.transform.localPosition = new Vector2(700, 580);
+                B_RightVersion.transform.localPosition = new Vector2(325, 250);
+                classic.transform.localPosition = new Vector2(146, 250);
+                goat.transform.localPosition = new Vector2(720, 405);
+                version = "goat";
+                break; 
+            case "goat":
+                B_RightVersion.transform.localPosition = new Vector2(700, 580);
+                B_LeftVersion.transform.localPosition = new Vector2(-36, 250);
+                goat.transform.localPosition = new Vector2(146, 250);
+                classic.transform.localPosition = new Vector2(720, 405);
+                version = "classic";
+                break;
+        }
+    } 
+    public void ChooseMaxPoints()
+    {
+        GameObject B_LeftPoint = GameObject.Find("B_LeftPoint");
+        GameObject B_RightPoint = GameObject.Find("B_RightPoint");
+
+        GameObject T_100 = GameObject.Find("T_100");
+        GameObject B_Set = GameObject.Find("B_Set");
+
+        if (pointfirst == true)
+        {
+            lvl = "set";
+            pointfirst = false;
+        }
+        switch (point)
+        {
+            case "100":
+                B_LeftPoint.transform.localPosition = new Vector2(700, 580);
+                B_RightPoint.transform.localPosition = new Vector2(325, 90);
+                T_100.transform.localPosition = new Vector2(146, 90);
+                B_Set.transform.localPosition = new Vector2(720, 405);
+                point = "set";
+                break;
+            case "set":
+                B_RightPoint.transform.localPosition = new Vector2(700, 580);
+                B_LeftPoint.transform.localPosition = new Vector2(-36, 90);
+                B_Set.transform.localPosition = new Vector2(146, 90);
+                T_100.transform.localPosition = new Vector2(720, 405);
+                point = "100";
+                break;
+        } 
+    }
+    public void Create()
+    {
+        LogicComp.difficutlylvl = "easy";
+        //switch(lvl)
+        //{
+        //    case "easy": LogicComp.difficutlylvl = "easy"; break;
+        //    case "medium": LogicComp.difficutlylvl = "medium"; break;
+        //    case "hard": LogicComp.difficutlylvl = "hard"; break;
+        //}
+        //switch (version)
+        //{
+        //    case "classic": LogicComp.difficutlylvl = version; break;
+        //    case "goat": LogicComp.difficutlylvl = version; break; 
+        //}
+        //switch (point)
+        //{
+        //    case "100": LogicComp.difficutlylvl = point; break;
+        //    case "set": LogicComp.difficutlylvl = point; break; 
+        //} 
+    }
     public void QuitOnscene()
     {
         SceneManager.LoadScene(0);

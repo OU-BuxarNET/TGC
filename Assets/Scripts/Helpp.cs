@@ -9,8 +9,7 @@ public class Helpp : MonoBehaviour
     static GameObject[] But;
     private int b = 0;
     private int j;
-    Game game;
-    float x = 50 , y = 50;
+    Game game; 
     public static string play = "comp";
     //Animation RuttleBones = new Animation();   
   
@@ -86,7 +85,7 @@ public class Helpp : MonoBehaviour
     float GameMinutes = 0;
     private void Update()
     {
-        GameObject gameScene = GameObject.Find("P_Game1");
+        //GameObject gameScene = GameObject.Find("P_Game1");
         //RuttleBones.Play(); 
         GameObject timetext = GameObject.Find("T_Time");
         GameSeconds += Time.deltaTime;
@@ -185,30 +184,9 @@ public class Helpp : MonoBehaviour
         for (int i = 0; i < But.Length; i++)
             Destroy(But[i]);
         ButHandPlayer();
-        for (int i = 0; i < Board.Hand.Count; i++)
-        {
-            if (x <= 60)
-            {
-               Debug.Log(x);
-            }
-            else
-            {
-                But[i].transform.localScale = new Vector2(x, y);
-            }
-        }
-        x -= 20;
-        y -= 20;
-    }
-    public void Easy()
-    {
-       LogicComp.difficutlylvl = "easy";
-    }
-    public void Medium()
-    {
-        LogicComp.difficutlylvl = "medium";
-    }
-    public void Hard()
-    {
-        LogicComp.difficutlylvl = "hard";
+        // шт = (количество домино на руке * размер домино - размер скрола) / размер домино
+        GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
+        int t = (Board.Hand.Count * 100 - 750) / 100;
+        T_RorLDominos.name = (t - 0,5).ToString() ;
     }
 }
