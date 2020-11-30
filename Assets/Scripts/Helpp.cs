@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Helpp : MonoBehaviour
 {
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
-    static GameObject[] But;
+    static GameObject [] But;
     private int b = 0;
     private int j;
     Game game; 
@@ -155,7 +155,7 @@ public class Helpp : MonoBehaviour
         Moving.namespritebutt = null;
     }
     void Pr()
-    {    
+    {
         switch (b)
         {
             case 1:
@@ -186,7 +186,9 @@ public class Helpp : MonoBehaviour
         ButHandPlayer();
         // шт = (количество домино на руке * размер домино - размер скрола) / размер домино
         GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
-        int t = (Board.Hand.Count * 100 - 750) / 100;
-        T_RorLDominos.name = (t - 0,5).ToString() ;
+        GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
+        double t = (Board.Hand.Count * 100 - 750) / 100;
+        I_RorLDominos.transform.localPosition = new Vector2(330,-400);
+        T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
     }
 }
