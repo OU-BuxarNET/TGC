@@ -72,12 +72,16 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
             Game.moving.goPos[27].GetComponent<Image>().color = color;
         }
-        for (int i = 0; i < Game.moving.goPos.Length; i++)
+        else
         {
-            if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.namespritebutt)
+            Game.moving.WhenCube();
+            for (int i = 0; i < Game.moving.goPos.Length; i++)
             {
-                Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-                Game.moving.goPos[i].GetComponent<Image>().color = color;
+                if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.CheckDomino[0].Name)
+                {
+                    Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
+                    Game.moving.goPos[i].GetComponent<Image>().color = color;
+                }
             }
         }
     }
@@ -113,22 +117,24 @@ public class Helpp : MonoBehaviour
         {
             game.MakeMove();
             if (Move.next_move == "player")
-            {
+            { 
                 if (Moving.LorR == false)
                 {
-                    Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                    Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
                     Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
                 }
                 else
                 {
-                    Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                    Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
                 }
                 Board.HandComp.RemoveAt(b - 1);
+                foreach (var i in Moving.bak)
+                    Debug.Log(i);
                 Destroy(But[b - 1]);
                 WayTrue();
                 Move.next_move = "comp";
-                game.MakeMove();
+                //game.MakeMove();
             }
         }
         else Debug.Log("Ничего не выбрано");
@@ -138,44 +144,42 @@ public class Helpp : MonoBehaviour
             game.MakeMove();
             if (Moving.LorR == false)
             {
-                Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
                 Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
             }
             else
             {
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.namespritebutt);
+                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
             }
             Board.HandComp.RemoveAt(LogicComp.kolforCom);
-            Game.moving.WhenCube();
             WayTrue();
             Move.next_move = "player";
         }
-        b = 0;
-        Moving.namespritebutt = null;
+        b = 0; 
     }
     void Pr()
     {
         switch (b)
         {
             case 1:
-                Moving.namespritebutt = But[0].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[0].GetComponent<Image>().sprite.name.ToString())); break;
             case 2:
-                Moving.namespritebutt = But[1].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[1].GetComponent<Image>().sprite.name.ToString())); break;
             case 3:
-                Moving.namespritebutt = But[2].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[2].GetComponent<Image>().sprite.name.ToString())); break;
             case 4:
-                Moving.namespritebutt = But[3].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[3].GetComponent<Image>().sprite.name.ToString())); break;
             case 5:
-                Moving.namespritebutt = But[4].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[4].GetComponent<Image>().sprite.name.ToString())); break;
             case 6:
-                Moving.namespritebutt = But[5].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[5].GetComponent<Image>().sprite.name.ToString())); break;
             case 7:
-                Moving.namespritebutt = But[6].GetComponent<Image>().sprite.name.ToString(); break;
+                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[6].GetComponent<Image>().sprite.name.ToString())); break;
         }
-        if (b > 0)
+        if (Moving.first == true)
         {
-            Game.check.ChooseBone();
+            Game.check.CheckOnCO();
         }
     }
     public void TakeBar()
