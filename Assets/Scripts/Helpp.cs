@@ -7,8 +7,8 @@ public class Helpp : MonoBehaviour
 {
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
     static GameObject [] But;
-    private int b = 0;
-    private int j;
+    private int but ;
+    private static int j;
     Game game; 
     public static string play = "comp";
     //Animation RuttleBones = new Animation();   
@@ -23,8 +23,8 @@ public class Helpp : MonoBehaviour
         {
             game = new Game();
             game.StartGame();
-            ButHandPlayer();
             game.Met();
+            ButHandPlayer(); 
         } 
     }
     void ButHandPlayer()
@@ -37,32 +37,12 @@ public class Helpp : MonoBehaviour
             But[i].transform.SetParent(Parent.transform); //Помещаем кнопку к родителю
             But[i].transform.localPosition = new Vector3(PosX, -10f, 0f); //смещаем кнопки по Х
             j = i + 1;
-            But[i].name = "B" + j.ToString(); // дополняем кнопки нумерацией 
-            But[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.Hand[i]); // присваиваем спрайты кнопкам    
-        }
-        ButD();
-        Butr();
-    }
-    void ButD()
-    {
-        But[0].GetComponent<Button>().onClick.AddListener(() => b = 1);
-        But[1].GetComponent<Button>().onClick.AddListener(() => b = 2);
-        But[2].GetComponent<Button>().onClick.AddListener(() => b = 3);
-        But[3].GetComponent<Button>().onClick.AddListener(() => b = 4);
-        But[4].GetComponent<Button>().onClick.AddListener(() => b = 5);
-        But[5].GetComponent<Button>().onClick.AddListener(() => b = 6);
-        But[6].GetComponent<Button>().onClick.AddListener(() => b = 7);
-    }
-    void Butr()
-    {
-        But[0].GetComponent<Button>().onClick.AddListener(() => Pr());
-        But[1].GetComponent<Button>().onClick.AddListener(() => Pr());
-        But[2].GetComponent<Button>().onClick.AddListener(() => Pr());
-        But[3].GetComponent<Button>().onClick.AddListener(() => Pr());
-        But[4].GetComponent<Button>().onClick.AddListener(() => Pr());
-        But[5].GetComponent<Button>().onClick.AddListener(() => Pr());
-        But[6].GetComponent<Button>().onClick.AddListener(() => Pr());
-    }
+            But[i].name = j.ToString(); // дополняем кнопки нумерацией 
+            But[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.Hand[i]); // присваиваем спрайты кнопкам  
+            int j2 = j;
+            But[i].GetComponent<Button>().onClick.AddListener(() => Pr(j2));
+        }  
+    }  
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
@@ -88,7 +68,7 @@ public class Helpp : MonoBehaviour
     float GameSeconds = 0;
     float GameMinutes = 0;
     private void Update()
-    {
+    { 
         //GameObject gameScene = GameObject.Find("P_Game1");
         //RuttleBones.Play(); 
         GameObject timetext = GameObject.Find("T_Time");
@@ -113,7 +93,7 @@ public class Helpp : MonoBehaviour
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
         Game.moving.PosGoHand();
-        if (b > 0)
+        if (but > 0)
         {
             game.MakeMove();
             if (Move.next_move == "player")
@@ -128,13 +108,10 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
                 }
-                Board.HandComp.RemoveAt(b - 1);
-                foreach (var i in Moving.bak)
-                    Debug.Log(i);
-                Destroy(But[b - 1]);
+                Board.Hand.RemoveAt(but - 1); 
+                Destroy(But[but - 1]);
                 WayTrue();
-                Move.next_move = "comp";
-                //game.MakeMove();
+                Move.next_move = "comp"; 
             }
         }
         else Debug.Log("Ничего не выбрано");
@@ -155,28 +132,13 @@ public class Helpp : MonoBehaviour
             Board.HandComp.RemoveAt(LogicComp.kolforCom);
             WayTrue();
             Move.next_move = "player";
-        }
-        b = 0; 
+            but = 0;
+        } 
     }
-    void Pr()
+    void Pr(int b)
     {
-        switch (b)
-        {
-            case 1:
-                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[0].GetComponent<Image>().sprite.name.ToString())); break;
-            case 2:
-                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[1].GetComponent<Image>().sprite.name.ToString())); break;
-            case 3:
-                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[2].GetComponent<Image>().sprite.name.ToString())); break;
-            case 4:
-                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[3].GetComponent<Image>().sprite.name.ToString())); break;
-            case 5:
-                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[4].GetComponent<Image>().sprite.name.ToString())); break;
-            case 6:
-                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[5].GetComponent<Image>().sprite.name.ToString())); break;
-            case 7:
-                Moving.CheckDomino.Insert(0, new Domino1.Domino(But[6].GetComponent<Image>().sprite.name.ToString())); break;
-        }
+        but = b;  
+        Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but - 1].GetComponent<Image>().sprite.name.ToString())); 
         if (Moving.first == true)
         {
             Game.check.CheckOnCO();
@@ -194,5 +156,15 @@ public class Helpp : MonoBehaviour
         double t = (Board.Hand.Count * 100 - 750) / 100;
         I_RorLDominos.transform.localPosition = new Vector2(330,-400);
         T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
+    }
+    public void EndGame()
+    {
+        game.EndGame();
+        for (int i = 0; i < Game.moving.goPos.Length; i++)
+        {
+            Game.moving.goPos[i].GetComponent<Image>().sprite.name = "UIMask";
+        }
+        for (int i = 0; i < But.Length; i++)
+            Destroy(But[i]);
     }
 }
