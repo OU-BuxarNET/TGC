@@ -22,8 +22,7 @@ public class Helpp : MonoBehaviour
         else
         {
             game = new Game();
-            game.StartGame();
-            game.Met();
+            game.StartGame(); 
             ButHandPlayer(); 
         } 
     }
@@ -36,8 +35,8 @@ public class Helpp : MonoBehaviour
             But[i] = Instantiate(Resources.Load("Button", typeof(GameObject)), transform, false) as GameObject; //загружаем копию префаба из ресурсов
             But[i].transform.SetParent(Parent.transform); //Помещаем кнопку к родителю
             But[i].transform.localPosition = new Vector3(PosX, -10f, 0f); //смещаем кнопки по Х
-            j = i + 1;
-            But[i].name = j.ToString(); // дополняем кнопки нумерацией 
+            j = i;
+            But[i].name = "B" + (j+1).ToString(); // дополняем кнопки нумерацией 
             But[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.Hand[i]); // присваиваем спрайты кнопкам  
             int j2 = j;
             But[i].GetComponent<Button>().onClick.AddListener(() => Pr(j2));
@@ -93,11 +92,11 @@ public class Helpp : MonoBehaviour
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
         Game.moving.PosGoHand();
-        if (but > 0)
+        if (Move.next_move == "player")
         {
-            game.MakeMove();
-            if (Move.next_move == "player")
-            { 
+            if (but >= 0)
+            {
+            game.MakeMove(); 
                 if (Moving.LorR == false)
                 {
                     Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
@@ -108,14 +107,13 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
                 }
-                Board.Hand.RemoveAt(but - 1); 
-                Destroy(But[but - 1]);
+                Board.Hand.RemoveAt(but);
+                Destroy(But[but]);
                 WayTrue();
                 Move.next_move = "comp"; 
             }
-        }
-        else Debug.Log("Ничего не выбрано");
-
+            else Debug.Log("Ничего не выбрано");
+        } 
         if (Move.next_move == "comp")
         {
             game.MakeMove();
@@ -131,16 +129,20 @@ public class Helpp : MonoBehaviour
             }
             Board.HandComp.RemoveAt(LogicComp.kolforCom);
             WayTrue();
-            Move.next_move = "player";
-            but = 0;
-        } 
+            Move.next_move = "player"; 
+        }
+        but = 0;
+        foreach (var t in Moving.bak)
+            Debug.Log(t);
     }
     void Pr(int b)
     {
+        Debug.Log("PR");
         but = b;  
-        Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but - 1].GetComponent<Image>().sprite.name.ToString())); 
+        Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but].GetComponent<Image>().sprite.name.ToString())); 
         if (Moving.first == true)
         {
+            Moving.bak.Add(Moving.CheckDomino[0]);
             Game.check.CheckOnCO();
         }
     }
