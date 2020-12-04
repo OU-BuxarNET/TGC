@@ -107,8 +107,12 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
                 }
-                Board.Hand.RemoveAt(but);
-                Destroy(But[but]);
+                for (int i = 0; i < But.Length; i++)
+                    Destroy(But[i]);
+                Debug.Log(Board.Hand.Count);
+                Board.Hand.Remove(Moving.CheckDomino[0]);
+                Debug.Log(Board.Hand.Count);
+                ButHandPlayer();
                 WayTrue();
                 Move.next_move = "comp"; 
             }
@@ -155,9 +159,12 @@ public class Helpp : MonoBehaviour
         // шт = (количество домино на руке * размер домино - размер скрола) / размер домино
         GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
         GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
-        double t = (Board.Hand.Count * 100 - 750) / 100;
-        I_RorLDominos.transform.localPosition = new Vector2(330,-400);
-        T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
+        if (But.Length > 7)
+        {
+            double t = (Board.Hand.Count * 100 - 750) / 100;
+            I_RorLDominos.transform.localPosition = new Vector2(330, -400);
+            T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
+        } 
     }
     public void EndGame()
     {
