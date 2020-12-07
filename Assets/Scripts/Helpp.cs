@@ -7,7 +7,7 @@ public class Helpp : MonoBehaviour
 {
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
     static GameObject [] But;
-    private int but ;
+    private int but;
     private static int j;
     Game game; 
     public static string play = "comp";
@@ -110,7 +110,7 @@ public class Helpp : MonoBehaviour
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
                 Debug.Log(Board.Hand.Count);
-                Board.Hand.Remove(Moving.CheckDomino[0]);
+                Board.Hand.RemoveAt(but);
                 Debug.Log(Board.Hand.Count);
                 ButHandPlayer();
                 WayTrue();
@@ -136,8 +136,7 @@ public class Helpp : MonoBehaviour
             Move.next_move = "player"; 
         }
         but = 0;
-        foreach (var t in Moving.bak)
-            Debug.Log(t);
+            //Debug.Log(Check.zF + " false, " + Check.zT + " true");
     }
     void Pr(int b)
     {
