@@ -11,6 +11,7 @@ public class Helpp : MonoBehaviour
     private static int j;
     Game game; 
     public static string play = "comp";
+    public Transform Game1;
     //Animation RuttleBones = new Animation();   
   
     public void Start() // сделать ход
@@ -86,7 +87,25 @@ public class Helpp : MonoBehaviour
         {
             if (Move.next_move == "comp")
                 Move1();
+        } 
+        if (But.Length <= 7)
+        {
+            GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
+            GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
+            I_RorLDominos.transform.localPosition = new Vector2(830, -400);
+            T_RorLDominos.GetComponent<Text>().text = 0.ToString();
         }
+        if (Board.Hand.Count == 0 || Board.HandComp.Count == 0)
+        {
+            if (Game.statistic.CountZero() == true)
+            {
+                GameObject P_EndOfRound = GameObject.Find("P_EndOfRound");
+                Game.statistic.FindEndOfRound();
+                P_EndOfRound.transform.SetParent(Game1);
+            }
+        }
+        //if (Game.statistic.MaxCount() == true)
+        //    Game.statistic.FindEndOfRound();
     }
     public void Move1()
     {
@@ -96,7 +115,7 @@ public class Helpp : MonoBehaviour
         {
             if (but >= 0)
             {
-            game.MakeMove(); 
+                game.MakeMove(); 
                 if (Moving.LorR == false)
                 {
                     Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
@@ -108,16 +127,15 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
                 }
                 for (int i = 0; i < But.Length; i++)
-                    Destroy(But[i]);
-                Debug.Log(Board.Hand.Count);
-                Board.Hand.RemoveAt(but);
-                Debug.Log(Board.Hand.Count);
+                    Destroy(But[i]); 
+                Board.Hand.RemoveAt(but); 
                 ButHandPlayer();
                 WayTrue();
                 Move.next_move = "comp"; 
             }
             else Debug.Log("Ничего не выбрано");
         } 
+
         if (Move.next_move == "comp")
         {
             game.MakeMove();
@@ -136,18 +154,22 @@ public class Helpp : MonoBehaviour
             Move.next_move = "player"; 
         }
         but = 0;
-            //Debug.Log(Check.zF + " false, " + Check.zT + " true");
+            //Debug.Log(Board.Hand.Count + " ");
     }
     void Pr(int b)
-    {
-        Debug.Log("PR");
+    { 
         but = b;  
         Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but].GetComponent<Image>().sprite.name.ToString())); 
-        if (Moving.first == true)
+        if (Moving.first == true )
         {
-            Moving.bak.Add(Moving.CheckDomino[0]);
-            Game.check.CheckOnCO();
+            Moving.bak.Add(Moving.CheckDomino[0]); 
+            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail)
+            { 
+                Game.check.CheckOnCO();
+            }
+            else Debug.Log("Дребезжение");
         }
+        else Moving.bak.Add(Moving.CheckDomino[0]);
     }
     public void TakeBar()
     {
