@@ -12,8 +12,8 @@ public class Helpp : MonoBehaviour
     Game game; 
     public static string play = "comp";
     public Transform Game1;
-    //Animation RuttleBones = new Animation();   
-  
+    //public Animation RuttleBones = new Animation();
+
     public void Start() // сделать ход
     { 
         if (LogicComp.difficutlylvl != "easy")
@@ -57,7 +57,7 @@ public class Helpp : MonoBehaviour
             Game.moving.WhenCube();
             for (int i = 0; i < Game.moving.goPos.Length; i++)
             {
-                if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.CheckDomino[0].Name)
+                if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true /*&& Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.CheckDomino[0].Name*/)
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
                     Game.moving.goPos[i].GetComponent<Image>().color = color;
@@ -67,10 +67,9 @@ public class Helpp : MonoBehaviour
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
+    int a = 1;
     private void Update()
-    { 
-        //GameObject gameScene = GameObject.Find("P_Game1");
-        //RuttleBones.Play(); 
+    {  
         GameObject timetext = GameObject.Find("T_Time");
         GameSeconds += Time.deltaTime;
         timetext.GetComponent<Text>().text = (Math.Round(GameMinutes, 0) + ":" + Math.Round(GameSeconds, 0)).ToString();
@@ -81,7 +80,11 @@ public class Helpp : MonoBehaviour
         }
         if (Moving.first == false && Move.next_move == "player")
         {
-            Game.moving.ChangePos();
+            if (Game.moving.ChangePos() == false)
+            {
+                //RuttleBones.Play();
+            }
+            else SpriteDomino();
         }
         else
         {
@@ -96,9 +99,10 @@ public class Helpp : MonoBehaviour
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
         }
         if (Board.Hand.Count == 0 || Board.HandComp.Count == 0)
-        {
-            if (Game.statistic.CountZero() == true)
+        { 
+            if (a == 1 && Game.statistic.CountZero() == true)
             {
+                a = 0;
                 GameObject P_EndOfRound = GameObject.Find("P_EndOfRound");
                 Game.statistic.FindEndOfRound();
                 P_EndOfRound.transform.SetParent(Game1);
@@ -109,23 +113,14 @@ public class Helpp : MonoBehaviour
     }
     public void Move1()
     {
-        Color color = new Color(1f, 1f, 1f, 0.7f);
+        
         Game.moving.PosGoHand();
         if (Move.next_move == "player")
         {
             if (but >= 0)
             {
-                game.MakeMove(); 
-                if (Moving.LorR == false)
-                {
-                    Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
-                    Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
-                }
-                else
-                {
-                    Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
-                    Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-                }
+                game.MakeMove();
+                SpriteDomino();
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]); 
                 Board.Hand.RemoveAt(but); 
@@ -139,37 +134,40 @@ public class Helpp : MonoBehaviour
         if (Move.next_move == "comp")
         {
             game.MakeMove();
-            if (Moving.LorR == false)
-            {
-                Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
-                Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
-            }
-            else
-            {
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-            }
+            SpriteDomino();
             Board.HandComp.RemoveAt(LogicComp.kolforCom);
             WayTrue();
             Move.next_move = "player"; 
         }
-        but = 0;
-            //Debug.Log(Board.Hand.Count + " ");
+        but = -1; 
+        Debug.Log(Board.Hand.Count + " комп");
+    }
+    void SpriteDomino()
+    {
+        Color color = new Color(1f, 1f, 1f, 0.7f);
+        if (Moving.LorR == false)
+        {
+            Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
+            Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
+        }
+        else
+        {
+            Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
+            Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
+        }
     }
     void Pr(int b)
     { 
         but = b;  
         Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but].GetComponent<Image>().sprite.name.ToString())); 
-        if (Moving.first == true )
-        {
-            Moving.bak.Add(Moving.CheckDomino[0]); 
-            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail)
-            { 
-                Game.check.CheckOnCO();
+        if (Moving.first == true)
+        { 
+            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0)
+            {
+                Moving.bak.Add(Moving.CheckDomino[0]); 
             }
             else Debug.Log("Дребезжение");
-        }
-        else Moving.bak.Add(Moving.CheckDomino[0]);
+        } 
     }
     public void TakeBar()
     {
@@ -189,10 +187,12 @@ public class Helpp : MonoBehaviour
     }
     public void EndGame()
     {
+        Color color = new Color(0,0,0,0);
         game.EndGame();
         for (int i = 0; i < Game.moving.goPos.Length; i++)
         {
-            Game.moving.goPos[i].GetComponent<Image>().sprite.name = "UIMask";
+            Game.moving.goPos[i].GetComponent<Image>().sprite = null;
+            Game.moving.goPos[i].GetComponent<Image>().color = color;
         }
         for (int i = 0; i < But.Length; i++)
             Destroy(But[i]);
