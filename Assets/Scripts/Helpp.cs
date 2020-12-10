@@ -12,10 +12,12 @@ public class Helpp : MonoBehaviour
     Game game; 
     public static string play = "comp";
     public Transform Game1;
+    GameObject P_EndOfRound;
     //public Animation RuttleBones = new Animation();
 
     public void Start() // сделать ход
-    { 
+    {
+        P_EndOfRound = GameObject.Find("P_EndOfRound");
         if (LogicComp.difficutlylvl != "easy")
         {
             Debug.Log(LogicComp.difficutlylvl);
@@ -69,28 +71,35 @@ public class Helpp : MonoBehaviour
     float GameMinutes = 0;
     int a = 1;
     private void Update()
-    {  
-        GameObject timetext = GameObject.Find("T_Time");
-        GameSeconds += Time.deltaTime;
-        timetext.GetComponent<Text>().text = (Math.Round(GameMinutes, 0) + ":" + Math.Round(GameSeconds, 0)).ToString();
-        if (GameSeconds > 60.0f)
+    { 
+        Timer();
+        if (P_EndOfRound.transform.parent != Game1)
         {
-            GameMinutes += 1.0f;
-            GameSeconds = 0.0f;
-        }
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = true;
+            }
+            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = false;
+            }
+            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false && Board.bar.Count == 0)
+            {
+                Move.next_move = "comp";
+                Move1();
+            }
+        } 
         if (Moving.first == false && Move.next_move == "player")
         {
-            if (Game.moving.ChangePos() == false)
-            {
-                //RuttleBones.Play();
-            }
-            else SpriteDomino();
+            Game.moving.ChangePos();
         }
         else
         {
             if (Move.next_move == "comp")
                 Move1();
         } 
+
         if (But.Length <= 7)
         {
             GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
@@ -99,21 +108,36 @@ public class Helpp : MonoBehaviour
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
         }
         if (Board.Hand.Count == 0 || Board.HandComp.Count == 0)
-        { 
+        {
             if (a == 1 && Game.statistic.CountZero() == true)
             {
-                a = 0;
-                GameObject P_EndOfRound = GameObject.Find("P_EndOfRound");
-                Game.statistic.FindEndOfRound();
-                P_EndOfRound.transform.SetParent(Game1);
+                if (Game.statistic.MaxCount() == true)
+                {
+
+                }
+                else
+                {
+                    a = 0;
+                    
+                    Game.statistic.FindEndOfRound();
+                    P_EndOfRound.transform.SetParent(Game1);
+                } 
             }
         }
-        //if (Game.statistic.MaxCount() == true)
-        //    Game.statistic.FindEndOfRound();
+    }
+    void Timer()
+    {
+        GameObject timetext = GameObject.Find("T_Time");
+        GameSeconds += Time.deltaTime;
+        timetext.GetComponent<Text>().text = (Math.Round(GameMinutes, 0) + ":" + Math.Round(GameSeconds, 0)).ToString();
+        if (GameSeconds > 60.0f)
+        {
+            GameMinutes += 1.0f;
+            GameSeconds = 0.0f;
+        }
     }
     public void Move1()
-    {
-        
+    { 
         Game.moving.PosGoHand();
         if (Move.next_move == "player")
         {
@@ -129,21 +153,22 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "comp"; 
             }
             else Debug.Log("Ничего не выбрано");
-        } 
-
-        if (Move.next_move == "comp")
-        {
-            game.MakeMove();
-            SpriteDomino();
-            Board.HandComp.RemoveAt(LogicComp.kolforCom);
-            WayTrue();
-            Move.next_move = "player"; 
         }
-        but = -1; 
-        Debug.Log(Board.Hand.Count + " комп");
+        if (P_EndOfRound.transform.parent != Game1)
+        {
+            if (Move.next_move == "comp")
+            {
+                game.MakeMove();
+                SpriteDomino();
+                Board.HandComp.RemoveAt(LogicComp.kolforCom);
+                WayTrue();
+                Move.next_move = "player";
+            }
+            but = -1;
+        } 
     }
     void SpriteDomino()
-    {
+    { 
         Color color = new Color(1f, 1f, 1f, 0.7f);
         if (Moving.LorR == false)
         {
@@ -159,7 +184,8 @@ public class Helpp : MonoBehaviour
     void Pr(int b)
     { 
         but = b;  
-        Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but].GetComponent<Image>().sprite.name.ToString())); 
+        Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
+        
         if (Moving.first == true)
         { 
             if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0)
@@ -168,6 +194,8 @@ public class Helpp : MonoBehaviour
             }
             else Debug.Log("Дребезжение");
         } 
+        foreach (var i in Moving.bak)
+            Debug.Log(i);
     }
     public void TakeBar()
     {
@@ -187,6 +215,7 @@ public class Helpp : MonoBehaviour
     }
     public void EndGame()
     {
+        Debug.Log(Move.next_move);
         Color color = new Color(0,0,0,0);
         game.EndGame();
         for (int i = 0; i < Game.moving.goPos.Length; i++)
