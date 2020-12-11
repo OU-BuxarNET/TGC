@@ -26,7 +26,7 @@ public class Helpp : MonoBehaviour
         {
             game = new Game();
             game.StartGame(); 
-            ButHandPlayer(); 
+            ButHandPlayer();
         } 
     }
     void ButHandPlayer()
@@ -73,23 +73,25 @@ public class Helpp : MonoBehaviour
     private void Update()
     { 
         Timer();
-        if (P_EndOfRound.transform.parent != Game1)
-        {
-            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = true;
-            }
-            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = false;
-            }
-            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false && Board.bar.Count == 0)
-            {
-                Move.next_move = "comp";
-                Move1();
-            }
-        } 
+
+        //if (P_EndOfRound.transform.parent != Game1 && Move.next_move == "player")
+        //{
+        //    GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+        //    if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
+        //    {
+        //        B_TakeBar.GetComponent<Button>().interactable = true;
+        //    }
+        //    else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
+        //    {
+        //        B_TakeBar.GetComponent<Button>().interactable = false;
+        //    }
+        //    else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false && Board.bar.Count == 0)
+        //    {
+        //        Move.next_move = "comp";
+        //        Move1();
+        //    }
+        //}
+
         if (Moving.first == false && Move.next_move == "player")
         {
             Game.moving.ChangePos();
@@ -117,10 +119,9 @@ public class Helpp : MonoBehaviour
                 }
                 else
                 {
-                    a = 0;
-                    
+                    a = 0; 
                     Game.statistic.FindEndOfRound();
-                    P_EndOfRound.transform.SetParent(Game1);
+                    P_EndOfRound.transform.localPosition = new Vector3(0, 0, 0);
                 } 
             }
         }
@@ -154,7 +155,7 @@ public class Helpp : MonoBehaviour
             }
             else Debug.Log("Ничего не выбрано");
         }
-        if (P_EndOfRound.transform.parent != Game1)
+        if (P_EndOfRound.transform.localPosition != new Vector3(0,0,0))
         {
             if (Move.next_move == "comp")
             {
@@ -194,8 +195,6 @@ public class Helpp : MonoBehaviour
             }
             else Debug.Log("Дребезжение");
         } 
-        foreach (var i in Moving.bak)
-            Debug.Log(i);
     }
     public void TakeBar()
     {
@@ -225,5 +224,10 @@ public class Helpp : MonoBehaviour
         }
         for (int i = 0; i < But.Length; i++)
             Destroy(But[i]);
+    }
+    public void Trans()
+    {
+        a = 1;
+        P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0); 
     }
 }
