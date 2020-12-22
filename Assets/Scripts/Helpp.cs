@@ -74,23 +74,18 @@ public class Helpp : MonoBehaviour
     { 
         Timer();
 
-        //if (P_EndOfRound.transform.parent != Game1 && Move.next_move == "player")
-        //{
-        //    GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-        //    if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
-        //    {
-        //        B_TakeBar.GetComponent<Button>().interactable = true;
-        //    }
-        //    else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
-        //    {
-        //        B_TakeBar.GetComponent<Button>().interactable = false;
-        //    }
-        //    else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false && Board.bar.Count == 0)
-        //    {
-        //        Move.next_move = "comp";
-        //        Move1();
-        //    }
-        //}
+        if (P_EndOfRound.transform.parent != Game1 && Move.next_move == "player" && Moving.first == false)
+        {
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = true;
+            }
+            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = false;
+            }
+        }
 
         if (Moving.first == false && Move.next_move == "player")
         {
@@ -150,7 +145,7 @@ public class Helpp : MonoBehaviour
                     Destroy(But[i]); 
                 Board.Hand.RemoveAt(but); 
                 ButHandPlayer();
-                WayTrue();
+                WayTrue(); 
                 Move.next_move = "comp"; 
             }
             else Debug.Log("Ничего не выбрано");
@@ -162,7 +157,7 @@ public class Helpp : MonoBehaviour
                 game.MakeMove();
                 SpriteDomino();
                 Board.HandComp.RemoveAt(LogicComp.kolforCom);
-                WayTrue();
+                WayTrue(); 
                 Move.next_move = "player";
             }
             but = -1;
@@ -198,7 +193,12 @@ public class Helpp : MonoBehaviour
     }
     public void TakeBar()
     {
-        Game.board.TakeBar(true);
+        Game.board.TakeBar(true); 
+        Moving.bak.Remove(Moving.CheckDomino[1]);
+        if (Board.bar.Count == 0)
+        { 
+            Move1();
+        }
         for (int i = 0; i < But.Length; i++)
             Destroy(But[i]);
         ButHandPlayer();
@@ -214,7 +214,6 @@ public class Helpp : MonoBehaviour
     }
     public void EndGame()
     {
-        Debug.Log(Move.next_move);
         Color color = new Color(0,0,0,0);
         game.EndGame();
         for (int i = 0; i < Game.moving.goPos.Length; i++)
