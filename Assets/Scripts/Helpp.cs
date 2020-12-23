@@ -15,6 +15,17 @@ public class Helpp : MonoBehaviour
     GameObject P_EndOfRound;
     //public Animation RuttleBones = new Animation();
 
+    void AminPlay()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            for(int i = 0; i < But.Length; i++)
+            {
+                var anim = But[i].GetComponent<Animation>();
+                anim.Play("RattleButtons");
+            } 
+        }
+    }
     public void Start() // сделать ход
     {
         P_EndOfRound = GameObject.Find("P_EndOfRound");
@@ -27,6 +38,8 @@ public class Helpp : MonoBehaviour
             game = new Game();
             game.StartGame(); 
             ButHandPlayer();
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+            B_TakeBar.GetComponent<Button>().interactable = false;
         } 
     }
     void ButHandPlayer()
@@ -73,20 +86,7 @@ public class Helpp : MonoBehaviour
     private void Update()
     { 
         Timer();
-
-        if (P_EndOfRound.transform.parent != Game1 && Move.next_move == "player" && Moving.first == false)
-        {
-            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = true;
-            }
-            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = false;
-            }
-        }
-
+        AminPlay();
         if (Moving.first == false && Move.next_move == "player")
         {
             Game.moving.ChangePos();
@@ -104,6 +104,10 @@ public class Helpp : MonoBehaviour
             I_RorLDominos.transform.localPosition = new Vector2(830, -400);
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
         }
+        
+    }
+    void EndRound()
+    {
         if (Board.Hand.Count == 0 || Board.HandComp.Count == 0)
         {
             if (a == 1 && Game.statistic.CountZero() == true)
@@ -114,10 +118,25 @@ public class Helpp : MonoBehaviour
                 }
                 else
                 {
-                    a = 0; 
+                    a = 0;
                     Game.statistic.FindEndOfRound();
                     P_EndOfRound.transform.localPosition = new Vector3(0, 0, 0);
-                } 
+                }
+            }
+        }
+    }
+    void ToTake()
+    {
+        if (P_EndOfRound.transform.parent != Game1 && Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
+        {
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = true;
+            }
+            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = false;
             }
         }
     }
@@ -133,7 +152,8 @@ public class Helpp : MonoBehaviour
         }
     }
     public void Move1()
-    { 
+    {
+        
         Game.moving.PosGoHand();
         if (Move.next_move == "player")
         {
@@ -161,7 +181,9 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "player";
             }
             but = -1;
-        } 
+        }
+        ToTake();
+        EndRound(); 
     }
     void SpriteDomino()
     { 
@@ -199,17 +221,21 @@ public class Helpp : MonoBehaviour
         { 
             Move1();
         }
-        for (int i = 0; i < But.Length; i++)
-            Destroy(But[i]);
-        ButHandPlayer();
-        // шт = (количество домино на руке * размер домино - размер скрола) / размер домино
-        GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
-        GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
-        if (But.Length > 7)
+        else
         {
-            double t = (Board.Hand.Count * 100 - 750) / 100;
-            I_RorLDominos.transform.localPosition = new Vector2(330, -400);
-            T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
+            for (int i = 0; i < But.Length; i++)
+                Destroy(But[i]);
+            ButHandPlayer();
+            // шт = (количество домино на руке * размер домино - размер скрола) / размер домино
+            GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
+            GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
+            if (But.Length > 7)
+            {
+                double t = (Board.Hand.Count * 100 - 750) / 100;
+                I_RorLDominos.transform.localPosition = new Vector2(330, -400);
+                T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
+            }
+            ToTake();
         } 
     }
     public void EndGame()
