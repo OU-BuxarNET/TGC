@@ -17,12 +17,10 @@ public class Output_info : MonoBehaviour // вывод данных
         PlayerPrefs.DeleteAll();
         IsActive();
     }
-
     public void QuitApp() // метод выхода из приложения
     {
         Application.Quit();
     }
-
     private void IsActive() // метод проверки какой раз пользователь вошел в игру
     {
         if (PlayerPrefs.GetInt("Entering", 1) == 1)

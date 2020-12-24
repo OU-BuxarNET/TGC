@@ -13,19 +13,7 @@ public class Helpp : MonoBehaviour
     public static string play = "comp";
     public Transform Game1;
     GameObject P_EndOfRound;
-    //public Animation RuttleBones = new Animation();
-
-    void AminPlay()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            for(int i = 0; i < But.Length; i++)
-            {
-                var anim = But[i].GetComponent<Animation>();
-                anim.Play("RattleButtons");
-            } 
-        }
-    }
+    
     public void Start() // сделать ход
     {
         P_EndOfRound = GameObject.Find("P_EndOfRound");
@@ -79,10 +67,7 @@ public class Helpp : MonoBehaviour
                 }
             }
         }
-    }
-    float GameSeconds = 0;
-    float GameMinutes = 0;
-    int a = 1;
+    } 
     private void Update()
     { 
         Timer();
@@ -95,51 +80,17 @@ public class Helpp : MonoBehaviour
         {
             if (Move.next_move == "comp")
                 Move1();
-        } 
-
+        }  
         if (But.Length <= 7)
         {
             GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
             GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
             I_RorLDominos.transform.localPosition = new Vector2(830, -400);
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
-        }
-        
+        } 
     }
-    void EndRound()
-    {
-        if (Board.Hand.Count == 0 || Board.HandComp.Count == 0)
-        {
-            if (a == 1 && Game.statistic.CountZero() == true)
-            {
-                if (Game.statistic.MaxCount() == true)
-                {
-
-                }
-                else
-                {
-                    a = 0;
-                    Game.statistic.FindEndOfRound();
-                    P_EndOfRound.transform.localPosition = new Vector3(0, 0, 0);
-                }
-            }
-        }
-    }
-    void ToTake()
-    {
-        if (P_EndOfRound.transform.parent != Game1 && Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
-        {
-            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = true;
-            }
-            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = false;
-            }
-        }
-    }
+    float GameSeconds = 0;
+    float GameMinutes = 0;
     void Timer()
     {
         GameObject timetext = GameObject.Find("T_Time");
@@ -153,7 +104,6 @@ public class Helpp : MonoBehaviour
     }
     public void Move1()
     {
-        
         Game.moving.PosGoHand();
         if (Move.next_move == "player")
         {
@@ -170,6 +120,7 @@ public class Helpp : MonoBehaviour
             }
             else Debug.Log("Ничего не выбрано");
         }
+
         if (P_EndOfRound.transform.localPosition != new Vector3(0,0,0))
         {
             if (Move.next_move == "comp")
@@ -183,7 +134,22 @@ public class Helpp : MonoBehaviour
             but = -1;
         }
         ToTake();
-        EndRound(); 
+        Game.statistic.EndRound(); 
+    }
+    void ToTake()
+    {
+        if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
+        {
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = true;
+            }
+            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = false;
+            }
+        }
     }
     void SpriteDomino()
     { 
@@ -202,7 +168,7 @@ public class Helpp : MonoBehaviour
     void Pr(int b)
     { 
         but = b;  
-        Moving.CheckDomino.Insert(0, new Domino1.Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
+        Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
         
         if (Moving.first == true)
         { 
@@ -252,7 +218,18 @@ public class Helpp : MonoBehaviour
     }
     public void Trans()
     {
-        a = 1;
+        Statistic.endround = false;
         P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0); 
+    }
+    void AminPlay()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            for (int i = 0; i < But.Length; i++)
+            {
+                var anim = But[i].GetComponent<Animation>();
+                anim.Play("Button");
+            }
+        }
     }
 }

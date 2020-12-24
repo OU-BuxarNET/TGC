@@ -105,10 +105,10 @@ public class LC : MonoBehaviour
         T_gamecount.text = lnggg.T_gamecount;
         T_NExist.text = lnggg.T_NExist;
         T_VarInst.text = lnggg.T_VarInst;
-        T_Checklvl.text = lnggg.T_Checklvl;
-        T_Beginner.text = lnggg.T_Beginner;
-        T_Fan.text = lnggg.T_Fan;
-        T_Pro.text = lnggg.T_Pro; 
+        //T_Checklvl.text = lnggg.T_Checklvl;
+        //T_Beginner.text = lnggg.T_Beginner;
+        //T_Fan.text = lnggg.T_Fan;
+        //T_Pro.text = lnggg.T_Pro; 
         
     }
 }

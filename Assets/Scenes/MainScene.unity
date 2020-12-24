@@ -2261,8 +2261,6 @@ MonoBehaviour:
   T_BttnLang2: {fileID: 117750206}
   T_ChangeLng: {fileID: 1555009849}
   T_Choose:
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 838987877}
   T_Questionlng: {fileID: 454516963}
   T_Yes:
@@ -2276,12 +2274,11 @@ MonoBehaviour:
   T_Agree: {fileID: 4660556323519913078}
   T_Disagree: {fileID: 907366495}
   T_Back:
-  - {fileID: 0}
+  - {fileID: 1167698909}
   - {fileID: 742714140}
   - {fileID: 559971666}
   - {fileID: 1694797665}
   - {fileID: 251829189}
-  - {fileID: 1167698909}
   T_Param:
   - {fileID: 1126877675}
   - {fileID: 967589236}
@@ -3208,7 +3205,7 @@ PrefabInstance:
     - target: {fileID: 2353414093204823400, guid: c9c2fe5abfbe9a9418691ae29f1fb41c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2353414093204823400, guid: c9c2fe5abfbe9a9418691ae29f1fb41c,
         type: 3}
@@ -3224,7 +3221,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 588808942}
     - target: {fileID: 2353414093204823400, guid: c9c2fe5abfbe9a9418691ae29f1fb41c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
