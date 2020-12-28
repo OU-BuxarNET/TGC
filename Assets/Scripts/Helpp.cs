@@ -72,15 +72,18 @@ public class Helpp : MonoBehaviour
     { 
         Timer();
         AminPlay();
-        if (Moving.first == false && Move.next_move == "player")
+        if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
-            Game.moving.ChangePos();
+            if (Moving.first == false && Move.next_move == "player")
+            {
+                Game.moving.ChangePos();
+            }
+            else
+            {
+                if (Move.next_move == "comp")
+                    Move1();
+            }
         }
-        else
-        {
-            if (Move.next_move == "comp")
-                Move1();
-        }  
         if (But.Length <= 7)
         {
             GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
@@ -107,7 +110,7 @@ public class Helpp : MonoBehaviour
         Game.moving.PosGoHand();
         if (Move.next_move == "player")
         {
-            if (but >= 0)
+            if (but >= 0 && Moving.CheckDomino[0] != null)
             {
                 game.MakeMove();
                 SpriteDomino();
