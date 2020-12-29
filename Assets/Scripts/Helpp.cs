@@ -136,14 +136,17 @@ public class Helpp : MonoBehaviour
             }
             but = -1;
         }
+        else 
+            Game.statistic.EndRound(); 
         ToTake();
-        Game.statistic.EndRound(); 
+        Debug.Log(Check.zF + " zF");
+        Debug.Log(Check.zT + " zT");
     }
     void ToTake()
     {
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
         {
-            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar"); 
             if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
             {
                 B_TakeBar.GetComponent<Button>().interactable = true;
