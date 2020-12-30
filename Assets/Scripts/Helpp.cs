@@ -28,6 +28,7 @@ public class Helpp : MonoBehaviour
             ButHandPlayer();
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
             B_TakeBar.GetComponent<Button>().interactable = false;
+            Debug.Log(Board.bar.Count);
         } 
     }
     void ButHandPlayer()
@@ -136,11 +137,9 @@ public class Helpp : MonoBehaviour
             }
             but = -1;
         }
-        else 
-            Game.statistic.EndRound(); 
+        Debug.Log(Board.bar.Count + " bar");
         ToTake();
-        Debug.Log(Check.zF + " zF");
-        Debug.Log(Check.zT + " zT");
+        Game.statistic.EndRound(); 
     }
     void ToTake()
     {
