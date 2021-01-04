@@ -136,8 +136,7 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "player";
             }
             but = -1;
-        }
-        Debug.Log(Board.bar.Count + " bar");
+        } 
         ToTake();
         Game.statistic.EndRound(); 
     }
