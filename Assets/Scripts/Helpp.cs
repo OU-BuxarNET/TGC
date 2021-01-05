@@ -180,7 +180,7 @@ public class Helpp : MonoBehaviour
             {
                 Moving.bak.Add(Moving.CheckDomino[0]); 
             }
-            else Debug.Log("Дребезжение");
+            else Debug.Log("Дребезжание");
         } 
     }
     public void TakeBar()
@@ -188,7 +188,7 @@ public class Helpp : MonoBehaviour
         Game.board.TakeBar(true); 
         Moving.bak.Remove(Moving.CheckDomino[1]);
         if (Board.bar.Count == 0)
-        { 
+        {
             Move1();
         }
         else
@@ -206,7 +206,7 @@ public class Helpp : MonoBehaviour
                 T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
             }
             ToTake();
-        } 
+        }
     }
     public void EndGame()
     {
