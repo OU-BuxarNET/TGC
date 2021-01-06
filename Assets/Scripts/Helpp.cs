@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class Helpp : MonoBehaviour
 {
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
-    static GameObject [] But;
-    private int but;
+    static GameObject[] But;
+    private static int but = -1;
     private static int j;
-    Game game; 
+    Game game;
     public static string play = "comp";
     public Transform Game1;
     GameObject P_EndOfRound;
-    
+
     public void Start() // сделать ход
     {
         P_EndOfRound = GameObject.Find("P_EndOfRound");
@@ -24,12 +24,11 @@ public class Helpp : MonoBehaviour
         else
         {
             game = new Game();
-            game.StartGame(); 
+            game.StartGame();
             ButHandPlayer();
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
             B_TakeBar.GetComponent<Button>().interactable = false;
-            Debug.Log(Board.bar.Count);
-        } 
+        }
     }
     void ButHandPlayer()
     {
@@ -41,12 +40,12 @@ public class Helpp : MonoBehaviour
             But[i].transform.SetParent(Parent.transform); //Помещаем кнопку к родителю
             But[i].transform.localPosition = new Vector3(PosX, -10f, 0f); //смещаем кнопки по Х
             j = i;
-            But[i].name = "B" + (j+1).ToString(); // дополняем кнопки нумерацией 
+            But[i].name = "B" + (j + 1).ToString(); // дополняем кнопки нумерацией 
             But[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Board.Hand[i]); // присваиваем спрайты кнопкам  
             int j2 = j;
             But[i].GetComponent<Button>().onClick.AddListener(() => Pr(j2));
-        }  
-    }  
+        }
+    }
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
@@ -68,16 +67,24 @@ public class Helpp : MonoBehaviour
                 }
             }
         }
-    } 
+    }
     private void Update()
-    { 
+    {
         Timer();
-        AminPlay();
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
-            if (Moving.first == false && Move.next_move == "player")
+            if (Moving.first == false && Move.next_move == "player" && but >= 0)
             {
-                Game.moving.ChangePos();
+                if (Game.moving.ChangePos() == false)
+                {
+                    AminPlay();
+                    Invoke("Anim", 0.12f);
+                }
+                else
+                {
+                    SpriteDomino();
+                    Game.moving.MovePos();
+                }   
             }
             else
             {
@@ -91,7 +98,7 @@ public class Helpp : MonoBehaviour
             GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
             I_RorLDominos.transform.localPosition = new Vector2(830, -400);
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
-        } 
+        }
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
@@ -116,35 +123,36 @@ public class Helpp : MonoBehaviour
                 game.MakeMove();
                 SpriteDomino();
                 for (int i = 0; i < But.Length; i++)
-                    Destroy(But[i]); 
-                Board.Hand.RemoveAt(but); 
+                    Destroy(But[i]);
+                Board.Hand.RemoveAt(but);
                 ButHandPlayer();
-                WayTrue(); 
-                Move.next_move = "comp"; 
+                WayTrue();
+                Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
         }
 
-        if (P_EndOfRound.transform.localPosition != new Vector3(0,0,0))
+        if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Move.next_move == "comp")
             {
                 game.MakeMove();
                 SpriteDomino();
-                Board.HandComp.RemoveAt(LogicComp.kolforCom);
-                WayTrue(); 
+                if (Board.HandComp.Count > 0)
+                    Board.HandComp.RemoveAt(LogicComp.kolforCom);
+                WayTrue();
                 Move.next_move = "player";
             }
             but = -1;
-        } 
+        }
         ToTake();
-        Game.statistic.EndRound(); 
+        Game.statistic.EndRound();
     }
     void ToTake()
     {
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
         {
-            GameObject B_TakeBar = GameObject.Find("B_TakeBar"); 
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
             if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
             {
                 B_TakeBar.GetComponent<Button>().interactable = true;
@@ -156,7 +164,7 @@ public class Helpp : MonoBehaviour
         }
     }
     void SpriteDomino()
-    { 
+    {
         Color color = new Color(1f, 1f, 1f, 0.7f);
         if (Moving.LorR == false)
         {
@@ -170,22 +178,25 @@ public class Helpp : MonoBehaviour
         }
     }
     void Pr(int b)
-    { 
-        but = b;  
-        Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
-        
-        if (Moving.first == true)
-        { 
+    {
+        but = b;
+        Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString())); 
+        if (Moving.CheckDomino[0] != null && Moving.first == true)
+        {
             if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0)
             {
-                Moving.bak.Add(Moving.CheckDomino[0]); 
+                Moving.bak.Add(Moving.CheckDomino[0]);
             }
-            else Debug.Log("Дребезжание");
-        } 
+            else
+            {
+                AminPlay();
+                Invoke("Anim", 0.12f); 
+            }
+        }
     }
     public void TakeBar()
     {
-        Game.board.TakeBar(true); 
+        Game.board.TakeBar(true);
         Moving.bak.Remove(Moving.CheckDomino[1]);
         if (Board.bar.Count == 0)
         {
@@ -210,7 +221,7 @@ public class Helpp : MonoBehaviour
     }
     public void EndGame()
     {
-        Color color = new Color(0,0,0,0);
+        Color color = new Color(0, 0, 0, 0);
         game.EndGame();
         for (int i = 0; i < Game.moving.goPos.Length; i++)
         {
@@ -223,17 +234,20 @@ public class Helpp : MonoBehaviour
     public void Trans()
     {
         Statistic.endround = false;
-        P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0); 
+        P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0);
     }
     void AminPlay()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        for (int i = 0; i < But.Length; i++)
         {
-            for (int i = 0; i < But.Length; i++)
-            {
-                var anim = But[i].GetComponent<Animation>();
-                anim.Play("Button");
-            }
-        }
+            But[i].transform.rotation = Quaternion.Euler(0, 0, 10); 
+        } 
     }
+    void Anim()
+    {
+        for (int i = 0; i < But.Length; i++)
+        {
+            But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    } 
 }
