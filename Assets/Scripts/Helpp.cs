@@ -17,10 +17,8 @@ public class Helpp : MonoBehaviour
     public void Start() // сделать ход
     {
         P_EndOfRound = GameObject.Find("P_EndOfRound");
-        if (LogicComp.difficutlylvl != "easy")
-        {
-            Debug.Log(LogicComp.difficutlylvl);
-        }
+        if (LogicComp.difficutlylvl != "easy") 
+            Debug.Log(LogicComp.difficutlylvl); 
         else
         {
             game = new Game();
@@ -78,7 +76,7 @@ public class Helpp : MonoBehaviour
                 if (Game.moving.ChangePos() == false)
                 {
                     AminPlay();
-                    Invoke("Anim", 0.12f);
+                    Invoke("Anim", 0.12f); 
                 }
                 else
                 {
@@ -125,13 +123,12 @@ public class Helpp : MonoBehaviour
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
                 Board.Hand.RemoveAt(but);
-                ButHandPlayer();
-                WayTrue();
+                ButHandPlayer(); 
                 Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
         }
-
+        WayTrue();
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Move.next_move == "comp")
@@ -153,14 +150,12 @@ public class Helpp : MonoBehaviour
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
         {
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = true;
-            }
-            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true)
-            {
-                B_TakeBar.GetComponent<Button>().interactable = false;
-            }
+
+            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false) 
+                B_TakeBar.GetComponent<Button>().interactable = true; 
+
+            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true) 
+                B_TakeBar.GetComponent<Button>().interactable = false; 
         }
     }
     void SpriteDomino()
@@ -180,13 +175,13 @@ public class Helpp : MonoBehaviour
     void Pr(int b)
     {
         but = b;
+        //if (Moving.CheckDomino[0].ToString() != But[but].GetComponent<Image>().sprite.name.ToString())
         Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString())); 
+
         if (Moving.CheckDomino[0] != null && Moving.first == true)
         {
-            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0)
-            {
-                Moving.bak.Add(Moving.CheckDomino[0]);
-            }
+            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0) 
+                Moving.bak.Add(Moving.CheckDomino[0]); 
             else
             {
                 AminPlay();
@@ -198,10 +193,8 @@ public class Helpp : MonoBehaviour
     {
         Game.board.TakeBar(true);
         Moving.bak.Remove(Moving.CheckDomino[1]);
-        if (Board.bar.Count == 0)
-        {
-            Move1();
-        }
+        if (Board.bar.Count == 0) 
+            Move1(); 
         else
         {
             for (int i = 0; i < But.Length; i++)
@@ -238,16 +231,12 @@ public class Helpp : MonoBehaviour
     }
     void AminPlay()
     {
-        for (int i = 0; i < But.Length; i++)
-        {
-            But[i].transform.rotation = Quaternion.Euler(0, 0, 10); 
-        } 
+        for (int i = 0; i < But.Length; i++) 
+            But[i].transform.rotation = Quaternion.Euler(0, 0, 10);  
     }
     void Anim()
     {
-        for (int i = 0; i < But.Length; i++)
-        {
-            But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
+        for (int i = 0; i < But.Length; i++) 
+            But[i].transform.rotation = Quaternion.Euler(0, 0, 0); 
     } 
 }
