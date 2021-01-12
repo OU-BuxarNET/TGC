@@ -174,9 +174,12 @@ public class Helpp : MonoBehaviour
     }
     void Pr(int b)
     {
+        int a = 0;
         but = b;
-        //if (Moving.CheckDomino[0].ToString() != But[but].GetComponent<Image>().sprite.name.ToString())
-        Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString())); 
+
+        if (But[but].GetComponent<Image>().sprite.name.ToString() != Moving.CheckDomino[0].ToString())
+            Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
+        else  a = 1;
 
         if (Moving.CheckDomino[0] != null && Moving.first == true)
         {
