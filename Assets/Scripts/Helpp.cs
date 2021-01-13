@@ -151,10 +151,13 @@ public class Helpp : MonoBehaviour
         {
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
 
-            if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == false) 
-                B_TakeBar.GetComponent<Button>().interactable = true; 
-
-            else if (Move.next_move == "player" && Game.check.TakeBarForPlayer(Board.Hand) == true) 
+            if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == false)
+            {
+                B_TakeBar.GetComponent<Button>().interactable = true;
+                Move.next_move = "comp";
+                Move1();
+            }
+            else if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == true)
                 B_TakeBar.GetComponent<Button>().interactable = false; 
         }
     }
@@ -173,20 +176,23 @@ public class Helpp : MonoBehaviour
         }
     }
     void Pr(int b)
-    {
-        int a = 0;
+    { 
         but = b;
 
-        if (But[but].GetComponent<Image>().sprite.name.ToString() != Moving.CheckDomino[0].ToString())
-            Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
-        else  a = 1;
+        if (Moving.first == true && Moving.bak.head != null)
+            Moving.bak.Remove(Moving.bak.head.Data);
+
+        Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
 
         if (Moving.CheckDomino[0] != null && Moving.first == true)
-        {
-            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0) 
-                Moving.bak.Add(Moving.CheckDomino[0]); 
+        { 
+            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0)
+            {  
+                Moving.bak.Add(Moving.CheckDomino[0]);  
+            }                
             else
             {
+                Moving.bak.Delete_Index(0);
                 AminPlay();
                 Invoke("Anim", 0.12f); 
             }
