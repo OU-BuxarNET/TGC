@@ -25,7 +25,7 @@ public class Helpp : MonoBehaviour
             game.StartGame();
             ButHandPlayer();
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-            B_TakeBar.GetComponent<Button>().interactable = false;
+            B_TakeBar.GetComponent<Button>().interactable = false; 
         }
     }
     void ButHandPlayer()
@@ -58,17 +58,33 @@ public class Helpp : MonoBehaviour
             Game.moving.WhenCube();
             for (int i = 0; i < Game.moving.goPos.Length; i++)
             {
-                if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true /*&& Game.moving.goPos[i].GetComponent<Image>().sprite.name != Moving.CheckDomino[0].Name*/)
+                if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true)
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
                     Game.moving.goPos[i].GetComponent<Image>().color = color;
                 }
             }
+        } 
+    }
+    void DoubleDom()
+    {
+        if (Moving.first == false && Move.next_move == "player")
+        {
+            if (Game.check.DoubleDomino() == false)
+            {
+                for (int i = 0; i < Game.moving.goPos.Length; i++)
+                { 
+                    if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[i].GetComponent<Image>().sprite.name != "Textures/WhiteSquare")
+                        Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<BoxCollider2D>().isTrigger = false; 
+                }
+            }          
         }
     }
+   
     private void Update()
     {
         Timer();
+       
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
@@ -90,13 +106,20 @@ public class Helpp : MonoBehaviour
                     Move1();
             }
         }
+        GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
+        GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
         if (But.Length <= 7)
-        {
-            GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
-            GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
+        { 
             I_RorLDominos.transform.localPosition = new Vector2(830, -400);
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
         }
+        else
+        {
+            double t = (Board.Hand.Count * 100 - 750) / 100;
+            I_RorLDominos.transform.localPosition = new Vector2(330, -400);
+            T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
+        }
+       
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
@@ -154,8 +177,8 @@ public class Helpp : MonoBehaviour
             if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == false)
             {
                 B_TakeBar.GetComponent<Button>().interactable = true;
-                Move.next_move = "comp";
-                Move1();
+                //Move.next_move = "comp";
+                //Move1();
             }
             else if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == true)
                 B_TakeBar.GetComponent<Button>().interactable = false; 
@@ -197,6 +220,7 @@ public class Helpp : MonoBehaviour
                 Invoke("Anim", 0.12f); 
             }
         }
+        DoubleDom();
     }
     public void TakeBar()
     {
@@ -210,14 +234,14 @@ public class Helpp : MonoBehaviour
                 Destroy(But[i]);
             ButHandPlayer();
             // шт = (количество домино на руке * размер домино - размер скрола) / размер домино
-            GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
-            GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
-            if (But.Length > 7)
-            {
-                double t = (Board.Hand.Count * 100 - 750) / 100;
-                I_RorLDominos.transform.localPosition = new Vector2(330, -400);
-                T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
-            }
+            //GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
+            //GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
+            //if (But.Length > 7)
+            //{
+            //    double t = (Board.Hand.Count * 100 - 750) / 100;
+            //    I_RorLDominos.transform.localPosition = new Vector2(330, -400);
+            //    T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
+            //}
             ToTake();
         }
     }
