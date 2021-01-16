@@ -122,7 +122,6 @@ public class Helpp : MonoBehaviour
             I_RorLDominos.transform.localPosition = new Vector2(330, -400);
             T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
         }
-       
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
@@ -155,6 +154,7 @@ public class Helpp : MonoBehaviour
             else Debug.Log("Ничего не выбрано");
         }
         WayTrue();
+        Game.statistic.EndRound();
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Move.next_move == "comp")
