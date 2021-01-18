@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Helpp : MonoBehaviour
 {
-    public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
+    public GameObject Parent; //Родительский объект на сцене
     static GameObject[] But;
     private static int but = -1;
     private static int j;
@@ -28,7 +28,7 @@ public class Helpp : MonoBehaviour
             B_TakeBar.GetComponent<Button>().interactable = false; 
         }
     }
-    void ButHandPlayer()
+    void ButHandPlayer() // создание кнопок (кости) в руке
     {
         But = new GameObject[Board.Hand.Count];
         for (int i = 0; i < Board.Hand.Count; i++)
@@ -66,32 +66,52 @@ public class Helpp : MonoBehaviour
             }
         } 
     }
-    void DoubleDom()
+    void DoubleDom() // чтобы игрок мог положить только с одной стороны цепи 
     {
         if (Moving.first == false && Move.next_move == "player")
-        { 
+        {
             if (Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<BoxCollider2D>().isTrigger == true
                 && Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
-
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<BoxCollider2D>().isTrigger = false;
-
+            {
+                if (Moving.linkedList.head.Data > 40 && Moving.linkedList.head.Data <= 47)
+                    Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
+                else
+                    Game.moving.goPos[Moving.linkedList.head.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
+            } 
             else if (Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<BoxCollider2D>().isTrigger == true
-                && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
-
-                Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<BoxCollider2D>().isTrigger = false;
-
-            //else Game.moving.WhenCube();
+                && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare") 
+            {
+                if (Moving.linkedList.head.Data >= 0 && Moving.linkedList.head.Data <= 7)
+                    Game.moving.goPos[Moving.linkedList.tail.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
+                else
+                    Game.moving.goPos[Moving.linkedList.tail.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
+            } 
+        }
+    } 
+    void DeleteDom() // если игрок выбрал кость и поставил на поле, он может убрать её
+    {
+        int layerMask = 1 << 8;
+        Vector2 CurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Input.GetMouseButtonUp(0)) 
+        {
+            var hit = Physics2D.Raycast(CurMousePos, Vector2.zero); 
+            if (Physics2D.Raycast(CurMousePos, Vector2.zero, Mathf.Infinity, layerMask) && hit.collider.isTrigger == true &&
+                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().sprite.name != "WhiteSquare")
+            {
+                WayTrue();
+                Game.moving.MovePos();
+            }
         }
     }
-   
     private void Update()
     {
         Timer();
        
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
-        {
+        { 
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
             {
+                DeleteDom();
                 if (Game.moving.ChangePos() == false)
                 {
                     //AminPlay();
@@ -99,9 +119,10 @@ public class Helpp : MonoBehaviour
                 }
                 else
                 {
-                    SpriteDomino(); // ставим спрайт домино на поле д
+                    SpriteDomino(); // ставим спрайт домино на поле  
                     Game.moving.MovePos();
-                }   
+                    DoubleDom();
+                }     
             }
             else
             {
@@ -125,7 +146,7 @@ public class Helpp : MonoBehaviour
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
-    void Timer()
+    void Timer() // секундомер
     {
         GameObject timetext = GameObject.Find("T_Time");
         GameSeconds += Time.deltaTime;
@@ -136,7 +157,7 @@ public class Helpp : MonoBehaviour
             GameSeconds = 0.0f;
         }
     }
-    public void Move1()
+    public void Move1() // сделать ход
     {
         Game.moving.PosGoHand();
         if (Move.next_move == "player")
@@ -169,9 +190,9 @@ public class Helpp : MonoBehaviour
             but = -1;
         }
         ToTake();
-        Game.statistic.EndRound();
+        Game.statistic.EndRound(); 
     }
-    void ToTake()
+    void ToTake() // активация кнопки взять из бара
     {
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
         {
@@ -185,21 +206,21 @@ public class Helpp : MonoBehaviour
                 B_TakeBar.GetComponent<Button>().interactable = false; 
         }
     }
-    void SpriteDomino()
+    void SpriteDomino() // кость кладется на выбранный квадрат
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
         if (Moving.LorR == false)
         {
             Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
-            Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
+            Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color; 
         }
         else
         {
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
-            Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-        }
+            Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color; 
+        } 
     }
-    void Pr(int b)
+    void Pr(int b) // нажатие на кость из руки
     { 
         but = b;
 
@@ -222,7 +243,7 @@ public class Helpp : MonoBehaviour
             }
         }
     }
-    public void TakeBar()
+    public void TakeBar() // взять из бара 
     {
         Game.board.TakeBar(true);
         Moving.bak.Remove(Moving.CheckDomino[1]);
@@ -236,7 +257,7 @@ public class Helpp : MonoBehaviour
             ToTake();
         }
     }
-    public void EndGame()
+    public void EndGame() // конец игры
     {
         Color color = new Color(0, 0, 0, 0);
         game.EndGame();
@@ -250,19 +271,19 @@ public class Helpp : MonoBehaviour
         GameObject P_Win = GameObject.Find("P_Win"); 
         P_Win.transform.localPosition = new Vector2(-859, 773);
     }
-    public void Trans()
+    public void Trans() // скрытие панели "Конец раунда"
     {
         Statistic.endround = false;
         P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0);
     }
-    void AminPlay()
+    void AminPlay() // для анимации дребезжания
     {
         for (int i = 0; i < But.Length; i++) 
             But[i].transform.rotation = Quaternion.Euler(0, 0, 10);  
     }
-    void Anim()
+    void Anim() // для анимации дребезжания
     {
         for (int i = 0; i < But.Length; i++) 
             But[i].transform.rotation = Quaternion.Euler(0, 0, 0); 
-    } 
+    }  
 }
