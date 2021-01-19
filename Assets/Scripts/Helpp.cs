@@ -77,9 +77,9 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
                 else
                     Game.moving.goPos[Moving.linkedList.head.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
-            } 
+            }
             else if (Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<BoxCollider2D>().isTrigger == true
-                && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare") 
+                && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
             {
                 if (Moving.linkedList.head.Data >= 0 && Moving.linkedList.head.Data <= 7)
                     Game.moving.goPos[Moving.linkedList.tail.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
@@ -90,16 +90,18 @@ public class Helpp : MonoBehaviour
     } 
     void DeleteDom() // если игрок выбрал кость и поставил на поле, он может убрать её
     {
+        Color color = new Color(1f, 1f, 1f, 0.5f);
         int layerMask = 1 << 8;
         Vector2 CurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetMouseButtonUp(0)) 
         {
             var hit = Physics2D.Raycast(CurMousePos, Vector2.zero); 
             if (Physics2D.Raycast(CurMousePos, Vector2.zero, Mathf.Infinity, layerMask) && hit.collider.isTrigger == true &&
-                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().sprite.name != "WhiteSquare")
-            {
-                WayTrue();
-                Game.moving.MovePos();
+                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().sprite.name == "WhiteSquare")
+            { 
+                Game.moving.WhenCube();
+                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
+                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().color = color;  
             }
         }
     }
@@ -110,8 +112,7 @@ public class Helpp : MonoBehaviour
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         { 
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
-            {
-                DeleteDom();
+            { 
                 if (Game.moving.ChangePos() == false)
                 {
                     //AminPlay();
@@ -121,8 +122,8 @@ public class Helpp : MonoBehaviour
                 {
                     SpriteDomino(); // ставим спрайт домино на поле  
                     Game.moving.MovePos();
-                    DoubleDom();
-                }     
+                    DoubleDom(); 
+                } 
             }
             else
             {

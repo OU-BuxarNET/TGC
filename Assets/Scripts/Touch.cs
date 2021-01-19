@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; 
 using Domino1;
+using UnityEngine.UI;
 
 public class Touch : MonoBehaviour
 {
@@ -162,11 +163,17 @@ public class Touch : MonoBehaviour
         //    case "classic": LogicComp.difficutlylvl = version; break;
         //    case "goat": LogicComp.difficutlylvl = version; break; 
         //}
-        //switch (point)
-        //{
-        //    case "100": LogicComp.difficutlylvl = point; break;
-        //    case "set": LogicComp.difficutlylvl = point; break; 
-        //} 
+        switch (point)
+        {
+            case "100": Statistic.maxpoint = Int32.Parse(point); break;
+            case "set": Statistic.maxpoint = Int32.Parse(point); break;  
+        }
+    }
+    public void PointSet()
+    {
+        GameObject T_Set = GameObject.Find("BT_Set");
+        if (T_Set.GetComponent<Text>().text != null)
+        point = T_Set.GetComponent<Text>().text;
     }
     public void QuitOnscene()
     {
