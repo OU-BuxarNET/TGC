@@ -66,45 +66,52 @@ public class Helpp : MonoBehaviour
             }
         } 
     }
+    void OneDomOnTable()
+    {
+        if (Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<BoxCollider2D>().isTrigger == true
+                    && Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
+        {
+            if (Moving.linkedList.head.Data >= 0 && Moving.linkedList.head.Data <= 7)
+                Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
+
+            else if (Moving.linkedList.head.Data == 24 || Moving.linkedList.head.Data == 16 || Moving.linkedList.head.Data == 8)
+                Game.moving.goPos[Moving.linkedList.head.Data - 8].GetComponent<BoxCollider2D>().isTrigger = false;
+
+            else Game.moving.goPos[Moving.linkedList.head.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        else if (Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<BoxCollider2D>().isTrigger == true
+            && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
+             {
+               if (Moving.linkedList.tail.Data <= 47 && Moving.linkedList.tail.Data > 40) 
+                Game.moving.goPos[Moving.linkedList.tail.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
+
+            else if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 39 || Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
+                Game.moving.goPos[Moving.linkedList.tail.Data + 8].GetComponent<BoxCollider2D>().isTrigger = false;
+
+            else Game.moving.goPos[Moving.linkedList.tail.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
+             }
+
+    }
     void DoubleDom() // чтобы игрок мог положить только с одной стороны цепи 
     {
         if (Moving.first == false && Move.next_move == "player")
         {
-            if (Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<BoxCollider2D>().isTrigger == true
-                && Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
+            if (Game.check.DoubleDomino() == false)
             {
-                if (Moving.linkedList.head.Data > 40 && Moving.linkedList.head.Data <= 47)
-                    Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
-                else
-                    Game.moving.goPos[Moving.linkedList.head.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
+                OneDomOnTable();
+                Destroy(But[but]);
             }
-            else if (Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<BoxCollider2D>().isTrigger == true
-                && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
+            else
             {
-                if (Moving.linkedList.head.Data >= 0 && Moving.linkedList.head.Data <= 7)
-                    Game.moving.goPos[Moving.linkedList.tail.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
-                else
-                    Game.moving.goPos[Moving.linkedList.tail.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
-            } 
+                Debug.Log("Возможен дубль");
+                if (Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name == Moving.CheckDomino[0].Name
+                    && Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail)
+                { }
+                else OneDomOnTable();
+            }
         }
     } 
-    void DeleteDom() // если игрок выбрал кость и поставил на поле, он может убрать её
-    {
-        Color color = new Color(1f, 1f, 1f, 0.5f);
-        int layerMask = 1 << 8;
-        Vector2 CurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonUp(0)) 
-        {
-            var hit = Physics2D.Raycast(CurMousePos, Vector2.zero); 
-            if (Physics2D.Raycast(CurMousePos, Vector2.zero, Mathf.Infinity, layerMask) && hit.collider.isTrigger == true &&
-                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().sprite.name == "WhiteSquare")
-            { 
-                Game.moving.WhenCube();
-                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-                Game.moving.goPos[Int32.Parse(hit.collider.name)].GetComponent<Image>().color = color;  
-            }
-        }
-    }
+    
     private void Update()
     {
         Timer();
@@ -120,6 +127,7 @@ public class Helpp : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log(Board.bar.Count);
                     SpriteDomino(); // ставим спрайт домино на поле  
                     Game.moving.MovePos();
                     DoubleDom(); 
@@ -182,7 +190,7 @@ public class Helpp : MonoBehaviour
             if (Move.next_move == "comp")
             {
                 game.MakeMove();
-                SpriteDomino();
+                SpriteDomino(); 
                 if (Board.HandComp.Count > 0)
                     Board.HandComp.RemoveAt(LogicComp.kolforCom);
                 WayTrue();
@@ -219,7 +227,7 @@ public class Helpp : MonoBehaviour
         {
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color; 
-        } 
+        }  
     }
     void Pr(int b) // нажатие на кость из руки
     { 
@@ -229,6 +237,8 @@ public class Helpp : MonoBehaviour
             Moving.bak.Remove(Moving.bak.head.Data);
 
         Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
+
+        DeleteDom();
 
         if (Moving.CheckDomino[0] != null && Moving.first == true)
         { 
@@ -242,6 +252,25 @@ public class Helpp : MonoBehaviour
                 AminPlay();
                 Invoke("Anim", 0.12f); 
             }
+        }
+    }
+    void DeleteDom()
+    {
+        if (Moving.first == false)
+        {
+            Color color = new Color(1f, 1f, 1f, 0.5f);
+            for (int i = 0; i < But.Length; i++)
+                Destroy(But[i]);
+            ButHandPlayer();
+            for (int i = 0; i < Game.moving.goPos.Length; i++)
+            {
+                if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
+                {
+                    Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
+                    Game.moving.goPos[i].GetComponent<Image>().color = color; 
+                }
+            }
+            Game.moving.WhenCube();
         }
     }
     public void TakeBar() // взять из бара 
