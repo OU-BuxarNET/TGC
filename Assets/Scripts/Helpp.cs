@@ -48,13 +48,8 @@ public class Helpp : MonoBehaviour
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
 
-        if (Moving.first == true)
-        {
-            Game.moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-            Game.moving.goPos[27].GetComponent<Image>().color = color;
-        }
-        else
-        {
+        if (Moving.first == false)
+        { 
             Game.moving.WhenCube();
             for (int i = 0; i < Game.moving.goPos.Length; i++)
             {
@@ -128,7 +123,7 @@ public class Helpp : MonoBehaviour
                 else
                 { 
                     SpriteDomino(); // ставим спрайт домино на поле  
-                    Game.moving.MovePos();
+                    //Game.moving.MovePos();
                     DoubleDom(); 
                 } 
             }
@@ -182,7 +177,10 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
-        }
+        } 
+
+        Debug.Log(Moving.addinchain);
+
         WayTrue();
         Game.statistic.EndRound();
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
@@ -235,19 +233,25 @@ public class Helpp : MonoBehaviour
                     break;
                 }
             case "player":
-                {   
+                {
                     if (Moving.first == true)
-
-                    if (Moving.LorR == false)
                     {
-                        Game.moving.goPos[Moving.addinchain].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino[0].Name);
-                        Game.moving.goPos[Moving.addinchain].GetComponent<Image>().color = color;
+                        Game.moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
+                        Game.moving.goPos[27].GetComponent<Image>().color = color;
                     }
                     else
                     {
-                        Game.moving.goPos[Moving.addinchain].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino[0].Name);
-                        Game.moving.goPos[Moving.addinchain].GetComponent<Image>().color = color;
-                    }  
+                        if (Moving.LorR == false)
+                        {
+                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino[0].Name);
+                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().color = color;
+                        }
+                        else
+                        {
+                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino[0].Name);
+                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().color = color;
+                        }
+                    } 
                     break;
                 }
         } 
@@ -271,9 +275,15 @@ public class Helpp : MonoBehaviour
             }                
             else
             {
-                Moving.bak.Delete_Index(0);
-                AminPlay();
-                Invoke("Anim", 0.12f); 
+                Game.check.NotDouble();
+                Move.next_move = "player";
+                if (Moving.CheckDomino[0].Name != Check.playerMin) 
+                {
+                    //Moving.bak.Delete_Index(0);
+                    AminPlay();
+                    Invoke("Anim", 0.12f);
+                }
+                else Moving.bak.Add(Moving.CheckDomino[0]);
             }
         }
     }
