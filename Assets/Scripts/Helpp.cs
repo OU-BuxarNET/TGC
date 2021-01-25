@@ -116,7 +116,7 @@ public class Helpp : MonoBehaviour
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
             { 
                 if (Game.moving.ChangePos() == false)
-                {
+                { 
                     //AminPlay();
                     //Invoke("Anim", 0.12f); 
                 }
