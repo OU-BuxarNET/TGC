@@ -265,7 +265,7 @@ public class Helpp : MonoBehaviour
 
         Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
 
-        DeleteDom();
+       DeleteDom();
 
         if (Moving.CheckDomino[0] != null && Moving.first == true)
         { 
@@ -279,6 +279,7 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "player";
                 if (Moving.CheckDomino[0].Name != Check.playerMin) 
                 {
+                    
                     //Moving.bak.Delete_Index(0);
                     AminPlay();
                     Invoke("Anim", 0.12f);
