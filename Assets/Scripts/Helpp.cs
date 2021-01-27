@@ -121,10 +121,10 @@ public class Helpp : MonoBehaviour
                     //Invoke("Anim", 0.12f); 
                 }
                 else
-                { 
+                {
                     SpriteDomino(); // ставим спрайт домино на поле  
-                    //Game.moving.MovePos();
-                    DoubleDom(); 
+                    Game.moving.MovePos();
+                    DoubleDom();
                 } 
             }
             else
@@ -167,8 +167,7 @@ public class Helpp : MonoBehaviour
         {
             if (but >= 0 && Moving.CheckDomino[0] != null)
             {
-                game.MakeMove();
-                Game.moving.ForMove();
+                game.MakeMove(); 
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
                 Board.Hand.RemoveAt(but);
@@ -178,8 +177,6 @@ public class Helpp : MonoBehaviour
             }
             else Debug.Log("Ничего не выбрано");
         } 
-
-        Debug.Log(Moving.addinchain);
 
         WayTrue();
         Game.statistic.EndRound();
@@ -216,45 +213,16 @@ public class Helpp : MonoBehaviour
     void SpriteDomino() // кость кладется на выбранный квадрат
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
-        switch(Move.next_move)
+        if (Moving.LorR == false)
         {
-            case "comp":
-                {
-                    if (Moving.LorR == false)
-                    {
-                        Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
-                        Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
-                    }
-                    else
-                    {
-                        Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
-                        Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
-                    }
-                    break;
-                }
-            case "player":
-                {
-                    if (Moving.first == true)
-                    {
-                        Game.moving.goPos[27].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
-                        Game.moving.goPos[27].GetComponent<Image>().color = color;
-                    }
-                    else
-                    {
-                        if (Moving.LorR == false)
-                        {
-                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino[0].Name);
-                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().color = color;
-                        }
-                        else
-                        {
-                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino[0].Name);
-                            Game.moving.goPos[Moving.addinchain].GetComponent<Image>().color = color;
-                        }
-                    } 
-                    break;
-                }
-        } 
+            Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.tail.Data);
+            Game.moving.goPos[Moving.linkedList.tail.Data].GetComponent<Image>().color = color;
+        }
+        else
+        {
+            Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
+            Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
+        }
     }
     void Pr(int b) // нажатие на кость из руки
     { 
@@ -264,6 +232,7 @@ public class Helpp : MonoBehaviour
             Moving.bak.Remove(Moving.bak.head.Data);
 
         Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
+
 
        DeleteDom();
 
@@ -278,8 +247,7 @@ public class Helpp : MonoBehaviour
                 Game.check.NotDouble();
                 Move.next_move = "player";
                 if (Moving.CheckDomino[0].Name != Check.playerMin) 
-                {
-                    
+                { 
                     //Moving.bak.Delete_Index(0);
                     AminPlay();
                     Invoke("Anim", 0.12f);
@@ -302,6 +270,10 @@ public class Helpp : MonoBehaviour
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
                     Game.moving.goPos[i].GetComponent<Image>().color = color;
+                    if (Moving.LorR == false)
+                        Moving.linkedList.Remove(Moving.linkedList.tail.Data);
+                    else
+                        Moving.linkedList.Remove(Moving.linkedList.head.Data);
                 }
             }
             Game.moving.WhenCube();
@@ -312,7 +284,10 @@ public class Helpp : MonoBehaviour
         Game.board.TakeBar(true);
         Moving.bak.Remove(Moving.CheckDomino[1]);
         if (Board.bar.Count == 0)
+        {
+            Move.next_move = "comp";
             Move1();
+        } 
         else
         {
             for (int i = 0; i < But.Length; i++)
