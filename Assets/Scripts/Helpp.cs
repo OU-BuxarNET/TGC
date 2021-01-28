@@ -270,10 +270,6 @@ public class Helpp : MonoBehaviour
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
                     Game.moving.goPos[i].GetComponent<Image>().color = color;
-                    if (Moving.LorR == false)
-                        Moving.linkedList.Remove(Moving.linkedList.tail.Data);
-                    else
-                        Moving.linkedList.Remove(Moving.linkedList.head.Data);
                 }
             }
             Game.moving.WhenCube();
