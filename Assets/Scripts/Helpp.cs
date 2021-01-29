@@ -269,7 +269,7 @@ public class Helpp : MonoBehaviour
                 if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-                    Game.moving.goPos[i].GetComponent<Image>().color = color;
+                    Game.moving.goPos[i].GetComponent<Image>().color = color; 
                 }
             }
             Game.moving.WhenCube();
