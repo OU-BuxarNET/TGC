@@ -85,7 +85,7 @@ public class Helpp : MonoBehaviour
 
             else Game.moving.goPos[Moving.linkedList.tail.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
              }
-
+          
     }
     void DoubleDom() // чтобы игрок мог положить только с одной стороны цепи 
     {
