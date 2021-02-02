@@ -84,8 +84,7 @@ public class Helpp : MonoBehaviour
                 Game.moving.goPos[Moving.linkedList.tail.Data + 8].GetComponent<BoxCollider2D>().isTrigger = false;
 
             else Game.moving.goPos[Moving.linkedList.tail.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
-             }
-          
+             } 
     }
     void DoubleDom() // чтобы игрок мог положить только с одной стороны цепи 
     {
@@ -177,9 +176,12 @@ public class Helpp : MonoBehaviour
             }
             else Debug.Log("Ничего не выбрано");
         } 
-
         WayTrue();
-        Game.statistic.EndRound();
+        switch (Touch.version)
+        {
+            case "classic": Game.statisticClassic.EndRound(); break;
+            case "goat": Game.statisticGoat.EndRound(); break;
+        }
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Move.next_move == "comp")
@@ -191,10 +193,14 @@ public class Helpp : MonoBehaviour
                 WayTrue();
                 Move.next_move = "player";
             }
-            but = -1;
+            but = -1; 
+            switch (Touch.version)
+            {
+                case "classic": Game.statisticClassic.EndRound(); break;
+                case "goat": Game.statisticGoat.EndRound(); break;
+            }
         }
-        ToTake();
-        Game.statistic.EndRound(); 
+        ToTake(); 
     }
     void ToTake() // активация кнопки взять из бара
     {
@@ -308,7 +314,12 @@ public class Helpp : MonoBehaviour
     }
     public void Trans() // скрытие панели "Конец раунда"
     {
-        Statistic.endround = false;
+        switch (Touch.version)
+        {
+            case "classic": Statistic.endround = false; break;
+            case "goat": StatisticGoat.endround = false; break;
+        }
+       
         P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0);
     }
     void AminPlay() // для анимации дребезжания

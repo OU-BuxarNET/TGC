@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class Touch : MonoBehaviour
 {
     static string lvl = "easy";
-    static string version = "classic"; 
+    public static string version = "classic"; 
     static string point = "100";
     static bool lvlfirst = true;
-    static bool versionfirst = true;
+    //static bool versionfirst = true;
     static bool pointfirst = true;
     public void ChooseLvlRight()
     {
@@ -88,35 +88,33 @@ public class Touch : MonoBehaviour
                 break; 
         }
     }
-    public void ChooseVersionR()
-    {
+    public void ChooseVersionL()
+    { 
         GameObject B_LeftVersion = GameObject.Find("B_LeftVersion");
         GameObject B_RightVersion = GameObject.Find("B_RightVersion");
 
         GameObject classic = GameObject.Find("T_ClassicVersion");
         GameObject goat = GameObject.Find("T_GoatVersion");
-        if (versionfirst == true)
-        {
-            lvl = "goat";
-            versionfirst = false;
-        }
-        switch (version)
-        {
-            case "classic":
-                B_LeftVersion.transform.localPosition = new Vector2(700, 580);
-                B_RightVersion.transform.localPosition = new Vector2(325, 250);
-                classic.transform.localPosition = new Vector2(146, 250);
-                goat.transform.localPosition = new Vector2(720, 405);
-                version = "goat";
-                break; 
-            case "goat":
-                B_RightVersion.transform.localPosition = new Vector2(700, 580);
-                B_LeftVersion.transform.localPosition = new Vector2(-36, 250);
-                goat.transform.localPosition = new Vector2(146, 250);
-                classic.transform.localPosition = new Vector2(720, 405);
-                version = "classic";
-                break;
-        }
+
+        B_LeftVersion.transform.localPosition = new Vector2(700, 580);
+        B_RightVersion.transform.localPosition = new Vector2(325, 250);
+        classic.transform.localPosition = new Vector2(146, 250);
+        goat.transform.localPosition = new Vector2(720, 405);
+        version = "classic"; 
+    }
+    public void ChooseVersionR()
+    { 
+        GameObject B_LeftVersion = GameObject.Find("B_LeftVersion");
+        GameObject B_RightVersion = GameObject.Find("B_RightVersion");
+
+        GameObject classic = GameObject.Find("T_ClassicVersion");
+        GameObject goat = GameObject.Find("T_GoatVersion");
+
+        B_RightVersion.transform.localPosition = new Vector2(700, 580);
+        B_LeftVersion.transform.localPosition = new Vector2(-36, 250);
+        goat.transform.localPosition = new Vector2(146, 250);
+        classic.transform.localPosition = new Vector2(720, 405);
+        version = "goat"; 
     } 
     public void ChooseMaxPoints()
     {
@@ -158,15 +156,29 @@ public class Touch : MonoBehaviour
         //    case "medium": LogicComp.difficutlylvl = "medium"; break;
         //    case "hard": LogicComp.difficutlylvl = "hard"; break;
         //}
-        //switch (version)
-        //{
-        //    case "classic": LogicComp.difficutlylvl = version; break;
-        //    case "goat": LogicComp.difficutlylvl = version; break; 
-        //}
+        switch (version)
+        {
+            case "classic": LogicComp.versionGame = version; break;
+            case "goat": LogicComp.versionGame = version; break;
+        }
         switch (point)
         {
-            case "100": Statistic.maxpoint = Int32.Parse(point); break;
-            case "set": Statistic.maxpoint = Int32.Parse(point); break;  
+            case "100":
+                { 
+                    if (version == "classic")
+                    Statistic.maxpoint = Int32.Parse(point); 
+                    else if (version == "goat")
+                        StatisticGoat.maxpoint = Int32.Parse(point);
+                    break; 
+                }
+            case "set":
+                {
+                    if (version == "classic")
+                        Statistic.maxpoint = Int32.Parse(point);
+                    else if (version == "goat")
+                        StatisticGoat.maxpoint = Int32.Parse(point);
+                    break;
+                }
         }
     }
     public void PointSet()
