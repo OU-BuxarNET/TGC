@@ -115,7 +115,7 @@ public class Helpp : MonoBehaviour
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
             { 
                 if (Game.moving.ChangePos() == false)
-                { 
+                {
                     //AminPlay();
                     //Invoke("Anim", 0.12f); 
                 }
@@ -177,11 +177,13 @@ public class Helpp : MonoBehaviour
             else Debug.Log("Ничего не выбрано");
         } 
         WayTrue();
+
         switch (Touch.version)
         {
             case "classic": Game.statisticClassic.EndRound(); break;
             case "goat": Game.statisticGoat.EndRound(); break;
         }
+
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Move.next_move == "comp")
@@ -194,6 +196,7 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "player";
             }
             but = -1; 
+
             switch (Touch.version)
             {
                 case "classic": Game.statisticClassic.EndRound(); break;
@@ -229,18 +232,17 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
         }
-    }
+    } 
     void Pr(int b) // нажатие на кость из руки
-    { 
+    {   
         but = b;
 
         if (Moving.first == true && Moving.bak.head != null)
             Moving.bak.Remove(Moving.bak.head.Data);
 
         Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
-
-
-       DeleteDom();
+        
+        DeleteDom();
 
         if (Moving.CheckDomino[0] != null && Moving.first == true)
         { 
