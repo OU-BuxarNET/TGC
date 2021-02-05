@@ -196,7 +196,7 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "player";
             }
             but = -1; 
-
+ 
             switch (Touch.version)
             {
                 case "classic": Game.statisticClassic.EndRound(); break;
