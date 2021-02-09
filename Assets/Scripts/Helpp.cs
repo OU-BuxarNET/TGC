@@ -232,7 +232,7 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
         }
-    }  
+    }   
     void Pr(int b) // нажатие на кость из руки
     {   
         but = b;
