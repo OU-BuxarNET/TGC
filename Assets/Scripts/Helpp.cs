@@ -93,7 +93,7 @@ public class Helpp : MonoBehaviour
             if (Game.check.DoubleDomino() == false)
             {
                 OneDomOnTable();
-                Destroy(But[but]);
+                But[but].SetActive(false);
             }
             else
             {
@@ -104,23 +104,24 @@ public class Helpp : MonoBehaviour
                 else OneDomOnTable();
             }
         }
-    } 
-    
+    }
+    static bool animat = true;
     private void Update()
-    {
+    { 
         Timer();
        
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         { 
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
             { 
-                if (Game.moving.ChangePos() == false)
+                if (Game.moving.ChangePos(But) == false)
                 {
-                    //AminPlay();
-                    //Invoke("Anim", 0.12f); 
+                    if (animat == true) 
+                        Invoke("Anim", 0.80f); 
                 }
                 else
                 {
+                    animat = false;
                     SpriteDomino(); // ставим спрайт домино на поле  
                     Game.moving.MovePos();
                     DoubleDom();
@@ -172,6 +173,7 @@ public class Helpp : MonoBehaviour
                 Board.Hand.RemoveAt(but);
                 ButHandPlayer();
                 SpriteDomino();
+                animat = true;
                 Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
@@ -328,6 +330,7 @@ public class Helpp : MonoBehaviour
     {
         for (int i = 0; i < But.Length; i++)
             But[i].transform.rotation = Quaternion.Euler(0, 0, 10);
+        //Invoke("Anim", 0.12f);
     }
     void Anim() // для анимации дребезжания
     { 
