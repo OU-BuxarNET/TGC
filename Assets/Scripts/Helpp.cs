@@ -122,8 +122,8 @@ public class Helpp : MonoBehaviour
                 else
                 {
                     animat = false;
-                    SpriteDomino(); // ставим спрайт домино на поле  
-                    Game.moving.MovePos();
+                    SpriteDomino1(); // ставим спрайт домино на поле  
+                    //Game.moving.MovePos();
                     DoubleDom();
                 } 
             }
@@ -165,13 +165,15 @@ public class Helpp : MonoBehaviour
         Game.moving.PosGoHand();
         if (Move.next_move == "player")
         {
-            if (but >= 0 && Moving.CheckDomino[0] != null)
+            if (but >= 0 && Moving.CheckDomino1 != null)
             {
                 game.MakeMove(); 
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
                 Board.Hand.RemoveAt(but);
                 ButHandPlayer();
+                Game.moving.Move();
+                //Game.moving.MovePos();
                 SpriteDomino();
                 animat = true;
                 Move.next_move = "comp";
@@ -190,8 +192,8 @@ public class Helpp : MonoBehaviour
         {
             if (Move.next_move == "comp")
             {
-                game.MakeMove();
-                SpriteDomino(); 
+                game.MakeMove(); 
+                SpriteDomino();  
                 if (Board.HandComp.Count > 0)
                     Board.HandComp.RemoveAt(LogicComp.kolforCom);
                 WayTrue();
@@ -234,6 +236,20 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
         }
+    }  
+    void SpriteDomino1() // кость кладется на выбранный квадрат
+    {
+        Color color = new Color(1f, 1f, 1f, 0.7f);
+        if (Moving.LorR == false)
+        {
+            Game.moving.goPos[Moving.CheckId].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino1);
+            Game.moving.goPos[Moving.CheckId].GetComponent<Image>().color = color;
+        }
+        else
+        {
+            Game.moving.goPos[Moving.CheckId].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino1);
+            Game.moving.goPos[Moving.CheckId].GetComponent<Image>().color = color;
+        }
     }   
     void Pr(int b) // нажатие на кость из руки
     {   
@@ -241,28 +257,28 @@ public class Helpp : MonoBehaviour
 
         if (Moving.first == true && Moving.bak.head != null)
             Moving.bak.Remove(Moving.bak.head.Data);
-
-        Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
+        Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString());
+        //Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
         
         DeleteDom();
 
-        if (Moving.CheckDomino[0] != null && Moving.first == true)
+        if (Moving.CheckDomino1 != null && Moving.first == true)
         { 
-            if (Moving.CheckDomino[0].Head == Moving.CheckDomino[0].Tail && Moving.CheckDomino[0].Head != 0)
+            if (Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
             {  
-                Moving.bak.Add(Moving.CheckDomino[0]);  
+                Moving.bak.Add(Moving.CheckDomino1);  
             }                
             else
             {
                 Game.check.NotDouble();
                 Move.next_move = "player";
-                if (Moving.CheckDomino[0].Name != Check.playerMin) 
+                if (Moving.CheckDomino1.Name != Check.playerMin) 
                 { 
                     //Moving.bak.Delete_Index(0);
                     AminPlay();
                     Invoke("Anim", 0.12f);
                 }
-                else Moving.bak.Add(Moving.CheckDomino[0]);
+                else Moving.bak.Add(Moving.CheckDomino1);
             }
         }
     }
