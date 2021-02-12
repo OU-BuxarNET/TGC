@@ -109,7 +109,7 @@ public class Helpp : MonoBehaviour
     private void Update()
     { 
         Timer();
-       
+        
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         { 
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
@@ -122,9 +122,8 @@ public class Helpp : MonoBehaviour
                 else
                 {
                     animat = false;
-                    SpriteDomino1(); // ставим спрайт домино на поле  
-                    //Game.moving.MovePos();
-                    DoubleDom();
+                    SpriteDomino1(); // ставим спрайт домино на поле    
+                    //DoubleDom();
                 } 
             }
             else
@@ -180,8 +179,7 @@ public class Helpp : MonoBehaviour
             }
             else Debug.Log("Ничего не выбрано");
         } 
-        WayTrue();
-
+        WayTrue(); 
         switch (Touch.version)
         {
             case "classic": Game.statisticClassic.EndRound(); break;
@@ -206,7 +204,7 @@ public class Helpp : MonoBehaviour
                 case "classic": Game.statisticClassic.EndRound(); break;
                 case "goat": Game.statisticGoat.EndRound(); break;
             }
-        }
+        } 
         ToTake(); 
     }
     void ToTake() // активация кнопки взять из бара
