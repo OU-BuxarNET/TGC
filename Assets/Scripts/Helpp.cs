@@ -123,7 +123,8 @@ public class Helpp : MonoBehaviour
                 {
                     animat = false;
                     SpriteDomino1(); // ставим спрайт домино на поле    
-                    //DoubleDom();
+                    Game.moving.goPos[Moving.CheckId].transform.rotation = Quaternion.Euler(0, 0, 0);
+                    DoubleDom();
                 } 
             }
             else
@@ -171,8 +172,7 @@ public class Helpp : MonoBehaviour
                     Destroy(But[i]);
                 Board.Hand.RemoveAt(but);
                 ButHandPlayer();
-                Game.moving.Move();
-                //Game.moving.MovePos();
+                Game.moving.Move(); 
                 SpriteDomino();
                 animat = true;
                 Move.next_move = "comp";
@@ -255,8 +255,7 @@ public class Helpp : MonoBehaviour
 
         if (Moving.first == true && Moving.bak.head != null)
             Moving.bak.Remove(Moving.bak.head.Data);
-        Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString());
-        //Moving.CheckDomino.Insert(0, new Domino(But[but].GetComponent<Image>().sprite.name.ToString()));
+        Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString()); 
         
         DeleteDom();
 
@@ -302,6 +301,7 @@ public class Helpp : MonoBehaviour
     public void TakeBar() // взять из бара
     {
         Game.board.TakeBar(true);
+        if (Moving.bak.Contains(Moving.CheckDomino[1]))
         Moving.bak.Remove(Moving.CheckDomino[1]);
         if (Board.bar.Count == 0)
         {

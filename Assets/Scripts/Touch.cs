@@ -13,6 +13,11 @@ public class Touch : MonoBehaviour
     static bool lvlfirst = true;
     //static bool versionfirst = true;
     static bool pointfirst = true;
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
     public void ChooseLvlRight()
     {
         Vector2 vecxy = new Vector2(146, 405);
