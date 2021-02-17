@@ -343,12 +343,29 @@ public class Helpp : MonoBehaviour
     void AminPlay() // для анимации дребезжания
     {
         for (int i = 0; i < But.Length; i++)
-            But[i].transform.rotation = Quaternion.Euler(0, 0, 10);
-        //Invoke("Anim", 0.12f);
+            But[i].transform.rotation = Quaternion.Euler(0, 0, 10); 
     }
     void Anim() // для анимации дребезжания
     { 
         for (int i = 0; i < But.Length; i++)
             But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+    void Endoffield() // конец поля
+    {
+        if (Moving.linkedList.head.Data == 6)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+               Game.moving.goPos[Moving.linkedList.head.Data - i - 1].GetComponent<Image>().sprite = Game.moving.goPos[Moving.linkedList.head.Data - i].GetComponent<Image>().sprite;
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (Moving.linkedList.head.Data == 0 || Moving.linkedList.head.Data == 8 || Moving.linkedList.head.Data == 16)
+                {
+                    Game.moving.goPos[Moving.linkedList.head.Data - 8].GetComponent<Image>().sprite = Game.moving.goPos[Moving.linkedList.head.Data - i - 8].GetComponent<Image>().sprite;
+                }
+            }
+        }
     }
 }
