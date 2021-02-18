@@ -205,7 +205,7 @@ public class Helpp : MonoBehaviour
                 case "goat": Game.statisticGoat.EndRound(); break;
             }
         } 
-        ToTake(); 
+        ToTake();
     }
     void ToTake() // активация кнопки взять из бара
     {
@@ -251,10 +251,10 @@ public class Helpp : MonoBehaviour
     }   
     void Pr(int b) // нажатие на кость из руки
     {   
-        but = b;
+        but = b; 
 
         if (Moving.first == true && Moving.bak.head != null)
-            Moving.bak.Remove(Moving.bak.head.Data);
+        Moving.bak.Remove(Moving.bak.head.Data);
         Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString()); 
         
         DeleteDom();
@@ -354,18 +354,25 @@ public class Helpp : MonoBehaviour
     {
         if (Moving.linkedList.head.Data == 6)
         {
-            for (int i = 0; i < 6; i++)
-            {
-               Game.moving.goPos[Moving.linkedList.head.Data - i - 1].GetComponent<Image>().sprite = Game.moving.goPos[Moving.linkedList.head.Data - i].GetComponent<Image>().sprite;
-            }
+            Moving.linkedList.Remove(Moving.linkedList.head.Data);
+            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-            for (int i = 0; i < 3; i++)
+            else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+
+            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
+
+            else Moving.linkedList.Add(Moving.linkedList.tail.Data + 1); 
+
+            for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
             {
-                if (Moving.linkedList.head.Data == 0 || Moving.linkedList.head.Data == 8 || Moving.linkedList.head.Data == 16)
+                for (int j = 0; j < Moving.bak.Count; j++)
                 {
-                    Game.moving.goPos[Moving.linkedList.head.Data - 8].GetComponent<Image>().sprite = Game.moving.goPos[Moving.linkedList.head.Data - i - 8].GetComponent<Image>().sprite;
+                    Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak[j]); 
                 }
-            }
-        }
+            } 
+        } 
     }
 }
