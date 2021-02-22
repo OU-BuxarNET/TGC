@@ -355,6 +355,7 @@ public class Helpp : MonoBehaviour
     void Endoffield() // конец поля
     {
         List<Domino> list = new List<Domino>();
+
         if (Moving.linkedList.head.Data == 6)
         {
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
@@ -375,7 +376,7 @@ public class Helpp : MonoBehaviour
 
             for(int i = 0; i < Moving.bak.Count; i++)
             {
-                list.Add(Moving.bak[i]);
+                list.Add(Moving.bak.ElementAt(i));
             }
 
             //for (int i = 0; i < list.Count; i++)
