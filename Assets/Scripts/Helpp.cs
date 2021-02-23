@@ -345,7 +345,7 @@ public class Helpp : MonoBehaviour
     void AminPlay() // для анимации дребезжания
     {
         for (int i = 0; i < But.Length; i++)
-            But[i].transform.rotation = Quaternion.Euler(0, 0, 10); 
+            But[i].transform.rotation = Quaternion.Euler(0, 0, 10);
     }
     void Anim() // для анимации дребезжания
     { 
@@ -372,18 +372,9 @@ public class Helpp : MonoBehaviour
             else if (Moving.linkedList.head.Data > 0 && Moving.linkedList.head.Data <= 6)
                 Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
 
-            else Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
-
-            for(int i = 0; i < Moving.bak.Count; i++)
-            {
-                list.Add(Moving.bak.ElementAt(i));
-            }
-
-            //for (int i = 0; i < list.Count; i++)
-            //Debug.Log(list[i]);
+            else Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);  
 
             Debug.Log(list.Count);
-
             for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
             {
                 for (int j = 0; j < list.Count; j++)
