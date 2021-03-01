@@ -367,13 +367,10 @@ public class Helpp : MonoBehaviour
                 Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
             else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1); 
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
             else if (Moving.linkedList.tail.Data >= 27 && Moving.linkedList.tail.Data < 31)
                 Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
-
-            foreach (var i in Moving.bak)
-                list.Add(i);
              
             for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
             {
@@ -381,6 +378,6 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + list[j]);
             }
             Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<Image>().sprite = null;
-        }  
+        }
     }
 }
