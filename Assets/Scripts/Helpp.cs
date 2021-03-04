@@ -91,7 +91,7 @@ public class Helpp : MonoBehaviour
     {
         if (Moving.first == false && Move.next_move == "player")
         {
-            if (Game.check.DoubleDomino() == false)
+            if (Game.check.DoubleDomino(Board.Hand) == false)
             {
                 OneDomOnTable();
                 But[but].SetActive(false);
@@ -114,7 +114,7 @@ public class Helpp : MonoBehaviour
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         { 
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
-            { 
+            {  
                 if (Game.moving.ChangePos(But) == false)
                 {
                     if (animat == true) 
