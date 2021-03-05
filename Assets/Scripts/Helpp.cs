@@ -141,7 +141,7 @@ public class Helpp : MonoBehaviour
             I_RorLDominos.transform.localPosition = new Vector2(830, -400);
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
         }
-        else
+        else 
         {
             double t = (Board.Hand.Count * 100 - 750) / 100;
             I_RorLDominos.transform.localPosition = new Vector2(330, -400);
