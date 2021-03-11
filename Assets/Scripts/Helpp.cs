@@ -357,7 +357,7 @@ public class Helpp : MonoBehaviour
         List<Domino> list = new List<Domino>();
 
         if (Moving.linkedList.head.Data == 6)
-        {
+        { 
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
 
             if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
