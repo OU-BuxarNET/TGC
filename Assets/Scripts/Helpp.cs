@@ -363,7 +363,7 @@ public class Helpp : MonoBehaviour
             if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
             Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-            else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
+            else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48) 
                 Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
             else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
