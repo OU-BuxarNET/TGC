@@ -379,5 +379,5 @@ public class Helpp : MonoBehaviour
             }
             Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<Image>().sprite = null;
         }
-    } 
+    }   
 }  
