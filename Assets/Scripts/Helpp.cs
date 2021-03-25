@@ -352,32 +352,32 @@ public class Helpp : MonoBehaviour
         for (int i = 0; i < But.Length; i++)
             But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
     }
-    //void Endoffield() // конец поля
-    //{
-    //    List<Domino> list = new List<Domino>();
+    void Endoffield() // конец поля
+    {
+        List<Domino> list = new List<Domino>();
 
-    //    if (Moving.linkedList.head.Data == 6)
-    //    {
-    //        Moving.linkedList.Remove(Moving.linkedList.head.Data);
+        if (Moving.linkedList.head.Data == 6)
+        {
+            Moving.linkedList.Remove(Moving.linkedList.head.Data);
 
-    //        if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-    //        else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+            else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-    //        else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
-    //        else if (Moving.linkedList.tail.Data >= 27 && Moving.linkedList.tail.Data < 31)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+            else if (Moving.linkedList.tail.Data >= 27 && Moving.linkedList.tail.Data < 31)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
-    //        for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
-    //        {
-    //            for (int j = 0; j < list.Count; j++)
-    //                Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + list[j]);
-    //        }
-    //        Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<Image>().sprite = null;
-    //    }
-    //}
+            for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
+            {
+                for (int j = 0; j < list.Count; j++)
+                    Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + list[j]);
+            }
+            Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<Image>().sprite = null;
+        }
+    }
 }
