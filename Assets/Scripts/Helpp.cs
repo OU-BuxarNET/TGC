@@ -2,7 +2,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class Helpp : MonoBehaviour
 {
@@ -18,15 +17,15 @@ public class Helpp : MonoBehaviour
     public void Start() // сделать ход
     {
         P_EndOfRound = GameObject.Find("P_EndOfRound");
-        if (LogicComp.difficutlylvl != "easy") 
-            Debug.Log(LogicComp.difficutlylvl); 
+        if (LogicComp.difficutlylvl != "easy")
+            Debug.Log(LogicComp.difficutlylvl);
         else
         {
             game = new Game();
             game.StartGame();
             ButHandPlayer();
-            GameObject B_TakeBar = GameObject.Find("B_TakeBar"); 
-            B_TakeBar.GetComponent<Button>().interactable = false; 
+            GameObject B_TakeBar = GameObject.Find("B_TakeBar");
+            B_TakeBar.GetComponent<Button>().interactable = false;
         }
     }
     void ButHandPlayer() // создание кнопок (кости) в руке
@@ -50,7 +49,7 @@ public class Helpp : MonoBehaviour
         Color color = new Color(1f, 1f, 1f, 0.5f);
 
         if (Moving.first == false)
-        { 
+        {
             Game.moving.WhenCube();
             for (int i = 0; i < Game.moving.goPos.Length; i++)
             {
@@ -60,7 +59,7 @@ public class Helpp : MonoBehaviour
                     Game.moving.goPos[i].GetComponent<Image>().color = color;
                 }
             }
-        } 
+        }
     }
     void OneDomOnTable()
     {
@@ -77,15 +76,15 @@ public class Helpp : MonoBehaviour
         }
         else if (Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<BoxCollider2D>().isTrigger == true
             && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
-             {
-               if (Moving.linkedList.tail.Data <= 47 && Moving.linkedList.tail.Data > 40) 
+        {
+            if (Moving.linkedList.tail.Data <= 47 && Moving.linkedList.tail.Data > 40)
                 Game.moving.goPos[Moving.linkedList.tail.Data - 1].GetComponent<BoxCollider2D>().isTrigger = false;
 
             else if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 39 || Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
                 Game.moving.goPos[Moving.linkedList.tail.Data + 8].GetComponent<BoxCollider2D>().isTrigger = false;
 
             else Game.moving.goPos[Moving.linkedList.tail.Data + 1].GetComponent<BoxCollider2D>().isTrigger = false;
-             } 
+        }
     }
     void DoubleDom() // чтобы игрок мог положить только с одной стороны цепи 
     {
@@ -108,17 +107,17 @@ public class Helpp : MonoBehaviour
     }
     static bool animat = true;
     private void Update()
-    { 
+    {
         Timer();
-        
+
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
-        { 
+        {
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
-            {  
+            {
                 if (Game.moving.ChangePos(But) == false)
                 {
-                    if (animat == true) 
-                        Invoke("Anim", 0.80f); 
+                    if (animat == true)
+                        Invoke("Anim", 0.80f);
                 }
                 else
                 {
@@ -126,7 +125,7 @@ public class Helpp : MonoBehaviour
                     SpriteDomino1(); // ставим спрайт домино на поле    
                     Game.moving.goPos[Moving.CheckId].transform.rotation = Quaternion.Euler(0, 0, 0);
                     DoubleDom();
-                } 
+                }
             }
             else
             {
@@ -137,11 +136,11 @@ public class Helpp : MonoBehaviour
         GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
         GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
         if (But.Length <= 7)
-        { 
+        {
             I_RorLDominos.transform.localPosition = new Vector2(830, -400);
             T_RorLDominos.GetComponent<Text>().text = 0.ToString();
         }
-        else 
+        else
         {
             double t = (Board.Hand.Count * 100 - 750) / 100;
             I_RorLDominos.transform.localPosition = new Vector2(330, -400);
@@ -168,19 +167,19 @@ public class Helpp : MonoBehaviour
         {
             if (but >= 0 && Moving.CheckDomino1 != null)
             {
-                game.MakeMove(); 
+                game.MakeMove();
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
                 Board.Hand.RemoveAt(but);
                 ButHandPlayer();
-                Game.moving.Move(); 
+                Game.moving.Move();
                 SpriteDomino();
                 animat = true;
                 Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
-        } 
-        WayTrue(); 
+        }
+        WayTrue();
         switch (Touch.version)
         {
             case "classic": Game.statisticClassic.EndRound(); break;
@@ -191,15 +190,15 @@ public class Helpp : MonoBehaviour
         {
             if (Move.next_move == "comp")
             {
-                game.MakeMove(); 
-                SpriteDomino();  
+                game.MakeMove();
+                SpriteDomino();
                 if (Board.HandComp.Count > 0)
                     Board.HandComp.RemoveAt(LogicComp.kolforCom);
                 WayTrue();
                 Move.next_move = "player";
             }
-            but = -1; 
- 
+            but = -1;
+
             switch (Touch.version)
             {
                 case "classic": Game.statisticClassic.EndRound(); break;
@@ -220,7 +219,7 @@ public class Helpp : MonoBehaviour
                 B_TakeBar.GetComponent<Button>().interactable = true;
             }
             else if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == true)
-                B_TakeBar.GetComponent<Button>().interactable = false; 
+                B_TakeBar.GetComponent<Button>().interactable = false;
         }
     }
     void SpriteDomino() // кость кладется на выбранный квадрат
@@ -236,7 +235,7 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.bak.head.Data);
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
         }
-    }  
+    }
     void SpriteDomino1() // кость кладется на выбранный квадрат
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
@@ -250,29 +249,29 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[Moving.CheckId].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino1);
             Game.moving.goPos[Moving.CheckId].GetComponent<Image>().color = color;
         }
-    }   
+    }
     void Pr(int b) // нажатие на кость из руки
-    {   
-        but = b; 
+    {
+        but = b;
 
         if (Moving.first == true && Moving.bak.head != null)
-        Moving.bak.Remove(Moving.bak.head.Data);
-        Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString()); 
-        
+            Moving.bak.Remove(Moving.bak.head.Data);
+        Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString());
+
         DeleteDom();
 
         if (Moving.CheckDomino1 != null && Moving.first == true)
-        { 
+        {
             if (Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
-            {  
-                Moving.bak.Add(Moving.CheckDomino1);  
-            }                
+            {
+                Moving.bak.Add(Moving.CheckDomino1);
+            }
             else
             {
                 Game.check.NotDouble();
                 Move.next_move = "player";
-                if (Moving.CheckDomino1.Name != Check.playerMin) 
-                { 
+                if (Moving.CheckDomino1.Name != Check.playerMin)
+                {
                     //Moving.bak.Delete_Index(0);
                     AminPlay();
                     Invoke("Anim", 0.12f);
@@ -294,7 +293,7 @@ public class Helpp : MonoBehaviour
                 if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
-                    Game.moving.goPos[i].GetComponent<Image>().color = color; 
+                    Game.moving.goPos[i].GetComponent<Image>().color = color;
                 }
             }
             Game.moving.WhenCube();
@@ -304,12 +303,12 @@ public class Helpp : MonoBehaviour
     {
         Game.board.TakeBar(true);
         if (Moving.bak.Contains(Moving.CheckDomino[1]))
-        Moving.bak.Remove(Moving.CheckDomino[1]);
+            Moving.bak.Remove(Moving.CheckDomino[1]);
         if (Board.bar.Count == 0)
         {
             Move.next_move = "comp";
             Move1();
-        } 
+        }
         else
         {
             for (int i = 0; i < But.Length; i++)
@@ -339,7 +338,7 @@ public class Helpp : MonoBehaviour
             case "classic": Statistic.endround = false; break;
             case "goat": StatisticGoat.endround = false; break;
         }
-       
+
         P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0);
     }
     void AminPlay() // для анимации дребезжания
@@ -348,36 +347,36 @@ public class Helpp : MonoBehaviour
             But[i].transform.rotation = Quaternion.Euler(0, 0, 10);
     }
     void Anim() // для анимации дребезжания
-    { 
+    {
         for (int i = 0; i < But.Length; i++)
             But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
     }
-    //void Endoffield() // конец поля
-    //{
-    //    List<Domino> list = new List<Domino>();
+    void Endoffield() // конец поля
+    {
+        //    List<Domino> list = new List<Domino>();
 
-    //    if (Moving.linkedList.head.Data == 6)
-    //    {
-    //        Moving.linkedList.Remove(Moving.linkedList.head.Data);
+        //    if (Moving.linkedList.head.Data == 6)
+        //    {
+        //        Moving.linkedList.Remove(Moving.linkedList.head.Data);
 
-    //        if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+        //        if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-    //        else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+        //        else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
+        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-    //        else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+        //        else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
-    //        else if (Moving.linkedList.tail.Data >= 27 && Moving.linkedList.tail.Data < 31)
-    //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+        //        else if (Moving.linkedList.tail.Data >= 27 && Moving.linkedList.tail.Data < 31)
+        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
-    //        for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
-    //        {
-    //            for (int j = 0; j < list.Count; j++)
-    //                Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + list[j]);
-    //        }
-    //        Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<Image>().sprite = null;
-    //    }
-    //}
+        //        for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
+        //        {
+        //            for (int j = 0; j < list.Count; j++)
+        //                Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + list[j]);
+        //        }
+        //        Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<Image>().sprite = null;
+        //}
+    }
 }
