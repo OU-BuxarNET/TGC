@@ -1,7 +1,8 @@
 ﻿using Domino1;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; 
+using System.Collections.Generic;
 
 public class Helpp : MonoBehaviour
 {
@@ -351,32 +352,57 @@ public class Helpp : MonoBehaviour
         for (int i = 0; i < But.Length; i++)
             But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
     }
+
     void Endoffield() // конец поля
-    {
-        //    List<Domino> list = new List<Domino>();
+    { 
+        List<Domino> list = new List<Domino>(Moving.bak.Count);
 
-        //    if (Moving.linkedList.head.Data == 6)
-        //    {
-        //        Moving.linkedList.Remove(Moving.linkedList.head.Data);
+        Domino [] mas = new Domino [Moving.bak.Count];
+        int[] mas1 = new int[Moving.linkedList.Count];
 
-        //        if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
-        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+        if (Moving.linkedList.head.Data == 0)
+        {
+            for (int i = 0; i < mas.Length; i++) // все доминошки, которые лежат на поле
+            {
+                mas[i] = Moving.bak.head.Data;
+                Moving.bak.Remove(Moving.bak.head.Data);
+            }
 
-        //        else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
-        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+            for (int i = 0; i < mas1.Length; i++) // все квадратики, на которых лежат доминошки
+            {
+                mas1[i] = Moving.linkedList.head.Data;
+                Moving.linkedList.Remove(Moving.linkedList.head.Data);
+            }
+           
+            for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
+            {
+                Game.moving.goPos[mas1[i]].GetComponent<Image>().sprite = null;
+                Moving.linkedList.Add(mas1[i]);
+            }
+             
+            // добавляем + 1 к хвосту
+            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-        //        else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
-        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+            else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-        //        else if (Moving.linkedList.tail.Data >= 27 && Moving.linkedList.tail.Data < 31)
-        //            Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
-        //        for (int i = Moving.linkedList.head.Data; i <= Moving.linkedList.tail.Data; i++)
-        //        {
-        //            for (int j = 0; j < list.Count; j++)
-        //                Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + list[j]);
-        //        }
-        //        Game.moving.goPos[Moving.linkedList.head.Data + 1].GetComponent<Image>().sprite = null;
-        //}
+            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+
+            for (int i = 0; i < mas.Length; i++)
+            { 
+                Moving.linkedList.Remove(Moving.linkedList.head.Data);
+                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + mas[i].ToString()); 
+            }  
+
+            for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
+            {
+                Moving.bak.Add(mas[i]);
+            } 
+        }
     }
 }
