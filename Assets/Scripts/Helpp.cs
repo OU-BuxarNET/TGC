@@ -354,9 +354,7 @@ public class Helpp : MonoBehaviour
     }
 
     void Endoffield() // конец поля
-    { 
-        List<Domino> list = new List<Domino>(Moving.bak.Count);
-
+    {  
         Domino [] mas = new Domino [Moving.bak.Count];
         int[] mas1 = new int[Moving.linkedList.Count];
 
@@ -366,43 +364,69 @@ public class Helpp : MonoBehaviour
             {
                 mas[i] = Moving.bak.head.Data;
                 Moving.bak.Remove(Moving.bak.head.Data);
-            }
+            } 
+
+            // добавляем + 1 к хвосту
+            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+
+            else if (Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+
+            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
+
+            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+
+
+            Debug.Log(Moving.linkedList.Count + " до");
 
             for (int i = 0; i < mas1.Length; i++) // все квадратики, на которых лежат доминошки
             {
                 mas1[i] = Moving.linkedList.head.Data;
                 Moving.linkedList.Remove(Moving.linkedList.head.Data);
             }
-           
+            
             for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
             {
-                Game.moving.goPos[mas1[i]].GetComponent<Image>().sprite = null;
+                if (i == 0)
+                {
+                    Game.moving.goPos[mas1[i]].GetComponent<Image>().sprite = null;
+                    continue;
+                }
                 Moving.linkedList.Add(mas1[i]);
             }
-             
-            // добавляем + 1 к хвосту
-            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-            else if (Moving.linkedList.tail.Data == 47 || Moving.linkedList.tail.Data == 48)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+            Debug.Log(Moving.linkedList.Count + " после");
 
-            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
-            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
-
-            for (int i = 0; i < mas.Length; i++)
-            { 
-                Moving.linkedList.Remove(Moving.linkedList.head.Data);
-                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + mas[i].ToString()); 
-            }  
-
-            for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
+            for (int i = 0; i < mas.Length; i++) // выкладываем на поле домино со сдвигом
             {
-                Moving.bak.Add(mas[i]);
-            } 
+                //if (i == 0)
+                //{
+                //    Moving.linkedList.Remove(Moving.linkedList.head.Data);
+                //    continue;
+                //}
+                Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + mas[i].ToString()); 
+            }
+
+            foreach (var i in Moving.linkedList)
+                Debug.Log(i);
+
+            //for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
+            //{ 
+            //    Moving.linkedList.Add(mas1[i]);
+            //}
+
+            //for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
+            //{
+            //    Moving.bak.Add(mas[i]);
+            //} 
+
+            Debug.Log(Moving.bak.head.Data + " " + Moving.linkedList.head.Data);
+            Game.moving.WhenCube();
+            WayTrue(); 
         }
     }
 }
