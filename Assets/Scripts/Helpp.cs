@@ -147,6 +147,11 @@ public class Helpp : MonoBehaviour
             I_RorLDominos.transform.localPosition = new Vector2(330, -400);
             T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
         }
+
+        if (Moving.linkedList.head.Data == 0)
+        {
+            Endoffield();
+        }
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
@@ -206,7 +211,7 @@ public class Helpp : MonoBehaviour
                 case "goat": Game.statisticGoat.EndRound(); break;
             }
         }
-        Endoffield();
+        
         ToTake();
     }
     void ToTake() // активация кнопки взять из бара
@@ -357,6 +362,8 @@ public class Helpp : MonoBehaviour
     {  
         Domino [] mas = new Domino [Moving.bak.Count];
         int[] mas1;
+        Color color = new Color(1f, 1f, 1f, 0f);
+        Color color1 = new Color(1f, 1f, 1f, 0.7f);
 
         if (Moving.linkedList.head.Data == 0)
         {
@@ -365,7 +372,8 @@ public class Helpp : MonoBehaviour
                 mas[i] = Moving.bak.head.Data;
                 Moving.bak.Remove(Moving.bak.head.Data);
             }
-
+            Game.moving.goPos[Moving.linkedList.head.Data+1].GetComponent<Image>().sprite = null;
+            Game.moving.goPos[Moving.linkedList.head.Data+1].GetComponent<Image>().color = color;
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
 
             // добавляем + 1 к хвосту
@@ -385,9 +393,9 @@ public class Helpp : MonoBehaviour
 
 
             for (int i = 0; i < mas1.Length; i++) // все квадратики, на которых лежат доминошки
-            {
+            { 
                 mas1[i] = Moving.linkedList.head.Data;
-                Moving.linkedList.Remove(Moving.linkedList.head.Data);
+                Moving.linkedList.Remove(Moving.linkedList.head.Data);                   
             }
 
             for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
@@ -396,7 +404,7 @@ public class Helpp : MonoBehaviour
             }
 
             Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
-            for (int i = 0; i < mas1.Length; i++) // выкладываем на поле домино со сдвигом
+            for (int i = 0; i < mas.Length; i++) // выкладываем на поле домино со сдвигом
             {
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + mas[i].ToString());
                 Moving.linkedList.Remove(Moving.linkedList.head.Data);
@@ -405,16 +413,15 @@ public class Helpp : MonoBehaviour
             Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
             for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
             {
+                Game.moving.goPos[mas1[i]].GetComponent<Image>().color = color1;
                 Moving.linkedList.Add(mas1[i]);
             }
 
             for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
             {
                 Moving.bak.Add(mas[i]);
-            }
+            }  
 
-            
-            Game.moving.WhenCube();
             WayTrue(); 
         }
     }
