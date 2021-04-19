@@ -420,9 +420,101 @@ public class Helpp : MonoBehaviour
             for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
             {
                 Moving.bak.Add(mas[i]);
-            }  
+            }
+
+            RotateDomino();
 
             WayTrue(); 
         }
+    }
+    void RotateDomino()
+    { 
+        int[] masLinked = new int[Moving.linkedList.Count]; 
+
+        for (int i = 0; i < masLinked.Length; i++) 
+        {
+            masLinked[i] = Moving.linkedList.head.Data;
+            Moving.linkedList.Remove(Moving.linkedList.head.Data);
+        }
+
+        for (int i = 0; i < masLinked.Length; i++)
+        {
+            int j = i;
+            if (masLinked[i] == 0)
+            { 
+                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
+                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
+
+            }
+            else
+            {
+                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[j-1]].GetComponent<Image>().sprite.name)); 
+                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
+            } 
+        }
+        //Convert.ToInt32(Game.moving.goPos[masLinked[j-1]].GetComponent<Image>().transform.rotation.z)
+
+        for (int i = 0; i < masLinked.Length; i++) 
+        {
+            Moving.linkedList.Add(masLinked[i]);
+        }
+    }
+    int Rotate(int index, Domino domino, Domino lastdomino)
+    {
+        if (index == 0)
+        {
+            if (domino.Head == domino.Tail) 
+                return 0; 
+            else 
+                return 90; 
+        }  
+        else if (index == 16 || index == 8 || index == 39 || index == 48)
+        {
+            if (domino.Head == domino.Tail) 
+                return 90;
+            else
+            {
+                //if (lastdomino == 180)
+                //    return 90;
+                //else if (lastdomino == 90)
+                //    return 180;
+                if (domino.Tail == lastdomino.Tail)
+                    return 180;
+                else if (domino.Tail == lastdomino.Head)
+                    return 0;
+                else if (domino.Head == lastdomino.Head)
+                    return 0;
+                else if (domino.Head == lastdomino.Tail)
+                    return 180;
+            }
+        }
+        else if (index > 24 && index <= 31 || index >= 56 && index <= 62 || index >= 0 && index <= 7)
+        {
+            if (domino.Head == domino.Tail) 
+                return 0;
+            else
+            {
+                //if (lastdomino == 90)
+                //    return -90;
+                //else if (lastdomino == -90)
+                //    return 90;
+                if (domino.Tail == lastdomino.Tail)
+                    return 90;
+                else if (domino.Tail == lastdomino.Head)
+                    return -90;
+                else if (domino.Head == lastdomino.Head)
+                    return -90;
+                else if (domino.Head == lastdomino.Tail)
+                    return 90;
+            } 
+        }
+        else if (index >= 40 && index <= 47)
+        {
+            //if (lastdomino == 90)
+            //    return -90;
+            //else if (lastdomino == -90)
+            //    return 90;
+        }
+        return 0;
     }
 }
