@@ -133,6 +133,11 @@ public class Helpp : MonoBehaviour
                 if (Move.next_move == "comp")
                     Move1();
             }
+
+            if (Moving.linkedList.head.Data >= 0 && Moving.linkedList.head.Data <= 7)
+            {
+                Endoffield();
+            }
         }
         GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
         GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
@@ -148,10 +153,7 @@ public class Helpp : MonoBehaviour
             T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
         }
 
-        if (Moving.linkedList.head.Data == 0)
-        {
-            Endoffield();
-        }
+      
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
@@ -203,7 +205,7 @@ public class Helpp : MonoBehaviour
                 WayTrue();
                 Move.next_move = "player";
             }
-            but = -1;
+            but =-1;
 
             switch (Touch.version)
             {
@@ -376,21 +378,9 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[Moving.linkedList.head.Data+1].GetComponent<Image>().color = color;
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
 
-            // добавляем + 1 к хвосту
-            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+            Shift(); // добавляем к голове либо к хвосту + 1
 
-            else if (Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
-
-            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
-
-            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
-
-              mas1 = new int[Moving.linkedList.Count];
-
+            mas1 = new int[Moving.linkedList.Count]; 
 
             for (int i = 0; i < mas1.Length; i++) // все квадратики, на которых лежат доминошки
             { 
@@ -408,23 +398,65 @@ public class Helpp : MonoBehaviour
             {
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + mas[i].ToString());
                 Moving.linkedList.Remove(Moving.linkedList.head.Data);
+            }  
+
+            if (Moving.linkedList.Count != 0)
+            { 
+                for (int i = 0; i < Moving.linkedList.Count; i++) // убираем все домино с поля
+                {
+                    Moving.linkedList.Remove(Moving.linkedList.head.Data);
+                }
             }
 
             Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
+
             for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
             {
                 Game.moving.goPos[mas1[i]].GetComponent<Image>().color = color1;
                 Moving.linkedList.Add(mas1[i]);
-            }
+            }  
 
             for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
             {
                 Moving.bak.Add(mas[i]);
             }
+             
+            WayTrue(); 
 
             RotateDomino();
+        }
+    }
+    void Shift()
+    {
+        if (Moving.linkedList.head.Data == 0)
+        {  
+            // добавляем + 1 к хвосту
+            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
 
-            WayTrue(); 
+            else if (Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+
+            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
+
+            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+        }
+        else if (Moving.linkedList.head.Data == 62)
+        {
+            // добавляем + 1 к голове
+            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 8);
+
+            else if (Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 8);
+
+            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+
+            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
         }
     }
     void RotateDomino()
@@ -437,20 +469,24 @@ public class Helpp : MonoBehaviour
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
         }
 
+        foreach (int i in masLinked)
+            Debug.Log(i);
+
+        int j = 0;
         for (int i = 0; i < masLinked.Length; i++)
-        {
-            int j = i;
+        { 
             if (masLinked[i] == 0)
             { 
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
-                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
+                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate); 
 
             }
-            else
+            else if (i >= 1)
             {
-                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[j-1]].GetComponent<Image>().sprite.name)); 
-                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
-            } 
+                j = i;
+                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[j-1]].GetComponent<Image>().sprite.name));
+                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate); 
+            }
         }
         //Convert.ToInt32(Game.moving.goPos[masLinked[j-1]].GetComponent<Image>().transform.rotation.z)
 
