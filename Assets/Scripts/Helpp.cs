@@ -134,7 +134,7 @@ public class Helpp : MonoBehaviour
                     Move1();
             }
 
-            if (Moving.linkedList.head.Data >= 0 && Moving.linkedList.head.Data <= 7)
+            if (Moving.linkedList.head.Data == 0)
             {
                 Endoffield();
             }
@@ -376,9 +376,21 @@ public class Helpp : MonoBehaviour
             }
             Game.moving.goPos[Moving.linkedList.head.Data+1].GetComponent<Image>().sprite = null;
             Game.moving.goPos[Moving.linkedList.head.Data+1].GetComponent<Image>().color = color;
+
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
 
-            Shift(); // добавляем к голове либо к хвосту + 1
+            // добавляем + 1 к хвосту
+            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+
+            else if (Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
+
+            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
+
+            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1); // добавляем к голове либо к хвосту + 1
 
             mas1 = new int[Moving.linkedList.Count]; 
 
@@ -394,18 +406,18 @@ public class Helpp : MonoBehaviour
             }
 
             Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
+
+
             for (int i = 0; i < mas.Length; i++) // выкладываем на поле домино со сдвигом
             {
+                Debug.Log(mas[i]);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + mas[i].ToString());
-                Moving.linkedList.Remove(Moving.linkedList.head.Data);
+                Moving.linkedList.Remove(Moving.linkedList.head.Data); 
             }  
 
             if (Moving.linkedList.Count != 0)
-            { 
-                for (int i = 0; i < Moving.linkedList.Count; i++) // убираем все домино с поля
-                {
-                    Moving.linkedList.Remove(Moving.linkedList.head.Data);
-                }
+            {
+                Moving.linkedList.Clear(); 
             }
 
             Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
@@ -472,7 +484,7 @@ public class Helpp : MonoBehaviour
         foreach (int i in masLinked)
             Debug.Log(i);
 
-        int j = 0;
+        int j;
         for (int i = 0; i < masLinked.Length; i++)
         { 
             if (masLinked[i] == 0)
