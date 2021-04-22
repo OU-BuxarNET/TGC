@@ -133,12 +133,13 @@ public class Helpp : MonoBehaviour
                 if (Move.next_move == "comp")
                     Move1();
             }
-
-            if (Moving.linkedList.head.Data == 0)
-            {
-                Endoffield();
-            }
         }
+
+        if (Moving.linkedList.head.Data == 0)
+        {
+            Endoffield();
+        }
+
         GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
         GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
         if (But.Length <= 7)
@@ -151,9 +152,7 @@ public class Helpp : MonoBehaviour
             double t = (Board.Hand.Count * 100 - 750) / 100;
             I_RorLDominos.transform.localPosition = new Vector2(330, -400);
             T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
-        }
-
-      
+        } 
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
@@ -171,6 +170,8 @@ public class Helpp : MonoBehaviour
     public void Move1() // сделать ход
     {
         Game.moving.PosGoHand();
+
+
         if (Move.next_move == "player")
         {
             if (but >= 0 && Moving.CheckDomino1 != null)
@@ -214,7 +215,9 @@ public class Helpp : MonoBehaviour
             }
         }
         
-        ToTake();
+        ToTake(); 
+
+       
     }
     void ToTake() // активация кнопки взять из бара
     {
@@ -374,11 +377,7 @@ public class Helpp : MonoBehaviour
                 mas[i] = Moving.bak.head.Data;
                 Moving.bak.Remove(Moving.bak.head.Data);
             }
-            Game.moving.goPos[Moving.linkedList.head.Data+1].GetComponent<Image>().sprite = null;
-            Game.moving.goPos[Moving.linkedList.head.Data+1].GetComponent<Image>().color = color;
-
-            Moving.linkedList.Remove(Moving.linkedList.head.Data);
-
+             
             // добавляем + 1 к хвосту
             if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
                 Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
@@ -389,8 +388,10 @@ public class Helpp : MonoBehaviour
             else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
                 Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
 
-            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1); // добавляем к голове либо к хвосту + 1
+            else if (Moving.linkedList.tail.Data >= 27 && Moving.linkedList.tail.Data < 31)
+                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
+
+            Moving.linkedList.Remove(Moving.linkedList.head.Data);
 
             mas1 = new int[Moving.linkedList.Count]; 
 
@@ -405,19 +406,23 @@ public class Helpp : MonoBehaviour
                 Moving.linkedList.Add(mas1[i]);
             }
 
-            Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
+            //if (Game.moving.goPos[0].GetComponent<Image>().sprite.name != "WhiteSquare")
+            //    Game.moving.goPos[0].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
 
+            //foreach (int i in mas1)
+            //    Debug.Log(i + " mas1");
+            foreach (var i in mas)
+                Debug.Log(i + " mas");
 
             for (int i = 0; i < mas.Length; i++) // выкладываем на поле домино со сдвигом
             {
-                Debug.Log(mas[i]);
                 Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + mas[i].ToString());
-                Moving.linkedList.Remove(Moving.linkedList.head.Data); 
-            }  
+                Moving.linkedList.Remove(Moving.linkedList.head.Data);
+            }
 
             if (Moving.linkedList.Count != 0)
             {
-                Moving.linkedList.Clear(); 
+                Moving.linkedList.Clear();
             }
 
             Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
@@ -426,36 +431,22 @@ public class Helpp : MonoBehaviour
             {
                 Game.moving.goPos[mas1[i]].GetComponent<Image>().color = color1;
                 Moving.linkedList.Add(mas1[i]);
-            }  
+            }
 
             for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
             {
                 Moving.bak.Add(mas[i]);
             }
-             
-            WayTrue(); 
+
+            
+            WayTrue();
 
             RotateDomino();
         }
     }
     void Shift()
     {
-        if (Moving.linkedList.head.Data == 0)
-        {  
-            // добавляем + 1 к хвосту
-            if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
-
-            else if (Moving.linkedList.tail.Data == 40 || Moving.linkedList.tail.Data == 48)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
-
-            else if (Moving.linkedList.tail.Data > 40 && Moving.linkedList.tail.Data <= 47)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
-
-            else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
-        }
-        else if (Moving.linkedList.head.Data == 62)
+        if (Moving.linkedList.head.Data == 62)
         {
             // добавляем + 1 к голове
             if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
@@ -481,12 +472,14 @@ public class Helpp : MonoBehaviour
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
         }
 
-        foreach (int i in masLinked)
-            Debug.Log(i);
+        //Debug.Log(Moving.bak.Count + " " + Moving.linkedList.Count);
+        //foreach (int i in masLinked)
+        //    Debug.Log(i);
+        
 
         int j;
         for (int i = 0; i < masLinked.Length; i++)
-        { 
+        {
             if (masLinked[i] == 0)
             { 
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
@@ -496,11 +489,10 @@ public class Helpp : MonoBehaviour
             else if (i >= 1)
             {
                 j = i;
-                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[j-1]].GetComponent<Image>().sprite.name));
+                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i-1]].GetComponent<Image>().sprite.name));
                 Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate); 
             }
         }
-        //Convert.ToInt32(Game.moving.goPos[masLinked[j-1]].GetComponent<Image>().transform.rotation.z)
 
         for (int i = 0; i < masLinked.Length; i++) 
         {
