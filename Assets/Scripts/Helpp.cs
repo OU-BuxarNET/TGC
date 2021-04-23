@@ -514,10 +514,6 @@ public class Helpp : MonoBehaviour
                 return 90;
             else
             {
-                //if (lastdomino == 180)
-                //    return 90;
-                //else if (lastdomino == 90)
-                //    return 180;
                 if (domino.Tail == lastdomino.Tail)
                     return 180;
                 else if (domino.Tail == lastdomino.Head)
@@ -534,10 +530,6 @@ public class Helpp : MonoBehaviour
                 return 0;
             else
             {
-                //if (lastdomino == 90)
-                //    return -90;
-                //else if (lastdomino == -90)
-                //    return 90;
                 if (domino.Tail == lastdomino.Tail)
                     return 90;
                 else if (domino.Tail == lastdomino.Head)
