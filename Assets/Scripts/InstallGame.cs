@@ -19,7 +19,7 @@ public class InstallGame : MonoBehaviour //скрип установки
         bool RakNaGoreSvistit = false;
         int i = 0;
         while (RakNaGoreSvistit == false)
-        {
+        { 
             float PosX = 232f + i * 60f; //тут сами подгоняйте это размер смещения
             GameObject But = Instantiate(Resources.Load<GameObject>(Text), transform, false); //загружаем копию префаба из ресурсов.
            // But.transform.SetParent(Parent); //Помещаем кнопку к родителю
