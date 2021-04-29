@@ -347,9 +347,8 @@ public class Helpp : MonoBehaviour
         switch (Touch.version)
         {
             case "classic": Statistic.endround = false; break;
-            case "goat": StatisticGoat.endround = false; break;
+            case "goat": StatisticGoat.endround = false; break; 
         }
-
         P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0);
     }
     void AminPlay() // для анимации дребезжания
