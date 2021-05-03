@@ -410,7 +410,7 @@ public class Helpp : MonoBehaviour
 
             else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
                 Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
-             
+               
             Shift(mas);
         }
     }
