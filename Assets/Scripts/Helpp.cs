@@ -447,7 +447,7 @@ public class Helpp : MonoBehaviour
         {
             Game.moving.goPos[mas1[i]].GetComponent<Image>().color = color1;
             Moving.linkedList.Add(mas1[i]);
-        }
+        } 
 
         for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
         {
@@ -466,10 +466,6 @@ public class Helpp : MonoBehaviour
             masLinked[i] = Moving.linkedList.head.Data;
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
         }
-
-        //Debug.Log(Moving.bak.Count + " " + Moving.linkedList.Count);
-        //foreach (int i in masLinked)
-        //Debug.Log(i);
         
         int j;
         for (int i = 0; i < masLinked.Length; i++)
