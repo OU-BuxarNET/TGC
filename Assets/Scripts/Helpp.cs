@@ -447,7 +447,7 @@ public class Helpp : MonoBehaviour
         {
             Game.moving.goPos[mas1[i]].GetComponent<Image>().color = color1;
             Moving.linkedList.Add(mas1[i]);
-        } 
+        }  
 
         for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
         {
