@@ -45,6 +45,7 @@ public class Helpp : MonoBehaviour
             But[i].GetComponent<Button>().onClick.AddListener(() => Pr(j2));
         }
     }
+    static int kolactivekube = 2;
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
@@ -58,6 +59,7 @@ public class Helpp : MonoBehaviour
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
                     Game.moving.goPos[i].GetComponent<Image>().color = color;
+                    kolactivekube = 2;
                 }
             }
         }
@@ -121,7 +123,8 @@ public class Helpp : MonoBehaviour
                         Invoke("Anim", 0.80f);
                 }
                 else
-                {
+                { 
+                    kolactivekube = 1;
                     animat = false;
                     SpriteDomino1(); // ставим спрайт домино на поле    
                     Game.moving.goPos[Moving.CheckId].transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -171,10 +174,9 @@ public class Helpp : MonoBehaviour
     {
         Game.moving.PosGoHand();
 
-
         if (Move.next_move == "player")
         {
-            if (but >= 0 && Moving.CheckDomino1 != null)
+            if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1) 
             {
                 game.MakeMove();
                 for (int i = 0; i < But.Length; i++)
@@ -182,7 +184,7 @@ public class Helpp : MonoBehaviour
                 Board.Hand.RemoveAt(but);
                 ButHandPlayer();
                 Game.moving.Move();
-                SpriteDomino();
+                //SpriteDomino();
                 animat = true;
                 Move.next_move = "comp";
             }
@@ -466,11 +468,13 @@ public class Helpp : MonoBehaviour
             masLinked[i] = Moving.linkedList.head.Data;
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
         }
-        
+
+        Debug.Log(masLinked[0] + " head");
+
         int j;
         for (int i = 0; i < masLinked.Length; i++)
         {
-            if (masLinked[i] == 0)
+            if (masLinked[i] == 8)
             { 
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
                 Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate); 
@@ -490,16 +494,14 @@ public class Helpp : MonoBehaviour
     }
     int Rotate(int index, Domino domino, Domino lastdomino)
     {
-        if (index == 0)
+        if (index == 8)
         {
             if (domino.Head == domino.Tail) 
-                return 0; 
-            else 
                 return 90; 
-        }  
+        }
         else if (index == 16 || index == 8 || index == 39 || index == 48)
         {
-            if (domino.Head == domino.Tail) 
+            if (domino.Head == domino.Tail)
                 return 90;
             else
             {
@@ -513,7 +515,7 @@ public class Helpp : MonoBehaviour
                     return 180;
             }
         }
-        else if (index > 24 && index <= 31 || index >= 56 && index <= 62 || index >= 0 && index <= 7)
+        else if (index >= 24 && index <= 31 || index >= 56 && index <= 62 || index >= 0 && index <= 7)
         {
             if (domino.Head == domino.Tail) 
                 return 0;
@@ -527,14 +529,23 @@ public class Helpp : MonoBehaviour
                     return -90;
                 else if (domino.Head == lastdomino.Tail)
                     return 90;
-            } 
+            }
         }
         else if (index >= 40 && index <= 47)
         {
-            //if (lastdomino == 90)
-            //    return -90;
-            //else if (lastdomino == -90)
-            //    return 90;
+            if (domino.Head == domino.Tail)
+                return 0;
+            else
+            {
+                if (domino.Tail == lastdomino.Tail)
+                    return -90;
+                else if (domino.Tail == lastdomino.Head)
+                    return 90;
+                else if (domino.Head == lastdomino.Head)
+                    return 90;
+                else if (domino.Head == lastdomino.Tail)
+                    return -90;
+            }
         }
         return 0;
     }
