@@ -45,7 +45,7 @@ public class Helpp : MonoBehaviour
             But[i].GetComponent<Button>().onClick.AddListener(() => Pr(j2));
         }
     }
-    static int kolactivekube = 2;
+    static int kolactivekube = 1;
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
@@ -178,13 +178,14 @@ public class Helpp : MonoBehaviour
         {
             if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1) 
             {
+                
                 game.MakeMove();
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
                 Board.Hand.RemoveAt(but);
                 ButHandPlayer();
                 Game.moving.Move();
-                //SpriteDomino();
+                SpriteDomino();
                 animat = true;
                 Move.next_move = "comp";
             }
@@ -494,25 +495,16 @@ public class Helpp : MonoBehaviour
     }
     int Rotate(int index, Domino domino, Domino lastdomino)
     {
-        if (index == 8)
-        {
-            if (domino.Head == domino.Tail) 
-                return 90; 
-        }
-        else if (index == 16 || index == 8 || index == 39 || index == 48)
+        if (index == 16 || index == 8 || index == 39 || index == 48)
         {
             if (domino.Head == domino.Tail)
                 return 90;
             else
             {
-                if (domino.Tail == lastdomino.Tail)
+                if (domino.Tail == lastdomino.Tail || domino.Head == lastdomino.Tail)
                     return 180;
-                else if (domino.Tail == lastdomino.Head)
+                else if (domino.Tail == lastdomino.Head || domino.Head == lastdomino.Head)
                     return 0;
-                else if (domino.Head == lastdomino.Head)
-                    return 0;
-                else if (domino.Head == lastdomino.Tail)
-                    return 180;
             }
         }
         else if (index >= 24 && index <= 31 || index >= 56 && index <= 62 || index >= 0 && index <= 7)
@@ -521,14 +513,10 @@ public class Helpp : MonoBehaviour
                 return 0;
             else
             {
-                if (domino.Tail == lastdomino.Tail)
+                if (domino.Tail == lastdomino.Tail || domino.Head == lastdomino.Tail)
                     return 90;
-                else if (domino.Tail == lastdomino.Head)
+                else if (domino.Tail == lastdomino.Head || domino.Head == lastdomino.Head)
                     return -90;
-                else if (domino.Head == lastdomino.Head)
-                    return -90;
-                else if (domino.Head == lastdomino.Tail)
-                    return 90;
             }
         }
         else if (index >= 40 && index <= 47)
@@ -537,14 +525,10 @@ public class Helpp : MonoBehaviour
                 return 0;
             else
             {
-                if (domino.Tail == lastdomino.Tail)
+                if (domino.Tail == lastdomino.Tail || domino.Head == lastdomino.Tail)
                     return -90;
-                else if (domino.Tail == lastdomino.Head)
+                else if (domino.Tail == lastdomino.Head || domino.Head == lastdomino.Head)
                     return 90;
-                else if (domino.Head == lastdomino.Head)
-                    return 90;
-                else if (domino.Head == lastdomino.Tail)
-                    return -90;
             }
         }
         return 0;
