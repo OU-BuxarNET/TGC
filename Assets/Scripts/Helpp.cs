@@ -170,13 +170,13 @@ public class Helpp : MonoBehaviour
             GameSeconds = 0.0f;
         }
     }
-    public void Move1() // сделать ход
+    public void Move1() // сделать ход 
     {
         Game.moving.PosGoHand();
 
         if (Move.next_move == "player")
         {
-            if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1) 
+            if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1)  
             {
                 
                 game.MakeMove();
