@@ -176,9 +176,8 @@ public class Helpp : MonoBehaviour
 
         if (Move.next_move == "player")
         {
-            if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1)  
-            {
-                
+            if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1)   
+            { 
                 game.MakeMove();
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
@@ -217,10 +216,7 @@ public class Helpp : MonoBehaviour
                 case "goat": Game.statisticGoat.EndRound(); break;
             }
         }
-        
         ToTake(); 
-
-       
     }
     void ToTake() // активация кнопки взять из бара
     {
@@ -364,7 +360,6 @@ public class Helpp : MonoBehaviour
         for (int i = 0; i < But.Length; i++)
             But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
     }
-
     void Endoffield() // конец поля
     {  
         Domino [] mas = new Domino [Moving.bak.Count]; 
