@@ -509,7 +509,7 @@ public class Helpp : MonoBehaviour
             else
             {
                 if (domino.Tail == lastdomino.Tail || domino.Head == lastdomino.Tail)
-                    return 90;
+                    return 90; 
                 else if (domino.Tail == lastdomino.Head || domino.Head == lastdomino.Head)
                     return -90;
             }
