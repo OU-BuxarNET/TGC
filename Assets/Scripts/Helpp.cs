@@ -514,7 +514,7 @@ public class Helpp : MonoBehaviour
                     return -90;
             }
         }
-        else if (index >= 40 && index <= 47)
+        else if (index >= 40 && index <= 47)  
         {
             if (domino.Head == domino.Tail)
                 return 0;
