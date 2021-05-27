@@ -186,6 +186,7 @@ public class Helpp : MonoBehaviour
                 Game.moving.Move();
                 SpriteDomino();
                 animat = true;
+                Fill();
                 Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
@@ -205,6 +206,7 @@ public class Helpp : MonoBehaviour
                 SpriteDomino();
                 if (Board.HandComp.Count > 0)
                     Board.HandComp.RemoveAt(LogicComp.kolforCom);
+                Fill();
                 WayTrue();
                 Move.next_move = "player";
             }
@@ -514,7 +516,7 @@ public class Helpp : MonoBehaviour
                     return -90;
             }
         }
-        else if (index >= 40 && index <= 47)   // заебало
+        else if (index >= 40 && index <= 47) 
         {
             if (domino.Head == domino.Tail)
                 return 0;
@@ -528,4 +530,101 @@ public class Helpp : MonoBehaviour
         }
         return 0;
     }
+
+    public static DoublyLinkedList<string> PlayersMove; // и - игрок, к - комп
+    int[,] PlayerMove; // значение 0 - право, 1 - лево
+
+    void Fill()
+    {
+        PlayerMove = new int[2, 2];
+        PlayersMove = new DoublyLinkedList<string>();
+
+        if (Moving.LorR == false)
+        {
+            if (Move.next_move == "player")
+            {
+                PlayersMove.Add("p");
+            }
+            else PlayersMove.Add("c");
+        }
+        else
+        {
+            if (Move.next_move == "player")
+            {
+                PlayersMove.AddFirst("p");
+            }
+            else PlayersMove.AddFirst("c");
+        }
+
+        if (PlayersMove.tail.Data == "p")
+        {
+            PlayerMove[0, 0] = Moving.linkedList.tail.Data;
+            PlayerMove[1, 0] = 0;
+        }
+        else if (PlayersMove.head.Data == "p")
+        {
+            PlayerMove[0, 0] = Moving.linkedList.head.Data;
+            PlayerMove[1, 0] = 1;
+        }
+
+        if (PlayersMove.Count >= 4)
+        {
+            if (PlayersMove.tail.Data == "p")
+            {
+                PlayerMove[0, 1] = Moving.linkedList.tail.Data;
+                PlayerMove[1, 1] = 0;
+            }
+            else if (PlayersMove.head.Data == "p")
+            {
+                PlayerMove[0, 1] = Moving.linkedList.head.Data;
+                PlayerMove[1, 1] = 1;
+            }
+        }
+
+        int itog = NotClose();
+        Debug.Log(itog);
+    }
+
+    int NotClose()
+    {
+        if (PlayersMove.Count >= 3)
+        {
+            if (PlayerMove[1, 0] == 0)
+            {
+                if (PlayerMove[0, 0] != Moving.linkedList.tail.Data)
+                    PlayerMove[0, 0] = -1;
+            }
+            else
+            {
+                if (PlayerMove[0, 1] != Moving.linkedList.head.Data)
+                    PlayerMove[0, 1] = -1;
+            }
+
+            if (PlayerMove[1, 1] == 0)
+            {
+                if (PlayerMove[0, 1] != Moving.linkedList.tail.Data)
+                    PlayerMove[0, 1] = -1;
+            }
+            else
+            {
+                if (PlayerMove[0, 1] != Moving.linkedList.head.Data)
+                    PlayerMove[0, 1] = -1;
+            }
+
+            if (PlayerMove[0, 0] == -1)
+            {
+                if (PlayerMove[1, 0] == 0)
+                    return Moving.linkedList.tail.Data;
+                else return Moving.linkedList.head.Data;
+            }
+            else if (PlayerMove[0, 1] == -1)
+            {
+                if (PlayerMove[1, 1] == 0)
+                    return Moving.linkedList.tail.Data;
+                else return Moving.linkedList.head.Data;
+            }
+        }
+        return -1;
+    }
+
 }
