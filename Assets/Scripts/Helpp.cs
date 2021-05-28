@@ -613,7 +613,7 @@ public class Helpp : MonoBehaviour
 
             if (PlayerMove[0, 0] == -1)
             {
-                if (PlayerMove[1, 0] == 0)
+                if (PlayerMove[1, 0] == 0) 
                     return Moving.linkedList.tail.Data;
                 else return Moving.linkedList.head.Data;
             }
