@@ -607,7 +607,7 @@ public class Helpp : MonoBehaviour
             }
             else
             {
-                if (PlayerMove[0, 1] != Moving.linkedList.head.Data)
+                if (PlayerMove[0, 1] != Moving.linkedList.head.Data) 
                     PlayerMove[0, 1] = -1;
             }
 
