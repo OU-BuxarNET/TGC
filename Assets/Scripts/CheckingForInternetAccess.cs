@@ -25,7 +25,7 @@ public class CheckingForInternetAccess : MonoBehaviour //скрипт на пр�
             m_ReachabilityText = "Not Reachable.";
             Internet = false;
         }
-        else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork)
+        else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork) 
         {
             m_ReachabilityText = "Reachable via carrier data network.";
             return Internet = true;
