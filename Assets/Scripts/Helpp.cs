@@ -123,7 +123,7 @@ public class Helpp : MonoBehaviour
                         Invoke("Anim", 0.80f);
                 }
                 else
-                { 
+                {
                     kolactivekube = 1;
                     animat = false;
                     SpriteDomino1(); // ставим спрайт домино на поле    
@@ -155,7 +155,7 @@ public class Helpp : MonoBehaviour
             double t = (Board.Hand.Count * 100 - 750) / 100;
             I_RorLDominos.transform.localPosition = new Vector2(330, -400);
             T_RorLDominos.GetComponent<Text>().text = (t + 1).ToString();
-        } 
+        }
     }
     float GameSeconds = 0;
     float GameMinutes = 0;
@@ -176,8 +176,8 @@ public class Helpp : MonoBehaviour
 
         if (Move.next_move == "player")
         {
-            if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1)   
-            { 
+            if (but >= 0 && Moving.CheckDomino1 != null && kolactivekube == 1)
+            {
                 game.MakeMove();
                 for (int i = 0; i < But.Length; i++)
                     Destroy(But[i]);
@@ -186,7 +186,7 @@ public class Helpp : MonoBehaviour
                 Game.moving.Move();
                 SpriteDomino();
                 animat = true;
-                Fill();
+                Game.logicComp.Fill();
                 Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
@@ -206,11 +206,11 @@ public class Helpp : MonoBehaviour
                 SpriteDomino();
                 if (Board.HandComp.Count > 0)
                     Board.HandComp.RemoveAt(LogicComp.kolforCom);
-                Fill();
+                Game.logicComp.Fill();
                 WayTrue();
                 Move.next_move = "player";
             }
-            but =-1;
+            but = -1;
 
             switch (Touch.version)
             {
@@ -218,7 +218,7 @@ public class Helpp : MonoBehaviour
                 case "goat": Game.statisticGoat.EndRound(); break;
             }
         }
-        ToTake(); 
+        ToTake();
     }
     void ToTake() // активация кнопки взять из бара
     {
@@ -348,7 +348,7 @@ public class Helpp : MonoBehaviour
         switch (Touch.version)
         {
             case "classic": Statistic.endround = false; break;
-            case "goat": StatisticGoat.endround = false; break; 
+            case "goat": StatisticGoat.endround = false; break;
         }
         P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0);
     }
@@ -363,8 +363,8 @@ public class Helpp : MonoBehaviour
             But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
     }
     void Endoffield() // конец поля
-    {  
-        Domino [] mas = new Domino [Moving.bak.Count]; 
+    {
+        Domino[] mas = new Domino[Moving.bak.Count];
 
         if (Moving.linkedList.head.Data == 0)
         {
@@ -373,7 +373,7 @@ public class Helpp : MonoBehaviour
                 mas[i] = Moving.bak.head.Data;
                 Moving.bak.Remove(Moving.bak.head.Data);
             }
-             
+
             // добавляем + 1 к хвосту
             if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
                 Moving.linkedList.Add(Moving.linkedList.tail.Data + 8);
@@ -410,11 +410,11 @@ public class Helpp : MonoBehaviour
 
             else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
                 Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
-               
+
             Shift(mas);
         }
     }
-    void Shift(Domino [] mas)
+    void Shift(Domino[] mas)
     {
         Color color1 = new Color(1f, 1f, 1f, 0.7f);
         int[] mas1 = new int[Moving.linkedList.Count];
@@ -447,8 +447,8 @@ public class Helpp : MonoBehaviour
         {
             Game.moving.goPos[mas1[i]].GetComponent<Image>().color = color1;
             Moving.linkedList.Add(mas1[i]);
-        }  
-         
+        }
+
         for (int i = 0; i < mas.Length; i++) // заново заполняем список с домино
         {
             Moving.bak.Add(mas[i]);
@@ -458,10 +458,10 @@ public class Helpp : MonoBehaviour
         RotateDomino();
     }
     void RotateDomino()
-    { 
-        int[] masLinked = new int[Moving.linkedList.Count]; 
+    {
+        int[] masLinked = new int[Moving.linkedList.Count];
 
-        for (int i = 0; i < masLinked.Length; i++) 
+        for (int i = 0; i < masLinked.Length; i++)
         {
             masLinked[i] = Moving.linkedList.head.Data;
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
@@ -473,19 +473,19 @@ public class Helpp : MonoBehaviour
         for (int i = 0; i < masLinked.Length; i++)
         {
             if (masLinked[i] == 8)
-            { 
+            {
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
-                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate); 
+                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
             }
             else if (i >= 1)
             {
                 j = i;
-                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i-1]].GetComponent<Image>().sprite.name));
-                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate); 
+                int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i - 1]].GetComponent<Image>().sprite.name));
+                Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
             }
         }
 
-        for (int i = 0; i < masLinked.Length; i++)  
+        for (int i = 0; i < masLinked.Length; i++)
         {
             Moving.linkedList.Add(masLinked[i]);
         }
@@ -506,17 +506,17 @@ public class Helpp : MonoBehaviour
         }
         else if (index >= 24 && index <= 31 || index >= 56 && index <= 62 || index >= 0 && index <= 7)
         {
-            if (domino.Head == domino.Tail) 
+            if (domino.Head == domino.Tail)
                 return 0;
             else
             {
-                if  (domino.Tail == lastdomino.Tail || domino.Head == lastdomino.Tail)
-                    return 90; 
-                else if (domino.Tail == lastdomino.Head || domino.Head == lastdomino.Head)    
+                if (domino.Tail == lastdomino.Tail || domino.Head == lastdomino.Tail)
+                    return 90;
+                else if (domino.Tail == lastdomino.Head || domino.Head == lastdomino.Head)
                     return -90;
             }
         }
-        else if (index >= 40 && index <= 47) 
+        else if (index >= 40 && index <= 47)
         {
             if (domino.Head == domino.Tail)
                 return 0;
@@ -529,102 +529,6 @@ public class Helpp : MonoBehaviour
             }
         }
         return 0;
-    }
-
-    public static DoublyLinkedList<string> PlayersMove; // и - игрок, к - комп
-    int[,] PlayerMove; // значение 0 - право, 1 - лево
-
-    void Fill()
-    {
-        PlayerMove = new int[2, 2];
-        PlayersMove = new DoublyLinkedList<string>();
-
-        if (Moving.LorR == false)
-        {
-            if (Move.next_move == "player")
-            {
-                PlayersMove.Add("p");
-            }
-            else PlayersMove.Add("c");
-        }
-        else
-        {
-            if (Move.next_move == "player")
-            {
-                PlayersMove.AddFirst("p");
-            }
-            else PlayersMove.AddFirst("c");
-        }
-
-        if (PlayersMove.tail.Data == "p")
-        {
-            PlayerMove[0, 0] = Moving.linkedList.tail.Data;
-            PlayerMove[1, 0] = 0;
-        }
-        else if (PlayersMove.head.Data == "p")
-        {
-            PlayerMove[0, 0] = Moving.linkedList.head.Data;
-            PlayerMove[1, 0] = 1;
-        }
-
-        if (PlayersMove.Count >= 4)
-        {
-            if (PlayersMove.tail.Data == "p")
-            {
-                PlayerMove[0, 1] = Moving.linkedList.tail.Data;
-                PlayerMove[1, 1] = 0;
-            }
-            else if (PlayersMove.head.Data == "p")
-            {
-                PlayerMove[0, 1] = Moving.linkedList.head.Data;
-                PlayerMove[1, 1] = 1;
-            }
-        }
-
-        int itog = NotClose();
-        Debug.Log(itog);
-    }
-
-    int NotClose()
-    {
-        if (PlayersMove.Count >= 3)
-        {
-            if (PlayerMove[1, 0] == 0)
-            {
-                if (PlayerMove[0, 0] != Moving.linkedList.tail.Data)
-                    PlayerMove[0, 0] = -1;
-            }
-            else
-            {
-                if (PlayerMove[0, 1] != Moving.linkedList.head.Data)
-                    PlayerMove[0, 1] = -1;
-            }
-
-            if (PlayerMove[1, 1] == 0)
-            {
-                if (PlayerMove[0, 1] != Moving.linkedList.tail.Data)
-                    PlayerMove[0, 1] = -1;
-            }
-            else
-            {
-                if (PlayerMove[0, 1] != Moving.linkedList.head.Data) 
-                    PlayerMove[0, 1] = -1;
-            }
-
-            if (PlayerMove[0, 0] == -1)
-            {
-                if (PlayerMove[1, 0] == 0) 
-                    return Moving.linkedList.tail.Data;
-                else return Moving.linkedList.head.Data;
-            }
-            else if (PlayerMove[0, 1] == -1)
-            {
-                if (PlayerMove[1, 1] == 0)
-                    return Moving.linkedList.tail.Data;
-                else return Moving.linkedList.head.Data;
-            }
-        }
-        return -1;
     }
 
 }
