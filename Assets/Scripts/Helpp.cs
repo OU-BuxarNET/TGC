@@ -471,7 +471,7 @@ public class Helpp : MonoBehaviour
 
         int j;
         for (int i = 0; i < masLinked.Length; i++)
-        {
+        { 
             if (masLinked[i] == 8)
             {
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
