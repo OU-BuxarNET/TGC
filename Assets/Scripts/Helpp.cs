@@ -186,7 +186,7 @@ public class Helpp : MonoBehaviour
                 Game.moving.Move();
                 SpriteDomino();
                 animat = true;
-                Game.logicComp.Fill();
+                //Game.logicComp.Fill();
                 Move.next_move = "comp";
             }
             else Debug.Log("Ничего не выбрано");
@@ -206,7 +206,7 @@ public class Helpp : MonoBehaviour
                 SpriteDomino();
                 if (Board.HandComp.Count > 0)
                     Board.HandComp.RemoveAt(LogicComp.kolforCom);
-                Game.logicComp.Fill();
+                //Game.logicComp.Fill();
                 WayTrue();
                 Move.next_move = "player";
             }
