@@ -189,7 +189,7 @@ public class Helpp : MonoBehaviour
                 //Game.logicComp.Fill();
                 Move.next_move = "comp";
             }
-            else Debug.Log("Ничего не выбрано");
+            else Debug.Log("Ничего не выбрано"); 
         }
         WayTrue();
         switch (Touch.version)
@@ -219,7 +219,7 @@ public class Helpp : MonoBehaviour
             }
         }
         ToTake();
-    }
+    } //help
     void ToTake() // активация кнопки взять из бара
     {
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
@@ -300,7 +300,7 @@ public class Helpp : MonoBehaviour
             for (int i = 0; i < But.Length; i++)
                 Destroy(But[i]);
             ButHandPlayer();
-            for (int i = 0; i < Game.moving.goPos.Length; i++)
+            for (int i = 0; i < Game.moving.goPos.Length; i++) 
             {
                 if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
                 {
