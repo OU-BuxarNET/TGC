@@ -277,6 +277,7 @@ public class Helpp : MonoBehaviour
             if (Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
             {
                 Moving.bak.Add(Moving.CheckDomino1);
+                But[but].transform.position = new Vector2(But[but].transform.position.x, 0.5f); // поднятие доминошки but
             }
             else
             {
@@ -284,7 +285,6 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "player";
                 if (Moving.CheckDomino1.Name != Check.playerMin)
                 {
-                    //Moving.bak.Delete_Index(0);
                     AminPlay();
                     Invoke("Anim", 0.12f);
                 }
@@ -351,7 +351,7 @@ public class Helpp : MonoBehaviour
             case "goat": StatisticGoat.endround = false; break;
         }
         P_EndOfRound.transform.localPosition = new Vector3(-800, 0, 0);
-    }
+    } 
     void AminPlay() // для анимации дребезжания
     {
         for (int i = 0; i < But.Length; i++)
