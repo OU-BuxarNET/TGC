@@ -288,7 +288,7 @@ public class Helpp : MonoBehaviour
                     AminPlay();
                     Invoke("Anim", 0.12f);
                 }
-                else Moving.bak.Add(Moving.CheckDomino1);
+                else Moving.bak.Add(Moving.CheckDomino1); 
             }
         }
     }
