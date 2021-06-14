@@ -289,7 +289,7 @@ public class Helpp : MonoBehaviour
                     Invoke("Anim", 0.12f);
                 }
                 else Moving.bak.Add(Moving.CheckDomino1); 
-            }
+            } 
         }
     }
     void DeleteDom()
