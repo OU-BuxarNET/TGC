@@ -285,7 +285,7 @@ public class Helpp : MonoBehaviour
                 Move.next_move = "player";
                 if (Moving.CheckDomino1.Name != Check.playerMin)
                 {
-                    AminPlay();
+                    AminPlay(); 
                     Invoke("Anim", 0.12f);
                 }
                 else Moving.bak.Add(Moving.CheckDomino1); 
