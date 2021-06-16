@@ -40,5 +40,3 @@ public class GameName
         namegame = g;
     }
 }
-
-

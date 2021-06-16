@@ -354,7 +354,7 @@ public class Helpp : MonoBehaviour
     } 
     void AminPlay() // для анимации дребезжания
     {
-        for (int i = 0; i < But.Length; i++)
+        for (int i = 0; i < But.Length; i++) 
             But[i].transform.rotation = Quaternion.Euler(0, 0, 10);
     }
     void Anim() // для анимации дребезжания
