@@ -409,7 +409,7 @@ public class Helpp : MonoBehaviour
                 Moving.linkedList.Add(Moving.linkedList.tail.Data + 1);
 
             else if (Moving.linkedList.tail.Data > 27 && Moving.linkedList.tail.Data < 31)
-                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1);
+                Moving.linkedList.Add(Moving.linkedList.tail.Data - 1); 
 
             Shift(mas);
         }
@@ -425,7 +425,7 @@ public class Helpp : MonoBehaviour
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
         }
 
-        for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
+        for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля 
         {
             Moving.linkedList.Add(mas1[i]);
         }

@@ -18,7 +18,7 @@ public class CheckingForInternetAccess : MonoBehaviour //скрипт на пр�
         else
             Debug.Log("Есть подкллючениe");*/
     }
-    private bool CheckInternet()
+    private bool CheckInternet() // проверка на подключение к интернету
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
