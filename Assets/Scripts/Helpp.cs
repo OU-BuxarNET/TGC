@@ -360,7 +360,7 @@ public class Helpp : MonoBehaviour
     void Anim() // для анимации дребезжания
     {
         for (int i = 0; i < But.Length; i++)
-            But[i].transform.rotation = Quaternion.Euler(0, 0, 0);
+            But[i].transform.rotation = Quaternion.Euler(0, 0, 0); 
     }
     void Endoffield() // конец поля
     {
