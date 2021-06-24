@@ -469,7 +469,7 @@ public class Helpp : MonoBehaviour
 
         Debug.Log(masLinked[0] + " head");
 
-        int j;
+        int j; 
         for (int i = 0; i < masLinked.Length; i++)
         { 
             if (masLinked[i] == 8)
