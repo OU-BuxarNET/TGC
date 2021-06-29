@@ -487,7 +487,7 @@ public class Helpp : MonoBehaviour
 
         for (int i = 0; i < masLinked.Length; i++)
         {
-            Moving.linkedList.Add(masLinked[i]); 
+            Moving.linkedList.Add(masLinked[i]);  
         }
     }
     int Rotate(int index, Domino domino, Domino lastdomino)
