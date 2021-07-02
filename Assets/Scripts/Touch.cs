@@ -9,7 +9,7 @@ public class Touch : MonoBehaviour
 {
     static string lvl = "easy";
     public static string version = "classic"; 
-    static string point = "100";
+    static public string point = "100";
     static bool lvlfirst = true;
     //static bool versionfirst = true;
     static bool pointfirst = true;
@@ -131,7 +131,7 @@ public class Touch : MonoBehaviour
 
         if (pointfirst == true)
         {
-            lvl = "set";
+            point = "set";
             pointfirst = false;
         }
         switch (point)
@@ -155,7 +155,7 @@ public class Touch : MonoBehaviour
     public void Create()
     {
         LogicComp.difficutlylvl = "easy";
-        //switch(lvl)
+        //switch (lvl) // Пока не готовы остальные уровни
         //{
         //    case "easy": LogicComp.difficutlylvl = "easy"; break;
         //    case "medium": LogicComp.difficutlylvl = "medium"; break;
@@ -188,9 +188,11 @@ public class Touch : MonoBehaviour
     }
     public void PointSet()
     {
-        GameObject T_Set = GameObject.Find("BT_Set");
+        GameObject T_Set = GameObject.Find("T_Set");
         if (T_Set.GetComponent<Text>().text != null)
-        point = T_Set.GetComponent<Text>().text;
+            point = T_Set.GetComponent<Text>().text;
+        else point = "100";
+        Debug.Log(point);
     }
     public void QuitOnscene()
     {

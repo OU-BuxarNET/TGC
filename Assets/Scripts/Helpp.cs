@@ -14,10 +14,12 @@ public class Helpp : MonoBehaviour
     public static string play = "comp";
     public Transform Game1;
     GameObject P_EndOfRound;
+    GameObject P_Win;
 
     public void Start() // сделать ход
     {
         P_EndOfRound = GameObject.Find("P_EndOfRound");
+        P_Win = GameObject.Find("P_Win");
         if (LogicComp.difficutlylvl != "easy")
             Debug.Log(LogicComp.difficutlylvl);
         else
@@ -27,8 +29,14 @@ public class Helpp : MonoBehaviour
             ButHandPlayer();
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
             B_TakeBar.GetComponent<Button>().interactable = false;
+
+            if (Touch.point != "100")
+            {
+                Statistic.maxpoint = Int32.Parse(Touch.point);
+            }
+            else Statistic.maxpoint = 100;
         }
-    }
+}
     void ButHandPlayer() // создание кнопок (кости) в руке
     {
         But = new GameObject[Board.Hand.Count];
@@ -113,7 +121,7 @@ public class Helpp : MonoBehaviour
     {
         Timer();
 
-        if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
+        if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0) && P_Win.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
             {
@@ -219,7 +227,7 @@ public class Helpp : MonoBehaviour
             }
         }
         ToTake();
-    } //help
+    } 
     void ToTake() // активация кнопки взять из бара
     {
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
@@ -234,7 +242,7 @@ public class Helpp : MonoBehaviour
                 B_TakeBar.GetComponent<Button>().interactable = false;
         }
     }
-    void SpriteDomino() // кость кладется на выбранный квадрат
+    void SpriteDomino() // кость кладется на выбранный квадрат (для последующих ходов)
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
         if (Moving.LorR == false)
@@ -248,7 +256,7 @@ public class Helpp : MonoBehaviour
             Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().color = color;
         }
     }
-    void SpriteDomino1() // кость кладется на выбранный квадрат
+    void SpriteDomino1() // кость кладется на выбранный квадрат (для первого хода игрока)
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
         if (Moving.LorR == false)
@@ -270,6 +278,8 @@ public class Helpp : MonoBehaviour
             Moving.bak.Remove(Moving.bak.head.Data);
         Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString());
 
+        Debug.Log(Moving.CheckDomino1);
+
         DeleteDom();
 
         if (Moving.CheckDomino1 != null && Moving.first == true)
@@ -277,7 +287,7 @@ public class Helpp : MonoBehaviour
             if (Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
             {
                 Moving.bak.Add(Moving.CheckDomino1);
-                But[but].transform.position = new Vector2(But[but].transform.position.x, 0.5f); // поднятие доминошки but
+                //But[but].transform.position = new Vector2(But[but].transform.position.x, 0.5f); // поднятие доминошки but
             }
             else
             {
@@ -289,7 +299,7 @@ public class Helpp : MonoBehaviour
                     Invoke("Anim", 0.12f);
                 }
                 else Moving.bak.Add(Moving.CheckDomino1); 
-            } 
+            }
         }
     }
     void DeleteDom()
@@ -340,7 +350,6 @@ public class Helpp : MonoBehaviour
         }
         for (int i = 0; i < But.Length; i++)
             Destroy(But[i]);
-        GameObject P_Win = GameObject.Find("P_Win");
         P_Win.transform.localPosition = new Vector2(-859, 773);
     }
     public void Trans() // скрытие панели "Конец раунда"
@@ -467,8 +476,6 @@ public class Helpp : MonoBehaviour
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
         }
 
-        Debug.Log(masLinked[0] + " head");
-
         int j; 
         for (int i = 0; i < masLinked.Length; i++)
         { 
@@ -479,7 +486,7 @@ public class Helpp : MonoBehaviour
             }
             else if (i >= 1)
             {
-                j = i;
+                //j = i;
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i - 1]].GetComponent<Image>().sprite.name));
                 Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
             }
@@ -530,5 +537,4 @@ public class Helpp : MonoBehaviour
         }
         return 0;
     }
-
 }

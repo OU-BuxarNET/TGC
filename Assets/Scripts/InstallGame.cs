@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class InstallGame : MonoBehaviour //скрип установки
 {
+    // ЭТОТ КЛАСС НУЖДАЕТСЯ В ДОРАБОТКЕ
+
     private int a; //количество элементов надо задать
     private string Text; //название кнопки надо задать
     public GameObject Parent; //Родительский объект на сцене, должен находиться в Canvas
@@ -16,7 +18,7 @@ public class InstallGame : MonoBehaviour //скрип установки
         int i = 0;
         while (RakNaGoreSvistit == false)
         { 
-            float PosX = 232f + i * 60f; //тут сами подгоняйте это размер смещения
+            float PosX = 232f + i * 60f; //тут подгонять это размер смещения
             GameObject But = Instantiate(Resources.Load<GameObject>(Text), transform, false); //загружаем копию префаба из ресурсов.
            // But.transform.SetParent(Parent); //Помещаем кнопку к родителю
             But.transform.localPosition = new Vector3(PosX, -25f, 0f); //смещаем кнопки в моем случае по Х
