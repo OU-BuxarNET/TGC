@@ -189,7 +189,7 @@ public class Touch : MonoBehaviour
     public void PointSet()
     {
         GameObject T_Set = GameObject.Find("T_Set");
-        if (T_Set.GetComponent<Text>().text != null)
+        if (T_Set.GetComponent<Text>().text != "")
             point = T_Set.GetComponent<Text>().text;
         else point = "100";
         Debug.Log(point);

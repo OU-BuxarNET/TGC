@@ -16,10 +16,22 @@ public class Helpp : MonoBehaviour
     GameObject P_EndOfRound;
     GameObject P_Win;
 
+    public GameObject T_NoBonesInTheBar;
+    public GameObject T_TheOpponentHasNoBones;
+
+    private AnimationForDomino AnimationForDomino;
+
+    static int kolactivekube = 1; // количество активных 
+    int NumberOfRounds = 1; // номер раунда 
+
     public void Start() // сделать ход
     {
+        AnimationForDomino = T_NoBonesInTheBar.GetComponent<AnimationForDomino>();
+        AnimationForDomino = T_TheOpponentHasNoBones.GetComponent<AnimationForDomino>();
+
         P_EndOfRound = GameObject.Find("P_EndOfRound");
         P_Win = GameObject.Find("P_Win");
+        NumberOfRounds = 1;
         if (LogicComp.difficutlylvl != "easy")
             Debug.Log(LogicComp.difficutlylvl);
         else
@@ -33,8 +45,13 @@ public class Helpp : MonoBehaviour
             if (Touch.point != "100")
             {
                 Statistic.maxpoint = Int32.Parse(Touch.point);
+                StatisticGoat.maxpoint = Int32.Parse(Touch.point);
             }
-            else Statistic.maxpoint = 100;
+            else
+            {
+                Statistic.maxpoint = 100;
+                StatisticGoat.maxpoint = 100;
+            }
         }
 }
     void ButHandPlayer() // создание кнопок (кости) в руке
@@ -53,7 +70,7 @@ public class Helpp : MonoBehaviour
             But[i].GetComponent<Button>().onClick.AddListener(() => Pr(j2));
         }
     }
-    static int kolactivekube = 1;
+   
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
@@ -67,7 +84,7 @@ public class Helpp : MonoBehaviour
                 {
                     Game.moving.goPos[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/WhiteSquare");
                     Game.moving.goPos[i].GetComponent<Image>().color = color;
-                    kolactivekube = 2;
+                    kolactivekube = 2; // активно 2 варианта хода слева и справа 
                 }
             }
         }
@@ -121,6 +138,11 @@ public class Helpp : MonoBehaviour
     {
         Timer();
 
+        if (Moving.linkedList.head.Data == 6 || Moving.linkedList.tail.Data == 62)
+        {
+            Endoffield();
+        }
+
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0) && P_Win.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
@@ -144,11 +166,6 @@ public class Helpp : MonoBehaviour
                 if (Move.next_move == "comp")
                     Move1();
             }
-        }
-
-        if (Moving.linkedList.head.Data == 0)
-        {
-            Endoffield();
         }
 
         GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
@@ -206,17 +223,26 @@ public class Helpp : MonoBehaviour
             case "goat": Game.statisticGoat.EndRound(); break;
         }
 
+        GameObject T_TheOpponentHasNoBones = new GameObject();
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0))
         {
             if (Move.next_move == "comp")
             {
                 game.MakeMove();
-                SpriteDomino();
-                if (Board.HandComp.Count > 0)
-                    Board.HandComp.RemoveAt(LogicComp.kolforCom);
-                //Game.logicComp.Fill();
-                WayTrue();
-                Move.next_move = "player";
+                if(Game.TheOpponentHasNoBones == true) // если компу нечем ходить и в баре 0 костей
+                {
+                    AnimationForDomino.StartT_TheOpponentHasNoBones();
+                    Move.next_move = "player";
+                }
+                else
+                {
+                    SpriteDomino();
+                    if (Board.HandComp.Count > 0)
+                        Board.HandComp.RemoveAt(LogicComp.kolforCom);
+                    //Game.logicComp.Fill();
+                    WayTrue();
+                    Move.next_move = "player";
+                } 
             }
             but = -1;
 
@@ -228,12 +254,12 @@ public class Helpp : MonoBehaviour
         }
         ToTake();
     } 
+
     void ToTake() // активация кнопки взять из бара
     {
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
         {
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-
             if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == false)
             {
                 B_TakeBar.GetComponent<Button>().interactable = true;
@@ -278,29 +304,57 @@ public class Helpp : MonoBehaviour
             Moving.bak.Remove(Moving.bak.head.Data);
         Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString());
 
-        Debug.Log(Moving.CheckDomino1);
-
-        DeleteDom();
+        
 
         if (Moving.CheckDomino1 != null && Moving.first == true)
         {
-            if (Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
+            if (NumberOfRounds == 1 && Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
             {
                 Moving.bak.Add(Moving.CheckDomino1);
-                //But[but].transform.position = new Vector2(But[but].transform.position.x, 0.5f); // поднятие доминошки but
+                DeleteDom();
+                //But[but].transform.position = new Vector2(But[but].transform.position.x, 0.5f); // поднятие выбранной доминошки but
             }
-            else
+            else if (NumberOfRounds > 1) // первых ход игрока если нет дубля игроk берет костяшку с наибольшим значением
             {
-                Game.check.NotDouble();
-                Move.next_move = "player";
-                if (Moving.CheckDomino1.Name != Check.playerMin)
+                int SumBone = 0;
+                int MaxBone = Board.Hand[0].Head + Board.Hand[0].Tail;
+                int MaxIndex = 0;
+                for (int i = 0; i > Board.Hand.Count; i++)
                 {
-                    AminPlay(); 
-                    Invoke("Anim", 0.12f);
+                    SumBone = Board.Hand[i].Head + Board.Hand[i].Tail;
+                    if (MaxBone < SumBone)
+                    {
+                        MaxBone = SumBone;
+                        MaxIndex = i;
+                    }
                 }
-                else Moving.bak.Add(Moving.CheckDomino1); 
+
+                if (Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
+                {
+                    Moving.bak.Add(Moving.CheckDomino1);
+                    DeleteDom();
+                }
+                else if (Moving.CheckDomino1 == Board.Hand[MaxIndex])
+                {
+                    Moving.bak.Add(Moving.CheckDomino1);
+                    DeleteDom();
+                }
+                else Rattle(); // дребезжание
+
             }
+            else Rattle(); // дребезжание
         }
+    }
+    void Rattle() // дребезжание
+    {
+        Game.check.NotDouble();
+        Move.next_move = "player";
+        if (Moving.CheckDomino1.Name != Check.playerMin)
+        {
+            AminPlay();
+            Invoke("Anim", 0.12f);
+        }
+        else Moving.bak.Add(Moving.CheckDomino1);
     }
     void DeleteDom()
     {
@@ -321,23 +375,32 @@ public class Helpp : MonoBehaviour
             Game.moving.WhenCube();
         }
     }
+
     public void TakeBar() // взять из бара
     {
-        Game.board.TakeBar(true);
-        if (Moving.bak.Contains(Moving.CheckDomino[1]))
-            Moving.bak.Remove(Moving.CheckDomino[1]);
         if (Board.bar.Count == 0)
         {
+            AnimationForDomino.StartT_T_NoBonesInTheBar();
             Move.next_move = "comp";
             Move1();
         }
         else
         {
-            for (int i = 0; i < But.Length; i++)
-                Destroy(But[i]);
-            ButHandPlayer();
-            ToTake();
-        }
+            Game.board.TakeBar(true);
+
+            if (Board.bar.Count == 0)
+            {
+                Move.next_move = "comp";
+                Move1();
+            }
+            else
+            {
+                for (int i = 0; i < But.Length; i++)
+                    Destroy(But[i]);
+                ButHandPlayer();
+                ToTake();
+            }
+        } 
     }
     public void EndGame() // конец игры
     {
@@ -351,6 +414,9 @@ public class Helpp : MonoBehaviour
         for (int i = 0; i < But.Length; i++)
             Destroy(But[i]);
         P_Win.transform.localPosition = new Vector2(-859, 773);
+        kolactivekube = 1;
+        NumberOfRounds++;
+        Game.TheOpponentHasNoBones = false;
     }
     public void Trans() // скрытие панели "Конец раунда"
     {
@@ -375,7 +441,7 @@ public class Helpp : MonoBehaviour
     {
         Domino[] mas = new Domino[Moving.bak.Count];
 
-        if (Moving.linkedList.head.Data == 0)
+        if (Moving.linkedList.head.Data == 6)
         {
             for (int i = 0; i < mas.Length; i++) // все доминошки, которые лежат на поле
             {
@@ -400,12 +466,12 @@ public class Helpp : MonoBehaviour
 
             Shift(mas);
         }
-        else if (Moving.linkedList.head.Data == 62)
+        else if (Moving.linkedList.tail.Data == 62)
         {
             for (int i = 0; i < mas.Length; i++) // все доминошки, которые лежат на поле
             {
-                mas[i] = Moving.bak.head.Data;
-                Moving.bak.Remove(Moving.bak.head.Data);
+                mas[i] = Moving.bak.tail.Data;
+                Moving.bak.Remove(Moving.bak.tail.Data);
             }
             // добавляем + 1 к голове
             if (Moving.linkedList.tail.Data == 31 || Moving.linkedList.tail.Data == 38)
@@ -438,6 +504,7 @@ public class Helpp : MonoBehaviour
         {
             Moving.linkedList.Add(mas1[i]);
         }
+
 
         for (int i = 0; i < mas.Length; i++) // выкладываем на поле домино со сдвигом
         {
