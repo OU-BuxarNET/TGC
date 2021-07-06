@@ -7,10 +7,10 @@ using System.Collections.Generic;
 public class Helpp : MonoBehaviour
 {
     public GameObject Parent; //Родительский объект на сцене
-    static GameObject[] But;
-    private static int but = -1;
+    static GameObject[] But; // костяшки игрока
+    private static int but = -1; // номер кости для выбора
     private static int j;
-    Game game;
+    Game game; // главный класс библиотеки 
     public static string play = "comp";
     public Transform Game1;
     GameObject P_EndOfRound;
@@ -20,18 +20,19 @@ public class Helpp : MonoBehaviour
     public GameObject T_TheOpponentHasNoBones;
 
     private AnimationForDomino AnimationForDomino;
+    private AnimationNoBonesInTheBar AnimationNoBonesInTheBar;
+
 
     static int kolactivekube = 1; // количество активных 
-    int NumberOfRounds = 1; // номер раунда 
+   
 
-    public void Start() // сделать ход
+    public void Start()
     {
-        AnimationForDomino = T_NoBonesInTheBar.GetComponent<AnimationForDomino>();
+        AnimationNoBonesInTheBar = T_NoBonesInTheBar.GetComponent<AnimationNoBonesInTheBar>();
         AnimationForDomino = T_TheOpponentHasNoBones.GetComponent<AnimationForDomino>();
 
         P_EndOfRound = GameObject.Find("P_EndOfRound");
         P_Win = GameObject.Find("P_Win");
-        NumberOfRounds = 1;
         if (LogicComp.difficutlylvl != "easy")
             Debug.Log(LogicComp.difficutlylvl);
         else
@@ -53,7 +54,7 @@ public class Helpp : MonoBehaviour
                 StatisticGoat.maxpoint = 100;
             }
         }
-}
+    }
     void ButHandPlayer() // создание кнопок (кости) в руке
     {
         But = new GameObject[Board.Hand.Count];
@@ -70,7 +71,7 @@ public class Helpp : MonoBehaviour
             But[i].GetComponent<Button>().onClick.AddListener(() => Pr(j2));
         }
     }
-   
+
     public void WayTrue() // присваиваю картинки куда можно положить след. кость
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
@@ -138,13 +139,20 @@ public class Helpp : MonoBehaviour
     {
         Timer();
 
-        if (Moving.linkedList.head.Data == 6 || Moving.linkedList.tail.Data == 62)
-        {
-            Endoffield();
-        }
-
         if (P_EndOfRound.transform.localPosition != new Vector3(0, 0, 0) && P_Win.transform.localPosition != new Vector3(0, 0, 0))
         {
+            if (Game.statisticClassic.Fish() == true)
+            {
+                EndGame();
+            }
+
+            //Interactivity(); // не дает нажать на кость если она не подходит.
+
+            if (Moving.linkedList.head.Data == 6 || Moving.linkedList.tail.Data == 62)
+            {
+                Endoffield();
+            }
+
             if (Moving.first == false && Move.next_move == "player" && but >= 0)
             {
                 if (Game.moving.ChangePos(But) == false)
@@ -214,7 +222,11 @@ public class Helpp : MonoBehaviour
                 //Game.logicComp.Fill();
                 Move.next_move = "comp";
             }
-            else Debug.Log("Ничего не выбрано"); 
+            else
+            {
+                Rattle();
+                Debug.Log("Ничего не выбрано");
+            }
         }
         WayTrue();
         switch (Touch.version)
@@ -229,7 +241,7 @@ public class Helpp : MonoBehaviour
             if (Move.next_move == "comp")
             {
                 game.MakeMove();
-                if(Game.TheOpponentHasNoBones == true) // если компу нечем ходить и в баре 0 костей
+                if (Game.TheOpponentHasNoBones == true) // если компу нечем ходить и в баре 0 костей
                 {
                     AnimationForDomino.StartT_TheOpponentHasNoBones();
                     Move.next_move = "player";
@@ -242,7 +254,7 @@ public class Helpp : MonoBehaviour
                     //Game.logicComp.Fill();
                     WayTrue();
                     Move.next_move = "player";
-                } 
+                }
             }
             but = -1;
 
@@ -253,7 +265,7 @@ public class Helpp : MonoBehaviour
             }
         }
         ToTake();
-    } 
+    }
 
     void ToTake() // активация кнопки взять из бара
     {
@@ -304,57 +316,64 @@ public class Helpp : MonoBehaviour
             Moving.bak.Remove(Moving.bak.head.Data);
         Moving.CheckDomino1 = new Domino(But[but].GetComponent<Image>().sprite.name.ToString());
 
-        
-
         if (Moving.CheckDomino1 != null && Moving.first == true)
         {
-            if (NumberOfRounds == 1 && Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
+
+            int CountDoubleInHand = 0;
+            for(int i = 0; i> Board.Hand.Count;i++)
+            {
+                if (Board.Hand[i].Head == Board.Hand[i].Tail)
+                    CountDoubleInHand++;
+            }
+
+            if (/*CountDoubleInHand != 0 &&*/ Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
             {
                 Moving.bak.Add(Moving.CheckDomino1);
                 DeleteDom();
                 //But[but].transform.position = new Vector2(But[but].transform.position.x, 0.5f); // поднятие выбранной доминошки but
-            }
-            else if (NumberOfRounds > 1) // первых ход игрока если нет дубля игроk берет костяшку с наибольшим значением
-            {
-                int SumBone = 0;
-                int MaxBone = Board.Hand[0].Head + Board.Hand[0].Tail;
-                int MaxIndex = 0;
-                for (int i = 0; i > Board.Hand.Count; i++)
-                {
-                    SumBone = Board.Hand[i].Head + Board.Hand[i].Tail;
-                    if (MaxBone < SumBone)
-                    {
-                        MaxBone = SumBone;
-                        MaxIndex = i;
-                    }
-                }
-
-                if (Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
-                {
-                    Moving.bak.Add(Moving.CheckDomino1);
-                    DeleteDom();
-                }
-                else if (Moving.CheckDomino1 == Board.Hand[MaxIndex])
-                {
-                    Moving.bak.Add(Moving.CheckDomino1);
-                    DeleteDom();
-                }
-                else Rattle(); // дребезжание
 
             }
-            else Rattle(); // дребезжание
+            else  Rattle();
+            //{
+            //    int MaxIndex = MaxDomino();
+
+            //    if (Moving.CheckDomino1 == Board.Hand[MaxIndex])
+            //    {
+            //        Moving.bak.Add(Moving.CheckDomino1);
+            //        DeleteDom();
+            //    }
+            //    else Rattle(); // дребезжание
+            //}
         }
+    }
+
+    int MaxDomino() // кость с максимальной суммой
+    {
+        int SumBone = 0;
+        int MaxBone = Board.Hand[0].Head + Board.Hand[0].Tail;
+        int MaxIndex = 0;
+        for (int i = 0; i > Board.Hand.Count; i++)
+        {
+            SumBone = Board.Hand[i].Head + Board.Hand[i].Tail;
+            if (MaxBone < SumBone)
+            {
+                MaxBone = SumBone;
+                MaxIndex = i;
+            }
+        }
+        return MaxIndex;
     }
     void Rattle() // дребезжание
     {
-        Game.check.NotDouble();
+        AminPlay();
+        Invoke("Anim", 0.12f);
+        //Game.check.NotDouble();
         Move.next_move = "player";
-        if (Moving.CheckDomino1.Name != Check.playerMin)
-        {
-            AminPlay();
-            Invoke("Anim", 0.12f);
-        }
-        else Moving.bak.Add(Moving.CheckDomino1);
+        //if (Moving.CheckDomino1.Name != Check.playerMin)
+        //{
+
+        //}
+        //else Moving.bak.Add(Moving.CheckDomino1);
     }
     void DeleteDom()
     {
@@ -364,7 +383,7 @@ public class Helpp : MonoBehaviour
             for (int i = 0; i < But.Length; i++)
                 Destroy(But[i]);
             ButHandPlayer();
-            for (int i = 0; i < Game.moving.goPos.Length; i++) 
+            for (int i = 0; i < Game.moving.goPos.Length; i++)
             {
                 if (Game.moving.goPos[i].GetComponent<BoxCollider2D>().isTrigger == true && Game.moving.goPos[Moving.linkedList.head.Data].GetComponent<Image>().sprite.name != "WhiteSquare")
                 {
@@ -376,11 +395,23 @@ public class Helpp : MonoBehaviour
         }
     }
 
+    public void Interactivity()
+    {
+        if (Move.next_move == "player")
+        for(int i = 0; i > Board.Hand.Count; i++)
+        {
+            if (Game.check.CheckOnCO(Board.Hand[i]) == false)
+            {
+                But[i+1].GetComponent<Button>().interactable = false;
+            }
+        }
+    }
+
     public void TakeBar() // взять из бара
     {
         if (Board.bar.Count == 0)
         {
-            AnimationForDomino.StartT_T_NoBonesInTheBar();
+            AnimationNoBonesInTheBar.StartT_T_NoBonesInTheBar();
             Move.next_move = "comp";
             Move1();
         }
@@ -400,7 +431,7 @@ public class Helpp : MonoBehaviour
                 ButHandPlayer();
                 ToTake();
             }
-        } 
+        }
     }
     public void EndGame() // конец игры
     {
@@ -415,7 +446,6 @@ public class Helpp : MonoBehaviour
             Destroy(But[i]);
         P_Win.transform.localPosition = new Vector2(-859, 773);
         kolactivekube = 1;
-        NumberOfRounds++;
         Game.TheOpponentHasNoBones = false;
     }
     public void Trans() // скрытие панели "Конец раунда"
@@ -488,6 +518,8 @@ public class Helpp : MonoBehaviour
 
             Shift(mas);
         }
+
+        Debug.Log(Moving.linkedList.Count);
     }
     void Shift(Domino[] mas)
     {
@@ -543,17 +575,15 @@ public class Helpp : MonoBehaviour
             Moving.linkedList.Remove(Moving.linkedList.head.Data);
         }
 
-        int j; 
         for (int i = 0; i < masLinked.Length; i++)
         { 
-            if (masLinked[i] == 8)
+            if (masLinked[i] == 5)
             {
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
                 Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
             }
             else if (i >= 1)
             {
-                //j = i;
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i - 1]].GetComponent<Image>().sprite.name));
                 Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
             }
