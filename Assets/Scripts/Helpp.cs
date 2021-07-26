@@ -423,7 +423,7 @@ public class Helpp : MonoBehaviour
             {
                 Move.next_move = "comp";
                 Move1();
-            }
+            } 
             else
             {
                 for (int i = 0; i < But.Length; i++)
