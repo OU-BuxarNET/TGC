@@ -2375,6 +2375,8 @@ MonoBehaviour:
   T_Welcome: {fileID: 1584392031}
   T_Wel: {fileID: 1584392030}
   Prefab: {fileID: 5649452115672755731, guid: c9c2fe5abfbe9a9418691ae29f1fb41c, type: 3}
+  P_GameCount: {fileID: 1272719627}
+  P_PanelParametrs: {fileID: 1866996869}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0

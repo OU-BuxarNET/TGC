@@ -406,6 +406,18 @@ public class Helpp : MonoBehaviour
             }
         }
     }
+    // проверка
+    void Proverka() // для удаления
+    {
+        Color color = new Color(0, 1, 1);
+        for (int i = 0; i < Game.moving.goPos.Length; i++)
+        {
+            Game.moving.goPos[i].GetComponent<Image>().sprite = null;
+            Game.moving.goPos[i].GetComponent<Image>().color = color;
+        }
+        for (int i = 0; i < But.Length; i++)
+            Destroy(But[i]);
+    }
 
     public void TakeBar() // взять из бара
     {
