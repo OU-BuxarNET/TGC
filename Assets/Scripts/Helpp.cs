@@ -406,7 +406,6 @@ public class Helpp : MonoBehaviour
             }
         }
     }
-  
 
     public void TakeBar() // взять из бара
     {
