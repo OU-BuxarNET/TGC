@@ -34,7 +34,7 @@ public class GameName
     public string namegame { get; set; }
 
     public GameName(string g)
-    {
+    { 
         namegame = g;
     }
 }
