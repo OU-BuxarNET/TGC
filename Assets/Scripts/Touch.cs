@@ -44,7 +44,7 @@ public class Touch : MonoBehaviour
                 B_RightLvl.transform.localPosition = new Vector2(325, 405);
                 lvl = "medium"; break;
             case "medium":
-                medium.transform.localPosition = vecxy;
+                medium.transform.localPosition = vecxy; 
                 easy.transform.localPosition = vecabroad;
                 hard.transform.localPosition = vecabroad; 
                 B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
