@@ -34,27 +34,28 @@ public class Touch : MonoBehaviour
             lvl = "medium";
             lvlfirst = false;
         }
+        float posY = B_LeftLvl.transform.position.y;
         switch (lvl)
         {
             case "easy":
                 easy.transform.localPosition = vecxy;
                 medium.transform.localPosition = vecabroad;
                 hard.transform.localPosition = vecabroad;
-                B_LeftLvl.transform.localPosition = new Vector2(615, 405); 
-                B_RightLvl.transform.localPosition = new Vector2(325, 405);
+                B_LeftLvl.transform.localPosition = new Vector2(615, posY); 
+                B_RightLvl.transform.localPosition = new Vector2(325, posY);
                 lvl = "medium"; break;
             case "medium":
                 medium.transform.localPosition = vecxy; 
                 easy.transform.localPosition = vecabroad;
                 hard.transform.localPosition = vecabroad; 
-                B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
+                B_LeftLvl.transform.localPosition = new Vector2(-36, posY);
                 lvl = "hard"; break;
             case "hard":
                 hard.transform.localPosition = vecxy;
                 medium.transform.localPosition = vecabroad;
                 easy.transform.localPosition = vecabroad;
-                B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
-                B_RightLvl.transform.localPosition = new Vector2(610, 405);
+                B_LeftLvl.transform.localPosition = new Vector2(-36, posY);
+                B_RightLvl.transform.localPosition = new Vector2(610, posY);
                 lvl = "medium";
                 break;
         } 
@@ -196,6 +197,7 @@ public class Touch : MonoBehaviour
     }
     public void QuitOnscene()
     {
+        OpenFirstScene.NumberPreviousScene = 2;
         SceneManager.LoadScene(0);
     }
     static int index = 0;
