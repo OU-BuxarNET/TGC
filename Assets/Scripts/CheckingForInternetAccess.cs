@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine; 
 
 public class CheckingForInternetAccess : MonoBehaviour //скрипт на проверку интернета (пока ни к чему не подключен)
 {
