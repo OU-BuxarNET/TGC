@@ -149,7 +149,7 @@ public class Helpp : MonoBehaviour
             //Interactivity(); // не дает нажать на кость если она не подходит.
 
             if (Moving.linkedList.head.Data == 6 || Moving.linkedList.tail.Data == 62)
-            {
+            { 
                 Endoffield();
             }
 
