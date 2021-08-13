@@ -135,7 +135,6 @@ public class Helpp : MonoBehaviour
         }
     }
     static bool animat = true;
-    static bool animat1 = true;
     private void Update()
     {
         Timer();
@@ -145,10 +144,10 @@ public class Helpp : MonoBehaviour
             if (Game.statisticClassic.Fish() == true)
             {
                 EndGame();
-            }
+            } 
 
             //Interactivity(); // не дает нажать на кость если она не подходит.
-
+             
             if (Moving.linkedList.head.Data == 6 || Moving.linkedList.tail.Data == 62)
             { 
                 Endoffield();
