@@ -8,7 +8,7 @@ public class CheckingForInternetAccess : MonoBehaviour //скрипт на пр�
     public GameObject P_Warning;
     private string m_ReachabilityText;
     void Start()
-    {
+    { 
        /* CheckInternet();
         if (Internet == false)
         {

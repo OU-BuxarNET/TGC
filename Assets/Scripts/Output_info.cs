@@ -73,7 +73,7 @@ public class Output_info : MonoBehaviour // вывод данных
             {
                 P_Welcome.SetActive(true);
                 P_GameCount.SetActive(true);
-
+ 
                 P_PanelParametrs.SetActive(false);
             }
         }
