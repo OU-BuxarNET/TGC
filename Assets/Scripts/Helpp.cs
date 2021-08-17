@@ -135,7 +135,6 @@ public class Helpp : MonoBehaviour
         }
     }
     static bool animat = true;
-    //static bool animat = true;
     private void Update()
     {
         Timer();
