@@ -177,7 +177,7 @@ public class Helpp : MonoBehaviour
         }
 
         GameObject T_RorLDominos = GameObject.Find("T_RorLDominos");
-        GameObject I_RorLDominos = GameObject.Find("I_RorLDominos");
+        GameObject I_RorLDominos = GameObject.Find("I_RorLDominos"); 
         if (But.Length <= 7)
         {
             I_RorLDominos.transform.localPosition = new Vector2(830, -400);

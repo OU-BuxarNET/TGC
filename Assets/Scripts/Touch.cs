@@ -196,7 +196,7 @@ public class Touch : MonoBehaviour
         Debug.Log(point);
     }
     public void QuitOnscene()
-    {
+    { 
         OpenFirstScene.NumberPreviousScene = 2;
         SceneManager.LoadScene(0);
     }
