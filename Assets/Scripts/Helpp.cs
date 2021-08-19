@@ -57,6 +57,7 @@ public class Helpp : MonoBehaviour
     }
     void ButHandPlayer() // создание кнопок (кости) в руке
     {
+      
         But = new GameObject[Board.Hand.Count];
         for (int i = 0; i < Board.Hand.Count; i++)
         {
@@ -72,7 +73,7 @@ public class Helpp : MonoBehaviour
         }
     }
 
-    public void WayTrue() // присваиваю картинки куда можно положить след. кость
+    public void WayTrue() // присваиваю картинки куда можно положить след. кость 3
     {
         Color color = new Color(1f, 1f, 1f, 0.5f);
 
