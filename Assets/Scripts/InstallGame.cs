@@ -14,7 +14,7 @@ public class InstallGame : MonoBehaviour //скрип установки
     }
     void Start()
     {
-        bool RakNaGoreSvistit = false;
+        bool RakNaGoreSvistit = false; 
         int i = 0;
         while (RakNaGoreSvistit == false)
         { 
