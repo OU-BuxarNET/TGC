@@ -322,7 +322,7 @@ public class Helpp : MonoBehaviour
 
             int CountDoubleInHand = 0;
             for(int i = 0; i> Board.Hand.Count;i++)
-            {
+            { 
                 if (Board.Hand[i].Head == Board.Hand[i].Tail)
                     CountDoubleInHand++;
             }
