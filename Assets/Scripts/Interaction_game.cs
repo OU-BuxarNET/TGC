@@ -17,7 +17,7 @@ public class Interaction_game : MonoBehaviour //скрип взаиможейс�
     {
 
     }
-    void Awake()
+    void Awake() 
     {
         //a = UnityEngine.Random.Range(0, 100);
     }

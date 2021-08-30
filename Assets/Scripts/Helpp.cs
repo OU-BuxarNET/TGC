@@ -311,7 +311,7 @@ public class Helpp : MonoBehaviour
     }
     void Pr(int b) // нажатие на кость из руки
     {
-        but = b;
+        but = b; 
 
         if (Moving.first == true && Moving.bak.head != null)
             Moving.bak.Remove(Moving.bak.head.Data);
