@@ -319,7 +319,7 @@ public class Helpp : MonoBehaviour
 
         if (Moving.CheckDomino1 != null && Moving.first == true)
         {
-            int CountDoubleInHand = 0;
+            int CountDoubleInHand = 0; 
             for(int i = 0; i> Board.Hand.Count;i++)
             { 
                 if (Board.Hand[i].Head == Board.Hand[i].Tail)
