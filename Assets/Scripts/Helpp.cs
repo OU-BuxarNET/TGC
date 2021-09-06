@@ -334,19 +334,18 @@ public class Helpp : MonoBehaviour
 
             }
             else  Rattle();
-            //{
-            //    int MaxIndex = MaxDomino();
+            {
+                int MaxIndex = MaxDomino();
 
-            //    if (Moving.CheckDomino1 == Board.Hand[MaxIndex])
-            //    {
-            //        Moving.bak.Add(Moving.CheckDomino1);
-            //        DeleteDom();
-            //    }
-            //    else Rattle(); // дребезжание
-            //}
+                if (Moving.CheckDomino1 == Board.Hand[MaxIndex])
+                {
+                    Moving.bak.Add(Moving.CheckDomino1);
+                    DeleteDom();
+                }
+                else Rattle(); // дребезжание
+            }
         }
     }
-
     int MaxDomino() // кость с максимальной суммой
     {
         int SumBone = 0;
@@ -394,7 +393,6 @@ public class Helpp : MonoBehaviour
             Game.moving.WhenCube();
         }
     }
-
     public void Interactivity()
     {
         if (Move.next_move == "player")
