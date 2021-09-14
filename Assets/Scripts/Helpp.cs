@@ -281,7 +281,7 @@ public class Helpp : MonoBehaviour
                 B_TakeBar.GetComponent<Button>().interactable = false;
         }
     }
-    void SpriteDomino() // кость кладется на выбранный квадрат (для последующих ходов)
+    void SpriteDomino() // кость кладется на выбранный квадрат (для последующих ходов) 
     {
         Color color = new Color(1f, 1f, 1f, 0.7f);
         if (Moving.LorR == false)
