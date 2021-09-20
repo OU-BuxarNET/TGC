@@ -327,7 +327,7 @@ public class Helpp : MonoBehaviour
             }
 
             if (/*CountDoubleInHand != 0 &&*/ Moving.CheckDomino1.Head == Moving.CheckDomino1.Tail && Moving.CheckDomino1.Head != 0)
-            {
+            { 
                 Moving.bak.Add(Moving.CheckDomino1);
                 DeleteDom();
                 //But[but].transform.position = new Vector2(But[but].transform.position.x, 0.5f); // поднятие выбранной доминошки but
