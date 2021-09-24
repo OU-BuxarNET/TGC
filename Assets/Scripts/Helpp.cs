@@ -301,7 +301,7 @@ public class Helpp : MonoBehaviour
         if (Moving.LorR == false) 
         {
             Game.moving.goPos[Moving.CheckId].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino1);
-            Game.moving.goPos[Moving.CheckId].GetComponent<Image>().color = color;
+            Game.moving.goPos[Moving.CheckId].GetComponent<Image>().color = color; 
         }
         else
         {
