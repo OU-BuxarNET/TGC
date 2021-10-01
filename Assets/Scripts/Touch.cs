@@ -200,7 +200,7 @@ public class Touch : MonoBehaviour
         OpenFirstScene.NumberPreviousScene = 2;
         SceneManager.LoadScene(0);
     }
-    static int index = 0;
+    static int index = 0; 
     public void ShowIcons() // перенести в dll комнаты
     { 
         GameObject I_CopmPlayer = GameObject.Find("I_CopmPlayer");
