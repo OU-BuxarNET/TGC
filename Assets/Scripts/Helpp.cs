@@ -297,7 +297,7 @@ public class Helpp : MonoBehaviour
     } 
     void SpriteDomino1() // кость кладется на выбранный квадрат (для первого хода игрока)
     {
-        Color color = new Color(1f, 1f, 1f, 0.7f);
+        Color color = new Color(1f, 1f, 1f, 0.7f); 
         if (Moving.LorR == false)            
         {
             Game.moving.goPos[Moving.CheckId].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/" + Moving.CheckDomino1);
