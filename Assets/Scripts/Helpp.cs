@@ -374,7 +374,7 @@ public class Helpp : MonoBehaviour
         //}
         //else Moving.bak.Add(Moving.CheckDomino1);
     } 
-    void DeleteDom()
+    void DeleteDom() 
     {
         if (Moving.first == false)
         {
