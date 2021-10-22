@@ -366,13 +366,7 @@ public class Helpp : MonoBehaviour
     {
         AminPlay();
         Invoke("Anim", 0.12f);
-        //Game.check.NotDouble();
         Move.next_move = "player";
-        //if (Moving.CheckDomino1.Name != Check.playerMin)
-        //{
-
-        //}
-        //else Moving.bak.Add(Moving.CheckDomino1);
     } 
     void DeleteDom()   
     {
