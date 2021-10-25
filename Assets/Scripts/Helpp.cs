@@ -403,7 +403,7 @@ public class Helpp : MonoBehaviour
     {
         if (Board.bar.Count == 0)
         {
-            AnimationNoBonesInTheBar.StartT_T_NoBonesInTheBar();
+            AnimationNoBonesInTheBar.StartT_T_NoBonesInTheBar(); 
             Move.next_move = "comp";
             Move1();
         }

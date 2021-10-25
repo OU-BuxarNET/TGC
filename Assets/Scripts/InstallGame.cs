@@ -11,7 +11,7 @@ public class InstallGame : MonoBehaviour //скрип установки
     void Awake()
     {
         a = UnityEngine.Random.Range(0, 1000);
-    }
+    } 
     void Start()
     {
         bool RakNaGoreSvistit = false; 
