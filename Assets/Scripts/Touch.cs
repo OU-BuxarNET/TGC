@@ -20,8 +20,7 @@ public class Touch : MonoBehaviour
     }
     public void ChooseLvlRight()
     {
-        Vector2 vecxy = new Vector2(146, 405);
-        Vector2 vecabroad = new Vector2(600, 400); 
+        Color ColorTrue = new Color();
 
         GameObject B_LeftLvl = GameObject.Find("B_LeftLvl");
         GameObject B_RightLvl = GameObject.Find("B_RightLvl");
@@ -38,22 +37,22 @@ public class Touch : MonoBehaviour
         switch (lvl)
         {
             case "easy":
-                easy.transform.localPosition = vecxy;
-                medium.transform.localPosition = vecabroad;
-                hard.transform.localPosition = vecabroad;
+                //easy.transform.localPosition = vecxy;
+                //medium.transform.localPosition = vecabroad;
+                //hard.transform.localPosition = vecabroad;
                 B_LeftLvl.transform.localPosition = new Vector2(615, posY); 
                 B_RightLvl.transform.localPosition = new Vector2(325, posY);
                 lvl = "medium"; break;
             case "medium":
-                medium.transform.localPosition = vecxy; 
-                easy.transform.localPosition = vecabroad;
-                hard.transform.localPosition = vecabroad; 
+                //medium.transform.localPosition = vecxy; 
+                //easy.transform.localPosition = vecabroad;
+                //hard.transform.localPosition = vecabroad; 
                 B_LeftLvl.transform.localPosition = new Vector2(-36, posY);
                 lvl = "hard"; break;
             case "hard":
-                hard.transform.localPosition = vecxy;
-                medium.transform.localPosition = vecabroad;
-                easy.transform.localPosition = vecabroad;
+                //hard.transform.localPosition = vecxy;
+                //medium.transform.localPosition = vecabroad;
+                //easy.transform.localPosition = vecabroad;
                 B_LeftLvl.transform.localPosition = new Vector2(-36, posY);
                 B_RightLvl.transform.localPosition = new Vector2(610, posY);
                 lvl = "medium";
