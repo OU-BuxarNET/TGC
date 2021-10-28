@@ -71,26 +71,26 @@ public class Touch : MonoBehaviour
         switch (lvl)
         { 
             case "easy":
-                easy.transform.localPosition = new Vector2(146, 405);
-                medium.transform.localPosition = new Vector2(600, 300);
-                hard.transform.localPosition = new Vector2(600, 400);
+                //easy.transform.localPosition = new Vector2(146, 405);
+                //medium.transform.localPosition = new Vector2(600, 300);
+                //hard.transform.localPosition = new Vector2(600, 400);
                 B_LeftLvl.transform.localPosition = new Vector2(630, 405);
                 lvl = "medium";
                 break;
             case "medium":
-                medium.transform.localPosition = new Vector2(146, 405);
-                easy.transform.localPosition = new Vector2(600, 300);
-                hard.transform.localPosition = new Vector2(600, 400);
+                //medium.transform.localPosition = new Vector2(146, 405);
+                //easy.transform.localPosition = new Vector2(600, 300);
+                //hard.transform.localPosition = new Vector2(600, 400);
                 B_LeftLvl.transform.localPosition = new Vector2(-36, 405);
                 B_RightLvl.transform.localPosition = new Vector2(325, 405);
                 lvl = "easy"; break;
             case "hard":
-                easy.transform.localPosition = new Vector2(146, 405);
-                medium.transform.localPosition = new Vector2(600, 300);
-                hard.transform.localPosition = new Vector2(600, 400);
+                //easy.transform.localPosition = new Vector2(146, 405);
+                //medium.transform.localPosition = new Vector2(600, 300);
+                //hard.transform.localPosition = new Vector2(600, 400);
                 B_LeftLvl.transform.localPosition = new Vector2(630, 405);
                 lvl = "medium";
-                break; 
+                break;  
         }
     }
     public void ChooseVersionL()
