@@ -11,7 +11,6 @@ public class Touch : MonoBehaviour
     public static string version = "classic"; 
     static public string point = "100";
     static bool lvlfirst = true;
-    //static bool versionfirst = true;
     static bool pointfirst = true;
 
     public void MainMenu()
@@ -20,7 +19,7 @@ public class Touch : MonoBehaviour
     }
     public void ChooseLvlRight()
     {
-        Color ColorTrue = new Color();
+        Color ColorTrue = new Color(0f, 0f, 0f, 0f);
 
         GameObject B_LeftLvl = GameObject.Find("B_LeftLvl");
         GameObject B_RightLvl = GameObject.Find("B_RightLvl");
