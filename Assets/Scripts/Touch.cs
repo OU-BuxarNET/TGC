@@ -19,7 +19,7 @@ public class Touch : MonoBehaviour
     }
     public void ChooseLvlRight()
     {
-        Color ColorTrue = new Color(0f, 0f, 0f, 0f);
+        Color ColorTrue = new Color(1f, 1f, 1f, 0.5f);
 
         GameObject B_LeftLvl = GameObject.Find("B_LeftLvl");
         GameObject B_RightLvl = GameObject.Find("B_RightLvl");
