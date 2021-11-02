@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Output_info : MonoBehaviour // вывод данных
 {
+
     public GameObject P_LoadApp;
     public GameObject P_Welcome;
     public GameObject P_Param;
@@ -27,16 +28,10 @@ public class Output_info : MonoBehaviour // вывод данных
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.Home))
-        {
-
-        }
-
         if (NameScene == "MainScene") // возврат через кнопку на телефоне
         {
             EscapeMainScene();
         }
-
     }
     public void QuitApp() // метод выхода из приложения
     {
@@ -64,7 +59,6 @@ public class Output_info : MonoBehaviour // вывод данных
     {
         T_Welcome.Play("WelcomeTextAnim");
     }
-
     public void EscapeMainScene() // возврат через кнопку на телефоне
     {
         if (Application.platform == RuntimePlatform.Android)

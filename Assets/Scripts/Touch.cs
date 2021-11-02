@@ -23,9 +23,7 @@ public class Touch : MonoBehaviour
 
         GameObject B_LeftLvl = GameObject.Find("B_LeftLvl");
         GameObject B_RightLvl = GameObject.Find("B_RightLvl");
-        GameObject easy = GameObject.Find("T_Easy");
-        GameObject medium = GameObject.Find("T_Medium");
-        GameObject hard = GameObject.Find("T_Hard"); 
+        GameObject T_Lvl = GameObject.Find("T_Lvl");
 
         if (lvlfirst == true)
         {
