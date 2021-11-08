@@ -543,7 +543,7 @@ public class Helpp : MonoBehaviour
 
         Debug.Log(mas1.Length + " " + Moving.linkedList.Count);
 
-        for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля
+        for (int i = 0; i < mas1.Length; i++) // убираем все домино с поля 
         {
             Game.moving.goPos[mas1[i]].GetComponent<Image>().color = color1;
             Moving.linkedList.Add(mas1[i]);
