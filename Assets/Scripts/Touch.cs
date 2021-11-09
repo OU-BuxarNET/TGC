@@ -22,7 +22,7 @@ public class Touch : MonoBehaviour
         Color ColorTrue = new Color(1f, 1f, 1f, 0.5f);
 
         GameObject B_LeftLvl = GameObject.Find("B_LeftLvl");
-        GameObject B_RightLvl = GameObject.Find("B_RightLvl");
+        GameObject B_RightLvl = GameObject.Find("B_RightLvl"); 
         GameObject T_Lvl = GameObject.Find("T_Lvl");
 
         if (lvlfirst == true)

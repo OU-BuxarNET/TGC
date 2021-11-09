@@ -553,7 +553,7 @@ public class Helpp : MonoBehaviour
         {
             Moving.bak.Add(mas[i]);
         }
-
+         
         WayTrue(); 
         RotateDomino();
     }
