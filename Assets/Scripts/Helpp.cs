@@ -555,7 +555,7 @@ public class Helpp : MonoBehaviour
         }
          
         WayTrue(); 
-        RotateDomino();
+        RotateDomino(); 
     }
     void RotateDomino()
     {
