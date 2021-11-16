@@ -588,7 +588,7 @@ public class Helpp : MonoBehaviour
     }
     int Rotate(int index, Domino domino, Domino lastdomino)
     {
-        if (index == 16 || index == 8 || index == 39 || index == 48)
+        if (index == 16 || index == 8 || index == 39 || index == 48) 
         {
             if (domino.Head == domino.Tail)
                 return 90;
