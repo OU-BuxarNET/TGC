@@ -581,7 +581,7 @@ public class Helpp : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < masLinked.Length; i++)
+        for (int i = 0; i < masLinked.Length; i++) 
         {
             Moving.linkedList.Add(masLinked[i]);  
         }
