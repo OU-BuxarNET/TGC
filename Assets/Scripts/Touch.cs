@@ -54,7 +54,7 @@ public class Touch : MonoBehaviour
                 B_RightLvl.transform.localPosition = new Vector2(610, posY);
                 lvl = "medium";
                 break;
-        } 
+        }
     }
     public void ChooseLvlLeft()
     {
