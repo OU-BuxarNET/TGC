@@ -574,7 +574,7 @@ public class Helpp : MonoBehaviour
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name));
                 Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);
             }
-            else if (i >= 1)
+            else if (i >= 1) 
             {
                 int rotate = Rotate(masLinked[i], new Domino(Game.moving.goPos[masLinked[i]].GetComponent<Image>().sprite.name), new Domino(Game.moving.goPos[masLinked[i - 1]].GetComponent<Image>().sprite.name));
                 Game.moving.goPos[masLinked[i]].transform.rotation = Quaternion.Euler(0, 0, rotate);

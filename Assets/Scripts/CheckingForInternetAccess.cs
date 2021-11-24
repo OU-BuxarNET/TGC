@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheckingForInternetAccess : MonoBehaviour //скрипт на проверку интернета (пока ни к чему не подключен)
 {
     private bool Internet = false;
-    public GameObject P_Warning;
+    public GameObject P_Warning; 
     private string m_ReachabilityText;
     void Start()
     { 

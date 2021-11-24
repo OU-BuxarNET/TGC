@@ -40,7 +40,7 @@ public class Output_info : MonoBehaviour // вывод данных
     private void IsActive() // метод проверки какой раз пользователь вошел в игру
     {
         if (PlayerPrefs.GetInt("Entering", 1) == 1)
-        { 
+        {  
             P_LoadApp.SetActive(true);
             PlayerPrefs.SetInt("Entering", 0);
         }
