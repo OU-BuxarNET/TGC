@@ -55,7 +55,7 @@ public class Touch : MonoBehaviour
                 lvl = "medium";
                 break;
         }
-    }
+    } 
     public void ChooseLvlLeft()
     {
         GameObject B_LeftLvl = GameObject.Find("B_LeftLvl");
