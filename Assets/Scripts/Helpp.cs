@@ -10,7 +10,7 @@ public class Helpp : MonoBehaviour
     static GameObject[] But; // костяшки игрока
     private static int but = -1; // номер кости для выбора
     private static int j;
-    Game game; // главный класс библиотеки 
+    Domino1.Game game; // главный класс библиотеки 
     public static string play = "comp";
     public Transform Game1;
     GameObject P_EndOfRound;
@@ -22,9 +22,7 @@ public class Helpp : MonoBehaviour
     private AnimationForDomino AnimationForDomino;
     private AnimationNoBonesInTheBar AnimationNoBonesInTheBar;
 
-
     static int kolactivekube = 1; // количество активных 
-   
 
     public void Start()
     {
@@ -37,7 +35,7 @@ public class Helpp : MonoBehaviour
             Debug.Log(LogicComp.difficutlylvl);
         else
         {
-            game = new Game();
+            game = new Domino1.Game();
             game.StartGame();
             ButHandPlayer();
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
