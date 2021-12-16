@@ -271,7 +271,7 @@ public class Helpp : MonoBehaviour
         if (Move.next_move == "player" && Moving.first == false && Board.Hand.Count != 0)
         {
             GameObject B_TakeBar = GameObject.Find("B_TakeBar");
-            if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == false)
+            if (Move.next_move == "player" && Game.check.TakeBar(Board.Hand) == false) 
             {  
                 B_TakeBar.GetComponent<Button>().interactable = true; 
             }

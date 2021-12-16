@@ -158,7 +158,7 @@ public class Touch : MonoBehaviour
         //    case "medium": LogicComp.difficutlylvl = "medium"; break;
         //    case "hard": LogicComp.difficutlylvl = "hard"; break;
         //}
-        switch (version)
+        switch (version) 
         {
             case "classic": LogicComp.versionGame = version; break;
             case "goat": LogicComp.versionGame = version; break;
