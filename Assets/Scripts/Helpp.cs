@@ -406,10 +406,10 @@ public class Helpp : MonoBehaviour
             Move1();
         }
         else
-        {
+        { 
             Game.board.TakeBar(true); 
 
-            if (Board.bar.Count == 0)
+            if (Board.bar.Count == 0) 
             {
                 Move.next_move = "comp"; 
                 Move1();
