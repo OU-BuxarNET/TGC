@@ -405,7 +405,7 @@ public class Helpp : MonoBehaviour
             Move.next_move = "comp";
             Move1();
         }
-        else
+        else 
         { 
             Game.board.TakeBar(true); 
 
