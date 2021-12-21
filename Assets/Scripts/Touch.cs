@@ -171,7 +171,7 @@ public class Touch : MonoBehaviour
                     Statistic.maxpoint = Int32.Parse(point); 
                     else if (version == "goat")
                         StatisticGoat.maxpoint = Int32.Parse(point);
-                    break; 
+                    break;  
                 }
             case "set":
                 {
