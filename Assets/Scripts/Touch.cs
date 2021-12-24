@@ -162,7 +162,7 @@ public class Touch : MonoBehaviour
         { 
             case "classic": LogicComp.versionGame = version; break;
             case "goat": LogicComp.versionGame = version; break;
-        }
+        } 
         switch (point)
         {
             case "100":
