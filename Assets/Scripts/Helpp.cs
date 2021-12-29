@@ -411,7 +411,7 @@ public class Helpp : MonoBehaviour
 
             if (Board.bar.Count == 0) 
             {
-                Move.next_move = "comp"; 
+                Move.next_move = "comp";  
                 Move1();
             } 
             else 
