@@ -370,7 +370,7 @@ public class Helpp : MonoBehaviour
     {
         if (Moving.first == false)
         {
-            Color color = new Color(1f, 1f, 1f, 0.5f); 
+            Color color = new Color(1f, 1f, 1f, 0.5f);  
             for (int i = 0; i < But.Length; i++)
                 Destroy(But[i]);
             ButHandPlayer();
