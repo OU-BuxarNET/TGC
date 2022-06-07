@@ -8,6 +8,7 @@ Table game club
 
 В настоящее время ищем разработчиков для завершения работы за денежное вознаграждение.
 Так же нужны разработчики на другие проекты с разными языками программирования.
+Telergam: @buxarnet_ru
 
 [ENG]
 Table Game Club
@@ -16,3 +17,4 @@ The final implementation will allow you to play on various mobile devices, websi
 
 We are currently looking for developers to complete the work for a monetary reward.
 Developers are also needed for other projects with different programming languages.
+Telergam: @buxarnet_ru
